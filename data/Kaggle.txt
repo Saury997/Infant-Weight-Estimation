@@ -1,0 +1,4 @@
+1. Birth Weight Prediction
+https://www.kaggle.com/competitions/birth-weight-prediction
+2. Prediction interval competition I: Birth weight
+https://www.kaggle.com/competitions/prediction-interval-competition-i-birth-weight

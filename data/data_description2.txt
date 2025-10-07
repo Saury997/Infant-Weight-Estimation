@@ -1,0 +1,36 @@
+ATTEND - Attendant at Birth
+BFACIL - Birth Place
+BMI - Body Mass Index
+CIG_0 - Cigarettes Before Pregnancy
+DLMP_MM - Last Normal Menses Month
+DMAR - Marital Status
+DOB_MM - Birth Month
+DOB_TT - Time of Birth
+DOB_WK - Birth Day of Week
+FAGECOMB - Father’s Combined Age
+FEDUC - Father’s Education
+ILLB_R - Interval Since Last Live Birth Recode
+ILOP_R - Interval Since Last Other Pregnancy Recode
+ILP_R - Interval Since Last Other Pregnancy Recode
+LD_INDL - Induction of Labor
+MAGER - Mother’s Single Years of Age
+MBSTATE_REC - Mother’s Nativity
+MEDUC - Mother’s Education
+M_Ht_In - Mother’s Height in Total Inches
+NO_INFEC - No Infections Reported
+NO_MMORB - No Maternal Morbidity Reported
+NO_RISKS - No Risk Factors Reported
+PAY - Payment Source for Delivery
+PAY_REC - Payment Recode
+PRECARE - Month Prenatal Care Began
+PREVIS - Number of Prenatal Visits
+PRIORDEAD - Prior Births Now Dead
+PRIORLIVE - Prior Births Now Living
+PRIORTERM - Prior Other Terminations
+PWgt_R - Pre-pregnancy Weight Recode
+RDMETH_REC - Delivery Method Recode
+RESTATUS - Residence Status
+RF_CESAR - Previous Cesarean
+RF_CESARN - Number of Previous Cesareans
+SEX - Sex of Infant
+WTGAIN - Weight Gain
