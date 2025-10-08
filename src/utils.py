@@ -13,12 +13,13 @@ import random
 import torch.distributed as dist
 import numpy as np
 import torch
-from torch.optim import AdamW, SGD
+from torch.optim import AdamW, SGD, LBFGS
 from muon import MuonWithAuxAdam
 from model import MLP, KAN
 
 
 def get_optimizer(model, optimizer, lr):
+    """根据参数初始化优化器"""
     if optimizer == 'AdamW':
         optimizer = AdamW(model.parameters(), lr=lr)
     elif optimizer == 'SGD':
@@ -37,8 +38,11 @@ def get_optimizer(model, optimizer, lr):
                  lr=3e-4, betas=(0.9, 0.95), weight_decay=0.01),
         ]
         optimizer = MuonWithAuxAdam(param_groups)
+    elif optimizer == 'LBFGS':  # The effect is extremely poor, so it was disabled.
+        # optimizer = LBFGS(model.parameters(), lr=lr)
+        raise NotImplementedError("The effect of LBFGS optimizer is extremely poor, so it was disabled.")
     else:
-        raise ValueError("Invalid optimizer. Please choose from ['AdamW', 'SGD', 'Muon'].")
+        raise ValueError("Invalid optimizer. Please choose from ['AdamW', 'SGD', 'Muon', 'LBFGS'].")
     return optimizer
 
 
