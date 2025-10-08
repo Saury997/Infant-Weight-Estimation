@@ -71,19 +71,17 @@ def feature_engineering(df):
     return df
 
 
-def load_and_preprocess_data(file_path, target_column, test_size=0.15, val_size=0.15, random_state=42):
+def load_and_preprocess_data(file_path, target_column, feature_engineering=True):
     """
     加载、进行高级特征工程、预处理数据并创建 PyTorch DataLoaders。
 
     Args:
         file_path (str): 数据集文件路径 (e.g., 'my_dataset.xlsx')。
         target_column (str): 目标变量的列名 (e.g., '出生体重')。
-        test_size (float): 测试集所占的比例。
-        val_size (float): 验证集所占的比例 (在剩余数据中)。
-        random_state (int): 随机种子，确保结果可复现。
+        feature_engineering (bool, optional): 是否进行高级特征工程。默认为 True。
 
     Returns:
-        tuple: 包含 train_loader, val_loader, test_loader, scaler 和 input_dim。
+        tuple: 包含 X, y 和 input_dim。
     """
     # 1. 加载数据
     try:
@@ -93,10 +91,13 @@ def load_and_preprocess_data(file_path, target_column, test_size=0.15, val_size=
         return None, None, None, None, None
 
     # 2. 剔除无关或导致数据泄漏的列
-    df = df.drop(columns=['编号'])
+    if '编号' in df.columns:
+        df = df.drop(columns=['编号'])
 
     # 3. 执行高级特征工程
-    df = feature_engineering(df)
+    if feature_engineering:
+        print("Performing advanced feature engineering...")
+        df = feature_engineering(df)
 
     # 4. 划分特征 (X) 和目标 (y)
     X = df.drop(columns=[target_column])

@@ -22,6 +22,8 @@ def parse_args():
                         help='Path to the dataset file')
     parser.add_argument('--target-column', type=str, default='出生体重',
                         help='Target column name in the dataset')
+    parser.add_argument('--feature-engineering', action='store_true',
+                        help='Perform advanced feature engineering, specifically designed for private datasets.')
     parser.add_argument('--test-size', type=float, default=0.15,
                         help='Proportion of the dataset to hold out for the final test set')
 
@@ -73,7 +75,7 @@ def main():
     X, y, input_dim = load_and_preprocess_data(
         file_path=args.data_path,
         target_column=args.target_column,
-        random_state=args.random_seed
+        feature_engineering=args.feature_engineering
     )
 
     # --- 2. 划分出最终的测试集 ---
