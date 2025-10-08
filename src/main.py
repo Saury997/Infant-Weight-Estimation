@@ -10,7 +10,7 @@ import argparse
 
 from data_loader import load_and_preprocess_data
 from trainer import Trainer
-from utils import get_optimizer, set_seed, get_model
+from utils import get_optimizer, set_seed, get_model, check_distribution
 
 
 def parse_args():
@@ -22,10 +22,16 @@ def parse_args():
                         help='Path to the dataset file')
     parser.add_argument('--target-column', type=str, default='出生体重',
                         help='Target column name in the dataset')
-    parser.add_argument('--feature-engineering', action='store_true',
+    parser.add_argument('--feature-engineering', action='store_true', default=False,
                         help='Perform advanced feature engineering, specifically designed for private datasets.')
     parser.add_argument('--test-size', type=float, default=0.15,
                         help='Proportion of the dataset to hold out for the final test set')
+    parser.add_argument('--bin', action='store_true', default=False,
+                        help='Perform binning of the target variable.')
+    parser.add_argument('--standardize', action='store_true', default=False,
+                        help='Whether to standardize the features.')
+    parser.add_argument('--log-transform', action='store_true', default=False,
+                        help='Apply log transformation to target variable')
 
     # model hyperparameters
     parser.add_argument('--model', type=str, default='MLP', help='Model architecture')
@@ -47,8 +53,6 @@ def parse_args():
                         help='Maximum number of training epochs')
     parser.add_argument('--patience', type=int, default=50,
                         help='Patience for early stopping')
-    parser.add_argument('--save-root', type=str, default='../ckpt',
-                        help='Path to save the best model')
     parser.add_argument('--use-kfold', action='store_true',
                         help='Enable K-Fold Cross-Validation. If not set, uses a simple train/val split.')
     parser.add_argument('--k-folds', type=int, default=5,
@@ -59,6 +63,10 @@ def parse_args():
                         help='Random seed for reproducibility')
     parser.add_argument('--device', type=str, default='cuda' if torch.cuda.is_available() else 'cpu',
                         help='Device to use for training (cuda or cpu)')
+    parser.add_argument('--save', action='store_true', default=False,
+                        help='Save the best model to the specified path')
+    parser.add_argument('--save-root', type=str, default='../ckpt',
+                        help='Path to save the best model')
 
     return parser.parse_args()
 
@@ -72,19 +80,29 @@ def main():
 
     # --- 1. 数据加载和预处理 ---
     print("Loading and preprocessing data...")
-    X, y, input_dim = load_and_preprocess_data(
+    X, y, y_bins, input_dim = load_and_preprocess_data(
         file_path=args.data_path,
         target_column=args.target_column,
-        feature_engineering=args.feature_engineering
+        feat_eng=args.feature_engineering,
+        binning=args.bin,
+        log_transform=args.log_transform
     )
 
     # --- 2. 划分出最终的测试集 ---
-    X_train_val, X_test, y_train_val, y_test = train_test_split(
-        X, y, test_size=args.test_size, random_state=args.random_seed
-    )
-    print(f"Data loaded. Input dimension: {input_dim}")
-    print(f"Total samples for training/validation: {len(X_train_val)}")
-    print(f"Held-out test samples: {len(X_test)}")
+    if args.bin:
+        X_train_val, X_test, y_train_val, y_test, y_bins_train, y_bins_test = train_test_split(
+            X, y, y_bins,
+            test_size=args.test_size,
+            random_state=args.random_seed,
+            stratify=y_bins  # 分层采样
+        )
+        check_distribution(y_train_val, y_test, y_bins_train, y_bins_test)
+    else:
+        X_train_val, X_test, y_train_val, y_test = train_test_split(
+            X, y,
+            test_size=args.test_size,
+            random_state=args.random_seed
+        )
 
     if X is None:
         raise ValueError("DataLoadError! Please check your data file path.")
@@ -103,13 +121,17 @@ def main():
             X_train, X_val = X_train_val.iloc[train_ids], X_train_val.iloc[val_ids]
             y_train, y_val = y_train_val.iloc[train_ids], y_train_val.iloc[val_ids]
 
-            scaler = StandardScaler()
-            X_train_scaled = scaler.fit_transform(X_train)
-            X_val_scaled = scaler.transform(X_val)
+            if args.standardize:
+                scaler = StandardScaler()
+                X_train = scaler.fit_transform(X_train)
+                X_val = scaler.transform(X_val)
+            else:
+                X_train = X_train.values
+                X_val = X_val.values
 
-            train_dataset = TensorDataset(torch.tensor(X_train_scaled, dtype=torch.float32),
+            train_dataset = TensorDataset(torch.tensor(X_train, dtype=torch.float32),
                                           torch.tensor(y_train.values, dtype=torch.float32).view(-1, 1))
-            val_dataset = TensorDataset(torch.tensor(X_val_scaled, dtype=torch.float32),
+            val_dataset = TensorDataset(torch.tensor(X_val, dtype=torch.float32),
                                         torch.tensor(y_val.values, dtype=torch.float32).view(-1, 1))
 
             train_loader = DataLoader(train_dataset, batch_size=args.batch_size, shuffle=True)

@@ -71,14 +71,15 @@ def feature_engineering(df):
     return df
 
 
-def load_and_preprocess_data(file_path, target_column, feature_engineering=True):
+def load_and_preprocess_data(file_path, target_column, feat_eng=False, binning=False, log_transform=False):
     """
     加载、进行高级特征工程、预处理数据并创建 PyTorch DataLoaders。
 
     Args:
         file_path (str): 数据集文件路径 (e.g., 'my_dataset.xlsx')。
         target_column (str): 目标变量的列名 (e.g., '出生体重')。
-        feature_engineering (bool, optional): 是否进行高级特征工程。默认为 True。
+        feat_eng (bool, optional): 是否进行高级特征工程。默认为 True。
+        binning (bool, optional): 是否进行目标变量的分箱。默认为 False。
 
     Returns:
         tuple: 包含 X, y 和 input_dim。
@@ -91,11 +92,10 @@ def load_and_preprocess_data(file_path, target_column, feature_engineering=True)
         return None, None, None, None, None
 
     # 2. 剔除无关或导致数据泄漏的列
-    if '编号' in df.columns:
-        df = df.drop(columns=['编号'])
+    df = df.drop(columns=['ID'])
 
     # 3. 执行高级特征工程
-    if feature_engineering:
+    if feat_eng:
         print("Performing advanced feature engineering...")
         df = feature_engineering(df)
 
@@ -103,7 +103,19 @@ def load_and_preprocess_data(file_path, target_column, feature_engineering=True)
     X = df.drop(columns=[target_column])
     y = df[target_column]
 
+    if log_transform:
+        y = np.log(y)
+
+    # 5. 对目标变量进行分箱
+    if binning:
+        print("Binning target variable...")
+        bins = list(np.arange(1470, 4800 + 500, 500))
+        labels = list(range(len(bins) - 1))
+        y_bins = pd.cut(y, bins=bins, labels=labels, include_lowest=True)
+    else:
+        y_bins = None
+
     # 获取输入特征的维度
     input_dim = X.shape[1]
 
-    return X, y, input_dim
+    return X, y, y_bins, input_dim

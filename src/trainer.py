@@ -30,7 +30,6 @@ class Trainer:
         self.model = model.to(self.device)
         self.best_model_wts = copy.deepcopy(model.state_dict())
         self.best_val_loss, self.best_val_mae = float('inf'), float('inf')
-        self.model_name = args.model
         self.args = args
 
     def train_one_epoch(self, train_loader):
@@ -40,11 +39,13 @@ class Trainer:
 
         for inputs, targets in train_loader:
             inputs, targets = inputs.to(self.device), targets.to(self.device)
+            if self.args.log_transform:
+                targets = torch.exp(targets)
 
             if isinstance(self.optimizer, torch.optim.LBFGS):
                 def closure():
                     self.optimizer.zero_grad()
-                    outputs = self.model(inputs)
+                    outputs = torch.exp(self.model(inputs))
                     loss = self.criterion(outputs, targets)
                     loss.backward()
                     return loss
@@ -55,7 +56,10 @@ class Trainer:
 
             else:
                 self.optimizer.zero_grad()
-                outputs = self.model(inputs)
+                if self.args.log_transform:
+                    outputs = torch.exp(self.model(inputs))
+                else:
+                    outputs = self.model(inputs)
                 loss = self.criterion(outputs, targets)
                 loss.backward()
                 self.optimizer.step()
@@ -74,7 +78,10 @@ class Trainer:
             for inputs, targets in data_loader:
                 inputs, targets = inputs.to(self.device), targets.to(self.device)
 
-                outputs = self.model(inputs)
+                if self.args.log_transform:
+                    outputs, targets = torch.exp(self.model(inputs)), torch.exp(targets)
+                else:
+                    outputs = self.model(inputs)
                 loss = self.criterion(outputs, targets)
 
                 # 计算 MAE (平均绝对误差)
@@ -92,9 +99,9 @@ class Trainer:
         完整训练流程，包含早停和学习率调度。
         如果 val_loader 为 None，则不进行验证和早停，直接训练指定 epochs。
         """
-        scheduler = ReduceLROnPlateau(self.optimizer, mode='min', factor=0.1, patience=patience // 2, verbose=True)
+        scheduler = ReduceLROnPlateau(self.optimizer, mode='min', factor=0.1, patience=patience // 2)
         patience_counter = 0
-        save_path_dir = os.path.join(save_root, self.model.__class__.__name__)
+        save_path_dir = os.path.join(save_root, self.args.model)
         if not os.path.exists(save_path_dir):
             os.makedirs(save_path_dir)
 
@@ -135,4 +142,5 @@ class Trainer:
         else:
             model_filename = f'final_{timestamp}-{model_info}.pth'
 
-        torch.save(self.best_model_wts, os.path.join(save_path_dir, model_filename))
+        if self.args.save:
+            torch.save(self.best_model_wts, os.path.join(save_path_dir, model_filename))

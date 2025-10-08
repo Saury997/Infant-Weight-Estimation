@@ -10,6 +10,8 @@
 """
 import os
 import random
+
+import pandas as pd
 import torch.distributed as dist
 import numpy as np
 import torch
@@ -67,3 +69,32 @@ def set_seed(seed):
         torch.cuda.manual_seed_all(seed)
         torch.backends.cudnn.deterministic = True
         torch.backends.cudnn.benchmark = False
+
+
+def check_distribution(y_train, y_test, y_bins_train, y_bins_test):
+    """
+    检查训练集和测试集的分箱类别分布及统计信息。
+
+    Args:
+        y_train (pd.Series): 训练集真实目标值（连续数值，如出生体重）
+        y_test (pd.Series): 测试集真实目标值
+        y_bins_train (pd.Series): 训练集分箱类别
+        y_bins_test (pd.Series): 测试集分箱类别
+    """
+    def stats_summary(y, y_bins, name="数据集"):
+        df = pd.DataFrame({"value": y, "bin": y_bins})
+        print(f"\n{name} 样本总数: {len(y)}")
+        print(f"{name} 按类别统计：")
+        summary = df.groupby("bin")["value"].agg(
+            count="count",
+            mean="mean",
+            std="std",
+            min="min",
+            max="max"
+        )
+        summary["ratio"] = summary["count"] / len(y)
+        print(summary)
+
+    print("==== 数据分布检查 ====")
+    stats_summary(y_train, y_bins_train, "训练集")
+    stats_summary(y_test, y_bins_test, "测试集")
