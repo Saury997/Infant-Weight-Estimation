@@ -15,6 +15,7 @@ import numpy as np
 import torch
 from torch.optim import AdamW, SGD
 from muon import MuonWithAuxAdam
+from model import MLP, KAN
 
 
 def get_optimizer(model, optimizer, lr):
@@ -39,6 +40,17 @@ def get_optimizer(model, optimizer, lr):
     else:
         raise ValueError("Invalid optimizer. Please choose from ['AdamW', 'SGD', 'Muon'].")
     return optimizer
+
+
+def get_model(args, input_dim):
+    """根据参数初始化模型"""
+    if args.model == 'MLP':
+        model = MLP(input_dim=input_dim, hidden_layers=args.hidden_layers, dropout_rate=args.dropout, init_type=args.init_type)
+    elif args.model == 'KAN':
+        model = KAN(layers_hidden=[input_dim] + args.hidden_layers + [1])
+    else:
+        raise ValueError(f"Invalid model: {args.model}. Please choose from ['MLP', KAN].")
+    return model
 
 
 def set_seed(seed):

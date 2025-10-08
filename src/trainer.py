@@ -13,9 +13,7 @@ import os
 # trainer.py
 
 import torch
-import torch.nn as nn
 from torch.optim.lr_scheduler import ReduceLROnPlateau
-import numpy as np
 import time
 import copy
 
@@ -84,48 +82,49 @@ class Trainer:
     def fit(self, train_loader, val_loader, epochs, patience, save_root):
         """
         完整训练流程，包含早停和学习率调度。
-
-        Args:
-            patience (int): 早停的耐心值。
-            save_root (str):最佳模型保存根路径。
+        如果 val_loader 为 None，则不进行验证和早停，直接训练指定 epochs。
         """
-        # Trick: 使用学习率调度器
         scheduler = ReduceLROnPlateau(self.optimizer, mode='min', factor=0.1, patience=patience // 2, verbose=True)
-
         patience_counter = 0
-        save_path = os.path.join(save_root, self.model.__class__.__name__)
-        if not os.path.exists(save_path):
-            os.makedirs(save_path)
+        save_path_dir = os.path.join(save_root, self.model.__class__.__name__)
+        if not os.path.exists(save_path_dir):
+            os.makedirs(save_path_dir)
+
+        timestamp = time.strftime("%Y%m%d_%H%M%S")
+        model_info = f"{self.args.hidden_layers}"
 
         for epoch in range(epochs):
             start_time = time.time()
-
             train_loss = self.train_one_epoch(train_loader)
-            val_loss, val_mae = self.evaluate(val_loader)
-
             elapsed = time.time() - start_time
 
-            print(f'Epoch {epoch + 1}/{epochs} [{elapsed:.0f}s] - '
-                  f'Train Loss: {train_loss:.4f}, Val Loss: {val_loss:.4f}, Val MAE: {val_mae:.2f}g')
+            if val_loader:
+                val_loss, val_mae = self.evaluate(val_loader)
+                print(f'Epoch {epoch + 1}/{epochs} [{elapsed:.0f}s] - '
+                      f'Train Loss: {train_loss:.4f}, Val Loss: {val_loss:.4f}, Val MAE: {val_mae:.2f}g')
+                scheduler.step(val_loss)
 
-            scheduler.step(val_loss)
+                if val_loss < self.best_val_loss:
+                    self.best_val_loss, self.best_val_mae = val_loss, val_mae
+                    self.best_model_wts = copy.deepcopy(self.model.state_dict())
+                    print('Validation loss decreased.')
+                    patience_counter = 0
+                else:
+                    patience_counter += 1
 
-            # Trick: 早停逻辑
-            if val_loss < self.best_val_loss:
-                self.best_val_loss, self.best_val_mae = val_loss, val_mae
-                self.best_model_wts = copy.deepcopy(self.model.state_dict())
-                print(f'Validation loss decreased.')
-                patience_counter = 0
+                if patience_counter >= patience:
+                    print(f'Early stopping triggered after {patience} epochs with no improvement.')
+                    break
             else:
-                patience_counter += 1
+                print(f'Epoch {epoch + 1}/{epochs} [{elapsed:.0f}s] - Train Loss: {train_loss:.4f}')
+                self.best_model_wts = copy.deepcopy(self.model.state_dict())
 
-            if patience_counter >= patience:
-                print(f'Early stopping triggered after {patience} epochs with no improvement.')
-                break
-
-        # 加载性能最好的模型权重
         self.model.load_state_dict(self.best_model_wts)
         print("Finished training. Loaded best model weights.")
 
-        timestamp = time.strftime("%Y%m%d_%H%M%S")
-        torch.save(self.best_model_wts, os.path.join(save_path, f'best{timestamp}-val_mae{self.best_val_mae:.0f}g-{self.args.hidden_layers}.pth'))
+        if val_loader:
+            model_filename = f'best_{timestamp}-val_mae{self.best_val_mae:.0f}g-{model_info}.pth'
+        else:
+            model_filename = f'final_{timestamp}-{model_info}.pth'
+
+        torch.save(self.best_model_wts, os.path.join(save_path_dir, model_filename))
