@@ -34,24 +34,32 @@ class Trainer:
         self.args = args
 
     def train_one_epoch(self, train_loader):
-        """训练一个 epoch。"""
+        """训练一个 epoch"""
         self.model.train()  # 设置为训练模式
         running_loss = 0.0
+
         for inputs, targets in train_loader:
             inputs, targets = inputs.to(self.device), targets.to(self.device)
 
-            # 梯度清零
-            self.optimizer.zero_grad()
+            if isinstance(self.optimizer, torch.optim.LBFGS):
+                def closure():
+                    self.optimizer.zero_grad()
+                    outputs = self.model(inputs)
+                    loss = self.criterion(outputs, targets)
+                    loss.backward()
+                    return loss
 
-            # 前向传播
-            outputs = self.model(inputs)
-            loss = self.criterion(outputs, targets)
+                # LBFGS 的 step 需要 closure
+                loss = self.optimizer.step(closure)
+                running_loss += loss.item() * inputs.size(0)
 
-            # 反向传播和优化
-            loss.backward()
-            self.optimizer.step()
-
-            running_loss += loss.item() * inputs.size(0)
+            else:
+                self.optimizer.zero_grad()
+                outputs = self.model(inputs)
+                loss = self.criterion(outputs, targets)
+                loss.backward()
+                self.optimizer.step()
+                running_loss += loss.item() * inputs.size(0)
 
         epoch_loss = running_loss / len(train_loader.dataset)
         return epoch_loss
@@ -62,7 +70,7 @@ class Trainer:
         running_loss = 0.0
         running_mae = 0.0
 
-        with torch.no_grad():  # 在评估期间不计算梯度
+        with torch.no_grad():
             for inputs, targets in data_loader:
                 inputs, targets = inputs.to(self.device), targets.to(self.device)
 
@@ -91,7 +99,7 @@ class Trainer:
             os.makedirs(save_path_dir)
 
         timestamp = time.strftime("%Y%m%d_%H%M%S")
-        model_info = f"{self.args.hidden_layers}"
+        model_info = f"{self.args.hidden_layers}-epochs{self.args.epochs}-lr{self.args.lr}"
 
         for epoch in range(epochs):
             start_time = time.time()

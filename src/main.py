@@ -36,7 +36,7 @@ def parse_args():
 
     # training hyperparameters
     parser.add_argument('--optimizer', type=str, default='AdamW',
-                        choices=['AdamW', 'SGD', 'Muon'], help='Optimizer for training')
+                        choices=['AdamW', 'SGD', 'Muon', 'LBFGS'], help='Optimizer for training')
     parser.add_argument('--lr', type=float, default=0.001,
                         help='Learning rate for the optimizer')
     parser.add_argument('--batch-size', type=int, default=32,
