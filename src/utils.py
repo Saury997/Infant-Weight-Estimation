@@ -10,11 +10,14 @@
 """
 import os
 import random
+import sys
+import time
 
 import pandas as pd
 import torch.distributed as dist
 import numpy as np
 import torch
+from loguru import logger
 from torch.optim import AdamW, SGD, LBFGS
 from muon import MuonWithAuxAdam
 from model import MLP, KAN
@@ -40,11 +43,15 @@ def get_optimizer(model, optimizer, lr):
                  lr=3e-4, betas=(0.9, 0.95), weight_decay=0.01),
         ]
         optimizer = MuonWithAuxAdam(param_groups)
-    elif optimizer == 'LBFGS':  # The effect is extremely poor, so it was disabled.
+        logger.warning("The Muon optimizer has bugs to fix.")
+    elif optimizer == 'LBFGS':
         # optimizer = LBFGS(model.parameters(), lr=lr)
+        logger.warning("The effect of LBFGS optimizer is extremely poor, so it was disabled.")
         raise NotImplementedError("The effect of LBFGS optimizer is extremely poor, so it was disabled.")
     else:
+        logger.error(f"Invalid optimizer: {optimizer}. Please choose from ['AdamW', 'SGD', 'Muon', 'LBFGS'].")
         raise ValueError("Invalid optimizer. Please choose from ['AdamW', 'SGD', 'Muon', 'LBFGS'].")
+
     return optimizer
 
 
@@ -83,8 +90,8 @@ def check_distribution(y_train, y_test, y_bins_train, y_bins_test):
     """
     def stats_summary(y, y_bins, name="数据集"):
         df = pd.DataFrame({"value": y, "bin": y_bins})
-        print(f"\n{name} 样本总数: {len(y)}")
-        print(f"{name} 按类别统计：")
+        logger.info(f"\n{name} 样本总数: {len(y)}")
+        logger.info(f"{name} 按类别统计：")
         summary = df.groupby("bin")["value"].agg(
             count="count",
             mean="mean",
@@ -93,8 +100,22 @@ def check_distribution(y_train, y_test, y_bins_train, y_bins_test):
             max="max"
         )
         summary["ratio"] = summary["count"] / len(y)
-        print(summary)
+        logger.opt(raw=True).info(str(summary))  # 使用 raw=True 避免添加额外的日志格式前缀
 
-    print("==== 数据分布检查 ====")
+    logger.info("==== 数据分布检查 ====")
     stats_summary(y_train, y_bins_train, "训练集")
     stats_summary(y_test, y_bins_test, "测试集")
+
+
+
+def setup_logger(log_file_path):
+    """初始化日志记录器"""
+    log_format = (
+        "<green>{time:YYYY-MM-DD HH:mm:ss.SSS}</green> | "
+        "<level>{level: <6}</level> | "
+        "<cyan>{name}</cyan>:<cyan>{function}</cyan>:<cyan>{line}</cyan> - <level>{message}</level>"
+    )
+    logger.remove()
+    logger.add(sys.stderr, format=log_format, level="INFO")
+    logger.add(log_file_path, rotation="10 MB", level="DEBUG")
+    logger.info("Logger initialized.")

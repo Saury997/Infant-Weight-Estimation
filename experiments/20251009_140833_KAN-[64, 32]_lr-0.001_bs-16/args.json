@@ -1,0 +1,26 @@
+{
+    "data_path": "../data/my_dataset.xlsx",
+    "target_column": "出生体重",
+    "feature_engineering": false,
+    "test_size": 0.15,
+    "bin": false,
+    "standardize": true,
+    "log_transform": false,
+    "model": "KAN",
+    "init_type": "xavier",
+    "dropout": 0.2,
+    "hidden_layers": [
+        64,
+        32
+    ],
+    "optimizer": "AdamW",
+    "lr": 0.001,
+    "batch_size": 16,
+    "epochs": 150,
+    "patience": 50,
+    "use_kfold": true,
+    "k_folds": 5,
+    "random_seed": 3407,
+    "device": "cuda",
+    "save_root": "../experiments"
+}

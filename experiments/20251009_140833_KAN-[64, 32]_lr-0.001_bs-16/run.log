@@ -1,0 +1,799 @@
+2025-10-09 14:08:33.517 | INFO     | utils:setup_logger:121 - Logger initialized.
+2025-10-09 14:08:33.517 | INFO     | __main__:main:96 - Experiment run directory: ../experiments\20251009_140833_KAN-[64, 32]_lr-0.001_bs-16
+2025-10-09 14:08:33.517 | INFO     | __main__:main:97 - Using device: cuda
+2025-10-09 14:08:33.517 | INFO     | __main__:main:102 - Arguments for this run saved to ../experiments\20251009_140833_KAN-[64, 32]_lr-0.001_bs-16\args.json
+2025-10-09 14:08:33.517 | INFO     | __main__:main:103 - Using device: cuda
+2025-10-09 14:08:33.517 | INFO     | __main__:main:106 - Loading and preprocessing all data...
+2025-10-09 14:08:33.947 | INFO     | __main__:main:130 - Data loaded. Input dimension: 19
+2025-10-09 14:08:33.947 | INFO     | __main__:main:131 - Samples for training/validation: 1050, Held-out test samples: 186
+2025-10-09 14:08:33.948 | INFO     | __main__:main:139 - ----- Starting 5-Fold Cross-Validation -----
+2025-10-09 14:08:33.948 | INFO     | __main__:main:145 - ----- FOLD 1/5 -----
+2025-10-09 14:08:35.100 | INFO     | trainer:fit:116 - Fold 1 | Epoch 001/150 [1s] -> Train Loss: 11045339.70, Val Loss: 10946634.76, Val MAE: 3285.98g
+2025-10-09 14:08:35.530 | INFO     | trainer:fit:116 - Fold 1 | Epoch 002/150 [0s] -> Train Loss: 10882462.18, Val Loss: 10595351.05, Val MAE: 3233.00g
+2025-10-09 14:08:35.955 | INFO     | trainer:fit:116 - Fold 1 | Epoch 003/150 [0s] -> Train Loss: 10112173.14, Val Loss: 9251808.80, Val MAE: 3020.91g
+2025-10-09 14:08:36.379 | INFO     | trainer:fit:116 - Fold 1 | Epoch 004/150 [0s] -> Train Loss: 8024459.19, Val Loss: 6426426.67, Val MAE: 2514.84g
+2025-10-09 14:08:36.799 | INFO     | trainer:fit:116 - Fold 1 | Epoch 005/150 [0s] -> Train Loss: 4596577.88, Val Loss: 2657134.67, Val MAE: 1602.17g
+2025-10-09 14:08:37.211 | INFO     | trainer:fit:116 - Fold 1 | Epoch 006/150 [0s] -> Train Loss: 1336769.83, Val Loss: 422035.54, Val MAE: 585.05g
+2025-10-09 14:08:37.626 | INFO     | trainer:fit:116 - Fold 1 | Epoch 007/150 [0s] -> Train Loss: 202333.07, Val Loss: 133200.44, Val MAE: 282.46g
+2025-10-09 14:08:38.120 | INFO     | trainer:fit:116 - Fold 1 | Epoch 008/150 [0s] -> Train Loss: 120476.51, Val Loss: 121001.10, Val MAE: 266.01g
+2025-10-09 14:08:38.638 | INFO     | trainer:fit:116 - Fold 1 | Epoch 009/150 [0s] -> Train Loss: 112260.05, Val Loss: 113210.85, Val MAE: 257.34g
+2025-10-09 14:08:39.069 | INFO     | trainer:fit:116 - Fold 1 | Epoch 010/150 [0s] -> Train Loss: 105148.36, Val Loss: 105135.29, Val MAE: 245.77g
+2025-10-09 14:08:39.497 | INFO     | trainer:fit:116 - Fold 1 | Epoch 011/150 [0s] -> Train Loss: 98519.12, Val Loss: 96985.45, Val MAE: 236.99g
+2025-10-09 14:08:39.929 | INFO     | trainer:fit:116 - Fold 1 | Epoch 012/150 [0s] -> Train Loss: 90235.60, Val Loss: 88418.22, Val MAE: 226.75g
+2025-10-09 14:08:40.371 | INFO     | trainer:fit:116 - Fold 1 | Epoch 013/150 [0s] -> Train Loss: 82347.07, Val Loss: 80165.94, Val MAE: 216.93g
+2025-10-09 14:08:40.836 | INFO     | trainer:fit:116 - Fold 1 | Epoch 014/150 [0s] -> Train Loss: 74700.57, Val Loss: 72441.24, Val MAE: 207.28g
+2025-10-09 14:08:41.292 | INFO     | trainer:fit:116 - Fold 1 | Epoch 015/150 [0s] -> Train Loss: 67466.13, Val Loss: 65317.13, Val MAE: 197.90g
+2025-10-09 14:08:41.734 | INFO     | trainer:fit:116 - Fold 1 | Epoch 016/150 [0s] -> Train Loss: 61181.31, Val Loss: 59142.14, Val MAE: 189.12g
+2025-10-09 14:08:42.160 | INFO     | trainer:fit:116 - Fold 1 | Epoch 017/150 [0s] -> Train Loss: 56037.05, Val Loss: 54502.84, Val MAE: 182.51g
+2025-10-09 14:08:42.597 | INFO     | trainer:fit:116 - Fold 1 | Epoch 018/150 [0s] -> Train Loss: 51505.54, Val Loss: 51156.74, Val MAE: 177.28g
+2025-10-09 14:08:43.035 | INFO     | trainer:fit:116 - Fold 1 | Epoch 019/150 [0s] -> Train Loss: 47905.76, Val Loss: 48245.83, Val MAE: 172.61g
+2025-10-09 14:08:43.475 | INFO     | trainer:fit:116 - Fold 1 | Epoch 020/150 [0s] -> Train Loss: 44942.64, Val Loss: 45281.03, Val MAE: 170.21g
+2025-10-09 14:08:43.908 | INFO     | trainer:fit:116 - Fold 1 | Epoch 021/150 [0s] -> Train Loss: 43080.10, Val Loss: 43319.32, Val MAE: 165.24g
+2025-10-09 14:08:44.351 | INFO     | trainer:fit:116 - Fold 1 | Epoch 022/150 [0s] -> Train Loss: 41197.75, Val Loss: 41623.73, Val MAE: 163.28g
+2025-10-09 14:08:44.800 | INFO     | trainer:fit:116 - Fold 1 | Epoch 023/150 [0s] -> Train Loss: 39742.50, Val Loss: 43869.04, Val MAE: 165.07g
+2025-10-09 14:08:45.267 | INFO     | trainer:fit:116 - Fold 1 | Epoch 024/150 [0s] -> Train Loss: 39033.57, Val Loss: 40054.52, Val MAE: 159.58g
+2025-10-09 14:08:45.778 | INFO     | trainer:fit:116 - Fold 1 | Epoch 025/150 [0s] -> Train Loss: 37857.44, Val Loss: 39400.37, Val MAE: 158.64g
+2025-10-09 14:08:46.242 | INFO     | trainer:fit:116 - Fold 1 | Epoch 026/150 [0s] -> Train Loss: 37461.70, Val Loss: 38972.25, Val MAE: 158.05g
+2025-10-09 14:08:46.696 | INFO     | trainer:fit:116 - Fold 1 | Epoch 027/150 [0s] -> Train Loss: 36723.71, Val Loss: 38766.32, Val MAE: 158.11g
+2025-10-09 14:08:47.153 | INFO     | trainer:fit:116 - Fold 1 | Epoch 028/150 [0s] -> Train Loss: 36376.75, Val Loss: 39436.73, Val MAE: 158.82g
+2025-10-09 14:08:47.600 | INFO     | trainer:fit:116 - Fold 1 | Epoch 029/150 [0s] -> Train Loss: 35901.02, Val Loss: 38494.25, Val MAE: 158.12g
+2025-10-09 14:08:48.025 | INFO     | trainer:fit:116 - Fold 1 | Epoch 030/150 [0s] -> Train Loss: 35493.74, Val Loss: 38259.16, Val MAE: 158.08g
+2025-10-09 14:08:48.470 | INFO     | trainer:fit:116 - Fold 1 | Epoch 031/150 [0s] -> Train Loss: 35744.99, Val Loss: 38202.85, Val MAE: 158.38g
+2025-10-09 14:08:48.905 | INFO     | trainer:fit:116 - Fold 1 | Epoch 032/150 [0s] -> Train Loss: 35333.76, Val Loss: 39573.80, Val MAE: 159.63g
+2025-10-09 14:08:49.350 | INFO     | trainer:fit:116 - Fold 1 | Epoch 033/150 [0s] -> Train Loss: 35272.60, Val Loss: 38254.40, Val MAE: 158.21g
+2025-10-09 14:08:49.818 | INFO     | trainer:fit:116 - Fold 1 | Epoch 034/150 [0s] -> Train Loss: 35015.07, Val Loss: 38243.93, Val MAE: 158.27g
+2025-10-09 14:08:50.520 | INFO     | trainer:fit:116 - Fold 1 | Epoch 035/150 [1s] -> Train Loss: 34468.58, Val Loss: 39730.90, Val MAE: 159.97g
+2025-10-09 14:08:51.296 | INFO     | trainer:fit:116 - Fold 1 | Epoch 036/150 [1s] -> Train Loss: 34603.79, Val Loss: 38233.33, Val MAE: 158.26g
+2025-10-09 14:08:51.716 | INFO     | trainer:fit:116 - Fold 1 | Epoch 037/150 [0s] -> Train Loss: 34535.73, Val Loss: 38031.29, Val MAE: 158.49g
+2025-10-09 14:08:52.127 | INFO     | trainer:fit:116 - Fold 1 | Epoch 038/150 [0s] -> Train Loss: 34392.53, Val Loss: 38289.27, Val MAE: 157.97g
+2025-10-09 14:08:52.544 | INFO     | trainer:fit:116 - Fold 1 | Epoch 039/150 [0s] -> Train Loss: 34189.21, Val Loss: 38314.83, Val MAE: 158.00g
+2025-10-09 14:08:52.961 | INFO     | trainer:fit:116 - Fold 1 | Epoch 040/150 [0s] -> Train Loss: 34276.94, Val Loss: 39642.49, Val MAE: 159.89g
+2025-10-09 14:08:53.387 | INFO     | trainer:fit:116 - Fold 1 | Epoch 041/150 [0s] -> Train Loss: 34495.63, Val Loss: 37882.37, Val MAE: 157.76g
+2025-10-09 14:08:53.804 | INFO     | trainer:fit:116 - Fold 1 | Epoch 042/150 [0s] -> Train Loss: 33774.71, Val Loss: 38893.89, Val MAE: 158.90g
+2025-10-09 14:08:54.217 | INFO     | trainer:fit:116 - Fold 1 | Epoch 043/150 [0s] -> Train Loss: 33743.99, Val Loss: 37880.47, Val MAE: 157.40g
+2025-10-09 14:08:54.628 | INFO     | trainer:fit:116 - Fold 1 | Epoch 044/150 [0s] -> Train Loss: 34091.72, Val Loss: 37853.49, Val MAE: 157.47g
+2025-10-09 14:08:55.032 | INFO     | trainer:fit:116 - Fold 1 | Epoch 045/150 [0s] -> Train Loss: 33801.66, Val Loss: 38116.98, Val MAE: 158.41g
+2025-10-09 14:08:55.460 | INFO     | trainer:fit:116 - Fold 1 | Epoch 046/150 [0s] -> Train Loss: 33939.50, Val Loss: 37792.60, Val MAE: 157.66g
+2025-10-09 14:08:55.888 | INFO     | trainer:fit:116 - Fold 1 | Epoch 047/150 [0s] -> Train Loss: 33744.54, Val Loss: 37915.51, Val MAE: 158.11g
+2025-10-09 14:08:56.304 | INFO     | trainer:fit:116 - Fold 1 | Epoch 048/150 [0s] -> Train Loss: 34160.91, Val Loss: 37687.85, Val MAE: 157.27g
+2025-10-09 14:08:56.731 | INFO     | trainer:fit:116 - Fold 1 | Epoch 049/150 [0s] -> Train Loss: 33584.10, Val Loss: 37918.56, Val MAE: 157.53g
+2025-10-09 14:08:57.146 | INFO     | trainer:fit:116 - Fold 1 | Epoch 050/150 [0s] -> Train Loss: 33690.84, Val Loss: 38268.75, Val MAE: 157.70g
+2025-10-09 14:08:57.573 | INFO     | trainer:fit:116 - Fold 1 | Epoch 051/150 [0s] -> Train Loss: 33672.60, Val Loss: 37681.23, Val MAE: 157.40g
+2025-10-09 14:08:58.013 | INFO     | trainer:fit:116 - Fold 1 | Epoch 052/150 [0s] -> Train Loss: 33539.90, Val Loss: 38300.73, Val MAE: 157.70g
+2025-10-09 14:08:58.440 | INFO     | trainer:fit:116 - Fold 1 | Epoch 053/150 [0s] -> Train Loss: 33442.97, Val Loss: 37629.96, Val MAE: 157.18g
+2025-10-09 14:08:58.856 | INFO     | trainer:fit:116 - Fold 1 | Epoch 054/150 [0s] -> Train Loss: 33336.69, Val Loss: 37708.54, Val MAE: 157.39g
+2025-10-09 14:08:59.280 | INFO     | trainer:fit:116 - Fold 1 | Epoch 055/150 [0s] -> Train Loss: 34083.10, Val Loss: 37669.76, Val MAE: 157.04g
+2025-10-09 14:08:59.700 | INFO     | trainer:fit:116 - Fold 1 | Epoch 056/150 [0s] -> Train Loss: 33671.54, Val Loss: 37609.95, Val MAE: 156.70g
+2025-10-09 14:09:00.119 | INFO     | trainer:fit:116 - Fold 1 | Epoch 057/150 [0s] -> Train Loss: 33428.85, Val Loss: 38505.78, Val MAE: 158.89g
+2025-10-09 14:09:00.540 | INFO     | trainer:fit:116 - Fold 1 | Epoch 058/150 [0s] -> Train Loss: 33394.69, Val Loss: 37517.15, Val MAE: 156.73g
+2025-10-09 14:09:00.972 | INFO     | trainer:fit:116 - Fold 1 | Epoch 059/150 [0s] -> Train Loss: 33241.37, Val Loss: 37969.58, Val MAE: 156.86g
+2025-10-09 14:09:01.383 | INFO     | trainer:fit:116 - Fold 1 | Epoch 060/150 [0s] -> Train Loss: 33676.37, Val Loss: 37933.48, Val MAE: 157.55g
+2025-10-09 14:09:01.805 | INFO     | trainer:fit:116 - Fold 1 | Epoch 061/150 [0s] -> Train Loss: 33205.67, Val Loss: 37699.32, Val MAE: 156.42g
+2025-10-09 14:09:02.225 | INFO     | trainer:fit:116 - Fold 1 | Epoch 062/150 [0s] -> Train Loss: 33255.00, Val Loss: 37503.55, Val MAE: 156.22g
+2025-10-09 14:09:02.657 | INFO     | trainer:fit:116 - Fold 1 | Epoch 063/150 [0s] -> Train Loss: 33125.25, Val Loss: 37432.46, Val MAE: 156.46g
+2025-10-09 14:09:03.076 | INFO     | trainer:fit:116 - Fold 1 | Epoch 064/150 [0s] -> Train Loss: 33429.89, Val Loss: 38545.52, Val MAE: 158.00g
+2025-10-09 14:09:03.513 | INFO     | trainer:fit:116 - Fold 1 | Epoch 065/150 [0s] -> Train Loss: 33239.67, Val Loss: 37420.38, Val MAE: 156.37g
+2025-10-09 14:09:03.943 | INFO     | trainer:fit:116 - Fold 1 | Epoch 066/150 [0s] -> Train Loss: 33199.69, Val Loss: 39686.53, Val MAE: 160.04g
+2025-10-09 14:09:04.366 | INFO     | trainer:fit:116 - Fold 1 | Epoch 067/150 [0s] -> Train Loss: 33360.38, Val Loss: 37459.53, Val MAE: 156.15g
+2025-10-09 14:09:04.801 | INFO     | trainer:fit:116 - Fold 1 | Epoch 068/150 [0s] -> Train Loss: 33471.61, Val Loss: 37501.08, Val MAE: 155.99g
+2025-10-09 14:09:05.223 | INFO     | trainer:fit:116 - Fold 1 | Epoch 069/150 [0s] -> Train Loss: 33304.74, Val Loss: 37510.34, Val MAE: 156.00g
+2025-10-09 14:09:05.637 | INFO     | trainer:fit:116 - Fold 1 | Epoch 070/150 [0s] -> Train Loss: 33007.98, Val Loss: 37395.26, Val MAE: 156.26g
+2025-10-09 14:09:06.071 | INFO     | trainer:fit:116 - Fold 1 | Epoch 071/150 [0s] -> Train Loss: 32998.35, Val Loss: 37482.26, Val MAE: 156.16g
+2025-10-09 14:09:06.491 | INFO     | trainer:fit:116 - Fold 1 | Epoch 072/150 [0s] -> Train Loss: 33117.24, Val Loss: 38312.26, Val MAE: 157.48g
+2025-10-09 14:09:06.920 | INFO     | trainer:fit:116 - Fold 1 | Epoch 073/150 [0s] -> Train Loss: 32922.58, Val Loss: 37545.27, Val MAE: 156.09g
+2025-10-09 14:09:07.347 | INFO     | trainer:fit:116 - Fold 1 | Epoch 074/150 [0s] -> Train Loss: 32755.16, Val Loss: 37995.99, Val MAE: 157.24g
+2025-10-09 14:09:07.767 | INFO     | trainer:fit:116 - Fold 1 | Epoch 075/150 [0s] -> Train Loss: 32878.13, Val Loss: 37319.96, Val MAE: 155.88g
+2025-10-09 14:09:08.186 | INFO     | trainer:fit:116 - Fold 1 | Epoch 076/150 [0s] -> Train Loss: 32933.04, Val Loss: 37523.67, Val MAE: 156.03g
+2025-10-09 14:09:08.599 | INFO     | trainer:fit:116 - Fold 1 | Epoch 077/150 [0s] -> Train Loss: 32774.41, Val Loss: 38478.04, Val MAE: 157.98g
+2025-10-09 14:09:09.024 | INFO     | trainer:fit:116 - Fold 1 | Epoch 078/150 [0s] -> Train Loss: 32795.22, Val Loss: 37976.96, Val MAE: 157.27g
+2025-10-09 14:09:09.440 | INFO     | trainer:fit:116 - Fold 1 | Epoch 079/150 [0s] -> Train Loss: 33458.82, Val Loss: 37767.57, Val MAE: 156.23g
+2025-10-09 14:09:09.857 | INFO     | trainer:fit:116 - Fold 1 | Epoch 080/150 [0s] -> Train Loss: 32726.63, Val Loss: 37443.19, Val MAE: 155.89g
+2025-10-09 14:09:10.272 | INFO     | trainer:fit:116 - Fold 1 | Epoch 081/150 [0s] -> Train Loss: 32751.43, Val Loss: 38109.73, Val MAE: 156.86g
+2025-10-09 14:09:10.694 | INFO     | trainer:fit:116 - Fold 1 | Epoch 082/150 [0s] -> Train Loss: 32821.48, Val Loss: 37588.11, Val MAE: 156.15g
+2025-10-09 14:09:11.112 | INFO     | trainer:fit:116 - Fold 1 | Epoch 083/150 [0s] -> Train Loss: 33077.29, Val Loss: 37729.33, Val MAE: 156.53g
+2025-10-09 14:09:11.542 | INFO     | trainer:fit:116 - Fold 1 | Epoch 084/150 [0s] -> Train Loss: 32778.37, Val Loss: 37532.11, Val MAE: 155.71g
+2025-10-09 14:09:11.966 | INFO     | trainer:fit:116 - Fold 1 | Epoch 085/150 [0s] -> Train Loss: 32798.21, Val Loss: 37329.34, Val MAE: 155.86g
+2025-10-09 14:09:12.397 | INFO     | trainer:fit:116 - Fold 1 | Epoch 086/150 [0s] -> Train Loss: 32807.96, Val Loss: 37413.97, Val MAE: 155.83g
+2025-10-09 14:09:12.821 | INFO     | trainer:fit:116 - Fold 1 | Epoch 087/150 [0s] -> Train Loss: 32869.45, Val Loss: 38760.67, Val MAE: 158.18g
+2025-10-09 14:09:13.244 | INFO     | trainer:fit:116 - Fold 1 | Epoch 088/150 [0s] -> Train Loss: 32838.17, Val Loss: 37401.23, Val MAE: 155.66g
+2025-10-09 14:09:13.677 | INFO     | trainer:fit:116 - Fold 1 | Epoch 089/150 [0s] -> Train Loss: 32551.45, Val Loss: 37530.94, Val MAE: 156.30g
+2025-10-09 14:09:14.104 | INFO     | trainer:fit:116 - Fold 1 | Epoch 090/150 [0s] -> Train Loss: 32400.87, Val Loss: 37217.15, Val MAE: 155.59g
+2025-10-09 14:09:14.519 | INFO     | trainer:fit:116 - Fold 1 | Epoch 091/150 [0s] -> Train Loss: 32504.24, Val Loss: 37992.14, Val MAE: 156.16g
+2025-10-09 14:09:14.943 | INFO     | trainer:fit:116 - Fold 1 | Epoch 092/150 [0s] -> Train Loss: 33125.86, Val Loss: 37494.06, Val MAE: 155.92g
+2025-10-09 14:09:15.368 | INFO     | trainer:fit:116 - Fold 1 | Epoch 093/150 [0s] -> Train Loss: 32280.96, Val Loss: 37963.49, Val MAE: 156.48g
+2025-10-09 14:09:15.808 | INFO     | trainer:fit:116 - Fold 1 | Epoch 094/150 [0s] -> Train Loss: 32394.45, Val Loss: 37421.61, Val MAE: 155.77g
+2025-10-09 14:09:16.229 | INFO     | trainer:fit:116 - Fold 1 | Epoch 095/150 [0s] -> Train Loss: 32260.00, Val Loss: 37209.93, Val MAE: 155.45g
+2025-10-09 14:09:16.644 | INFO     | trainer:fit:116 - Fold 1 | Epoch 096/150 [0s] -> Train Loss: 32348.20, Val Loss: 37247.70, Val MAE: 155.49g
+2025-10-09 14:09:17.062 | INFO     | trainer:fit:116 - Fold 1 | Epoch 097/150 [0s] -> Train Loss: 32591.33, Val Loss: 38581.68, Val MAE: 157.53g
+2025-10-09 14:09:17.485 | INFO     | trainer:fit:116 - Fold 1 | Epoch 098/150 [0s] -> Train Loss: 32139.81, Val Loss: 37328.18, Val MAE: 155.50g
+2025-10-09 14:09:17.907 | INFO     | trainer:fit:116 - Fold 1 | Epoch 099/150 [0s] -> Train Loss: 32202.09, Val Loss: 37288.85, Val MAE: 155.32g
+2025-10-09 14:09:18.329 | INFO     | trainer:fit:116 - Fold 1 | Epoch 100/150 [0s] -> Train Loss: 32597.04, Val Loss: 38145.18, Val MAE: 156.71g
+2025-10-09 14:09:18.761 | INFO     | trainer:fit:116 - Fold 1 | Epoch 101/150 [0s] -> Train Loss: 31929.26, Val Loss: 37692.54, Val MAE: 156.05g
+2025-10-09 14:09:19.179 | INFO     | trainer:fit:116 - Fold 1 | Epoch 102/150 [0s] -> Train Loss: 32609.04, Val Loss: 37223.40, Val MAE: 155.06g
+2025-10-09 14:09:19.598 | INFO     | trainer:fit:116 - Fold 1 | Epoch 103/150 [0s] -> Train Loss: 32121.73, Val Loss: 37327.95, Val MAE: 155.48g
+2025-10-09 14:09:20.029 | INFO     | trainer:fit:116 - Fold 1 | Epoch 104/150 [0s] -> Train Loss: 31831.61, Val Loss: 37503.57, Val MAE: 155.40g
+2025-10-09 14:09:20.463 | INFO     | trainer:fit:116 - Fold 1 | Epoch 105/150 [0s] -> Train Loss: 32142.81, Val Loss: 37284.94, Val MAE: 155.26g
+2025-10-09 14:09:20.894 | INFO     | trainer:fit:116 - Fold 1 | Epoch 106/150 [0s] -> Train Loss: 32017.89, Val Loss: 37243.62, Val MAE: 154.91g
+2025-10-09 14:09:21.386 | INFO     | trainer:fit:116 - Fold 1 | Epoch 107/150 [0s] -> Train Loss: 32184.31, Val Loss: 37424.71, Val MAE: 155.44g
+2025-10-09 14:09:21.837 | INFO     | trainer:fit:116 - Fold 1 | Epoch 108/150 [0s] -> Train Loss: 31750.81, Val Loss: 37328.37, Val MAE: 155.22g
+2025-10-09 14:09:22.279 | INFO     | trainer:fit:116 - Fold 1 | Epoch 109/150 [0s] -> Train Loss: 31619.54, Val Loss: 37331.89, Val MAE: 155.28g
+2025-10-09 14:09:22.709 | INFO     | trainer:fit:116 - Fold 1 | Epoch 110/150 [0s] -> Train Loss: 31964.04, Val Loss: 37403.14, Val MAE: 155.41g
+2025-10-09 14:09:23.136 | INFO     | trainer:fit:116 - Fold 1 | Epoch 111/150 [0s] -> Train Loss: 31663.55, Val Loss: 37727.90, Val MAE: 155.69g
+2025-10-09 14:09:23.569 | INFO     | trainer:fit:116 - Fold 1 | Epoch 112/150 [0s] -> Train Loss: 31498.31, Val Loss: 37468.05, Val MAE: 155.46g
+2025-10-09 14:09:24.008 | INFO     | trainer:fit:116 - Fold 1 | Epoch 113/150 [0s] -> Train Loss: 31733.38, Val Loss: 37394.24, Val MAE: 155.33g
+2025-10-09 14:09:24.437 | INFO     | trainer:fit:116 - Fold 1 | Epoch 114/150 [0s] -> Train Loss: 31911.58, Val Loss: 37650.35, Val MAE: 156.03g
+2025-10-09 14:09:24.871 | INFO     | trainer:fit:116 - Fold 1 | Epoch 115/150 [0s] -> Train Loss: 32079.04, Val Loss: 37675.39, Val MAE: 155.93g
+2025-10-09 14:09:25.310 | INFO     | trainer:fit:116 - Fold 1 | Epoch 116/150 [0s] -> Train Loss: 31343.06, Val Loss: 37727.35, Val MAE: 156.24g
+2025-10-09 14:09:25.746 | INFO     | trainer:fit:116 - Fold 1 | Epoch 117/150 [0s] -> Train Loss: 31203.47, Val Loss: 37752.79, Val MAE: 155.66g
+2025-10-09 14:09:26.206 | INFO     | trainer:fit:116 - Fold 1 | Epoch 118/150 [0s] -> Train Loss: 31145.82, Val Loss: 39774.16, Val MAE: 158.99g
+2025-10-09 14:09:26.635 | INFO     | trainer:fit:116 - Fold 1 | Epoch 119/150 [0s] -> Train Loss: 31574.77, Val Loss: 38227.88, Val MAE: 156.43g
+2025-10-09 14:09:27.040 | INFO     | trainer:fit:116 - Fold 1 | Epoch 120/150 [0s] -> Train Loss: 31161.23, Val Loss: 37764.01, Val MAE: 155.74g
+2025-10-09 14:09:27.429 | INFO     | trainer:fit:116 - Fold 1 | Epoch 121/150 [0s] -> Train Loss: 30912.04, Val Loss: 38442.88, Val MAE: 156.69g
+2025-10-09 14:09:27.804 | INFO     | trainer:fit:116 - Fold 1 | Epoch 122/150 [0s] -> Train Loss: 30623.67, Val Loss: 37942.70, Val MAE: 155.99g
+2025-10-09 14:09:28.249 | INFO     | trainer:fit:116 - Fold 1 | Epoch 123/150 [0s] -> Train Loss: 30477.03, Val Loss: 37903.03, Val MAE: 155.96g
+2025-10-09 14:09:28.716 | INFO     | trainer:fit:116 - Fold 1 | Epoch 124/150 [0s] -> Train Loss: 30488.45, Val Loss: 38026.07, Val MAE: 156.05g
+2025-10-09 14:09:29.443 | INFO     | trainer:fit:116 - Fold 1 | Epoch 125/150 [1s] -> Train Loss: 30484.35, Val Loss: 37898.65, Val MAE: 155.96g
+2025-10-09 14:09:29.916 | INFO     | trainer:fit:116 - Fold 1 | Epoch 126/150 [0s] -> Train Loss: 30594.01, Val Loss: 37784.49, Val MAE: 155.79g
+2025-10-09 14:09:30.294 | INFO     | trainer:fit:116 - Fold 1 | Epoch 127/150 [0s] -> Train Loss: 30448.02, Val Loss: 37981.05, Val MAE: 155.97g
+2025-10-09 14:09:30.673 | INFO     | trainer:fit:116 - Fold 1 | Epoch 128/150 [0s] -> Train Loss: 30441.00, Val Loss: 37905.97, Val MAE: 155.95g
+2025-10-09 14:09:31.076 | INFO     | trainer:fit:116 - Fold 1 | Epoch 129/150 [0s] -> Train Loss: 30451.16, Val Loss: 38007.19, Val MAE: 156.08g
+2025-10-09 14:09:31.462 | INFO     | trainer:fit:116 - Fold 1 | Epoch 130/150 [0s] -> Train Loss: 30470.18, Val Loss: 38059.56, Val MAE: 156.09g
+2025-10-09 14:09:31.833 | INFO     | trainer:fit:116 - Fold 1 | Epoch 131/150 [0s] -> Train Loss: 30505.65, Val Loss: 37868.27, Val MAE: 155.91g
+2025-10-09 14:09:32.207 | INFO     | trainer:fit:116 - Fold 1 | Epoch 132/150 [0s] -> Train Loss: 30480.25, Val Loss: 37838.33, Val MAE: 155.89g
+2025-10-09 14:09:32.569 | INFO     | trainer:fit:116 - Fold 1 | Epoch 133/150 [0s] -> Train Loss: 30586.92, Val Loss: 37834.70, Val MAE: 155.89g
+2025-10-09 14:09:32.995 | INFO     | trainer:fit:116 - Fold 1 | Epoch 134/150 [0s] -> Train Loss: 30479.28, Val Loss: 37961.16, Val MAE: 156.02g
+2025-10-09 14:09:33.380 | INFO     | trainer:fit:116 - Fold 1 | Epoch 135/150 [0s] -> Train Loss: 30415.05, Val Loss: 38182.87, Val MAE: 156.21g
+2025-10-09 14:09:33.797 | INFO     | trainer:fit:116 - Fold 1 | Epoch 136/150 [0s] -> Train Loss: 30472.22, Val Loss: 38038.73, Val MAE: 156.05g
+2025-10-09 14:09:34.214 | INFO     | trainer:fit:116 - Fold 1 | Epoch 137/150 [0s] -> Train Loss: 30406.97, Val Loss: 38164.41, Val MAE: 156.23g
+2025-10-09 14:09:34.653 | INFO     | trainer:fit:116 - Fold 1 | Epoch 138/150 [0s] -> Train Loss: 30441.87, Val Loss: 38082.70, Val MAE: 156.09g
+2025-10-09 14:09:35.089 | INFO     | trainer:fit:116 - Fold 1 | Epoch 139/150 [0s] -> Train Loss: 30421.59, Val Loss: 38163.52, Val MAE: 156.21g
+2025-10-09 14:09:35.508 | INFO     | trainer:fit:116 - Fold 1 | Epoch 140/150 [0s] -> Train Loss: 30386.98, Val Loss: 37898.83, Val MAE: 155.97g
+2025-10-09 14:09:35.930 | INFO     | trainer:fit:116 - Fold 1 | Epoch 141/150 [0s] -> Train Loss: 30409.19, Val Loss: 38017.19, Val MAE: 156.07g
+2025-10-09 14:09:36.343 | INFO     | trainer:fit:116 - Fold 1 | Epoch 142/150 [0s] -> Train Loss: 30384.60, Val Loss: 37948.50, Val MAE: 156.02g
+2025-10-09 14:09:36.767 | INFO     | trainer:fit:116 - Fold 1 | Epoch 143/150 [0s] -> Train Loss: 30372.04, Val Loss: 38286.97, Val MAE: 156.40g
+2025-10-09 14:09:37.193 | INFO     | trainer:fit:116 - Fold 1 | Epoch 144/150 [0s] -> Train Loss: 30399.15, Val Loss: 38079.36, Val MAE: 156.13g
+2025-10-09 14:09:37.604 | INFO     | trainer:fit:116 - Fold 1 | Epoch 145/150 [0s] -> Train Loss: 30392.82, Val Loss: 38050.01, Val MAE: 156.07g
+2025-10-09 14:09:37.605 | WARNING  | trainer:fit:134 - Early stopping triggered at epoch 145.
+2025-10-09 14:09:37.606 | INFO     | trainer:fit:144 - Finished training Fold 1. Loaded best model weights.
+2025-10-09 14:09:37.608 | SUCCESS  | trainer:fit:152 - Best model for Fold 1 saved.
+2025-10-09 14:09:37.608 | SUCCESS  | __main__:main:177 - Fold 1 Best Validation MAE: 155.45g
+2025-10-09 14:09:37.609 | INFO     | __main__:main:145 - ----- FOLD 2/5 -----
+2025-10-09 14:09:38.065 | INFO     | trainer:fit:116 - Fold 2 | Epoch 001/150 [0s] -> Train Loss: 11088730.93, Val Loss: 10767059.26, Val MAE: 3258.16g
+2025-10-09 14:09:38.507 | INFO     | trainer:fit:116 - Fold 2 | Epoch 002/150 [0s] -> Train Loss: 10938533.73, Val Loss: 10444533.92, Val MAE: 3209.01g
+2025-10-09 14:09:38.927 | INFO     | trainer:fit:116 - Fold 2 | Epoch 003/150 [0s] -> Train Loss: 10224427.89, Val Loss: 9211810.51, Val MAE: 3012.97g
+2025-10-09 14:09:39.355 | INFO     | trainer:fit:116 - Fold 2 | Epoch 004/150 [0s] -> Train Loss: 8316122.78, Val Loss: 6619121.25, Val MAE: 2550.09g
+2025-10-09 14:09:39.781 | INFO     | trainer:fit:116 - Fold 2 | Epoch 005/150 [0s] -> Train Loss: 5070757.64, Val Loss: 3019170.75, Val MAE: 1705.80g
+2025-10-09 14:09:40.201 | INFO     | trainer:fit:116 - Fold 2 | Epoch 006/150 [0s] -> Train Loss: 1703861.73, Val Loss: 575691.26, Val MAE: 677.37g
+2025-10-09 14:09:40.617 | INFO     | trainer:fit:116 - Fold 2 | Epoch 007/150 [0s] -> Train Loss: 270824.55, Val Loss: 157564.06, Val MAE: 327.12g
+2025-10-09 14:09:41.046 | INFO     | trainer:fit:116 - Fold 2 | Epoch 008/150 [0s] -> Train Loss: 119172.15, Val Loss: 149371.39, Val MAE: 312.36g
+2025-10-09 14:09:41.460 | INFO     | trainer:fit:116 - Fold 2 | Epoch 009/150 [0s] -> Train Loss: 111337.45, Val Loss: 139429.03, Val MAE: 302.61g
+2025-10-09 14:09:41.892 | INFO     | trainer:fit:116 - Fold 2 | Epoch 010/150 [0s] -> Train Loss: 104406.06, Val Loss: 133959.97, Val MAE: 294.52g
+2025-10-09 14:09:42.321 | INFO     | trainer:fit:116 - Fold 2 | Epoch 011/150 [0s] -> Train Loss: 97831.77, Val Loss: 122222.18, Val MAE: 282.84g
+2025-10-09 14:09:42.744 | INFO     | trainer:fit:116 - Fold 2 | Epoch 012/150 [0s] -> Train Loss: 90261.09, Val Loss: 111884.78, Val MAE: 270.40g
+2025-10-09 14:09:43.165 | INFO     | trainer:fit:116 - Fold 2 | Epoch 013/150 [0s] -> Train Loss: 82006.83, Val Loss: 100720.28, Val MAE: 256.16g
+2025-10-09 14:09:43.586 | INFO     | trainer:fit:116 - Fold 2 | Epoch 014/150 [0s] -> Train Loss: 74408.06, Val Loss: 91161.17, Val MAE: 241.94g
+2025-10-09 14:09:44.024 | INFO     | trainer:fit:116 - Fold 2 | Epoch 015/150 [0s] -> Train Loss: 67456.84, Val Loss: 81783.39, Val MAE: 228.08g
+2025-10-09 14:09:44.447 | INFO     | trainer:fit:116 - Fold 2 | Epoch 016/150 [0s] -> Train Loss: 61655.56, Val Loss: 76075.94, Val MAE: 216.98g
+2025-10-09 14:09:44.885 | INFO     | trainer:fit:116 - Fold 2 | Epoch 017/150 [0s] -> Train Loss: 56751.42, Val Loss: 68621.77, Val MAE: 205.67g
+2025-10-09 14:09:45.315 | INFO     | trainer:fit:116 - Fold 2 | Epoch 018/150 [0s] -> Train Loss: 52790.02, Val Loss: 63997.84, Val MAE: 197.18g
+2025-10-09 14:09:45.734 | INFO     | trainer:fit:116 - Fold 2 | Epoch 019/150 [0s] -> Train Loss: 49255.31, Val Loss: 60400.77, Val MAE: 191.07g
+2025-10-09 14:09:46.147 | INFO     | trainer:fit:116 - Fold 2 | Epoch 020/150 [0s] -> Train Loss: 46396.23, Val Loss: 55669.53, Val MAE: 183.01g
+2025-10-09 14:09:46.572 | INFO     | trainer:fit:116 - Fold 2 | Epoch 021/150 [0s] -> Train Loss: 43977.01, Val Loss: 51354.46, Val MAE: 175.45g
+2025-10-09 14:09:47.003 | INFO     | trainer:fit:116 - Fold 2 | Epoch 022/150 [0s] -> Train Loss: 42223.22, Val Loss: 48741.26, Val MAE: 170.53g
+2025-10-09 14:09:47.429 | INFO     | trainer:fit:116 - Fold 2 | Epoch 023/150 [0s] -> Train Loss: 40769.93, Val Loss: 47382.47, Val MAE: 169.01g
+2025-10-09 14:09:47.855 | INFO     | trainer:fit:116 - Fold 2 | Epoch 024/150 [0s] -> Train Loss: 40008.55, Val Loss: 46116.14, Val MAE: 167.24g
+2025-10-09 14:09:48.277 | INFO     | trainer:fit:116 - Fold 2 | Epoch 025/150 [0s] -> Train Loss: 39452.12, Val Loss: 43613.90, Val MAE: 162.21g
+2025-10-09 14:09:48.711 | INFO     | trainer:fit:116 - Fold 2 | Epoch 026/150 [0s] -> Train Loss: 38588.08, Val Loss: 42097.91, Val MAE: 159.28g
+2025-10-09 14:09:49.145 | INFO     | trainer:fit:116 - Fold 2 | Epoch 027/150 [0s] -> Train Loss: 37908.53, Val Loss: 41665.68, Val MAE: 159.26g
+2025-10-09 14:09:49.569 | INFO     | trainer:fit:116 - Fold 2 | Epoch 028/150 [0s] -> Train Loss: 37045.24, Val Loss: 41370.92, Val MAE: 158.88g
+2025-10-09 14:09:49.996 | INFO     | trainer:fit:116 - Fold 2 | Epoch 029/150 [0s] -> Train Loss: 37031.52, Val Loss: 39481.88, Val MAE: 154.77g
+2025-10-09 14:09:50.415 | INFO     | trainer:fit:116 - Fold 2 | Epoch 030/150 [0s] -> Train Loss: 36656.58, Val Loss: 38593.83, Val MAE: 152.91g
+2025-10-09 14:09:50.847 | INFO     | trainer:fit:116 - Fold 2 | Epoch 031/150 [0s] -> Train Loss: 36412.08, Val Loss: 38437.89, Val MAE: 153.33g
+2025-10-09 14:09:51.272 | INFO     | trainer:fit:116 - Fold 2 | Epoch 032/150 [0s] -> Train Loss: 35915.09, Val Loss: 38963.80, Val MAE: 154.99g
+2025-10-09 14:09:51.697 | INFO     | trainer:fit:116 - Fold 2 | Epoch 033/150 [0s] -> Train Loss: 35657.09, Val Loss: 37468.69, Val MAE: 151.43g
+2025-10-09 14:09:52.124 | INFO     | trainer:fit:116 - Fold 2 | Epoch 034/150 [0s] -> Train Loss: 35520.85, Val Loss: 37105.89, Val MAE: 150.72g
+2025-10-09 14:09:52.549 | INFO     | trainer:fit:116 - Fold 2 | Epoch 035/150 [0s] -> Train Loss: 35494.40, Val Loss: 36696.53, Val MAE: 149.94g
+2025-10-09 14:09:52.969 | INFO     | trainer:fit:116 - Fold 2 | Epoch 036/150 [0s] -> Train Loss: 35097.73, Val Loss: 36948.87, Val MAE: 151.35g
+2025-10-09 14:09:53.391 | INFO     | trainer:fit:116 - Fold 2 | Epoch 037/150 [0s] -> Train Loss: 35010.38, Val Loss: 36232.29, Val MAE: 149.28g
+2025-10-09 14:09:53.802 | INFO     | trainer:fit:116 - Fold 2 | Epoch 038/150 [0s] -> Train Loss: 34988.80, Val Loss: 36238.80, Val MAE: 149.73g
+2025-10-09 14:09:54.235 | INFO     | trainer:fit:116 - Fold 2 | Epoch 039/150 [0s] -> Train Loss: 34743.93, Val Loss: 36314.77, Val MAE: 150.06g
+2025-10-09 14:09:54.679 | INFO     | trainer:fit:116 - Fold 2 | Epoch 040/150 [0s] -> Train Loss: 34702.13, Val Loss: 37077.86, Val MAE: 152.53g
+2025-10-09 14:09:55.091 | INFO     | trainer:fit:116 - Fold 2 | Epoch 041/150 [0s] -> Train Loss: 35104.77, Val Loss: 35964.15, Val MAE: 149.26g
+2025-10-09 14:09:55.519 | INFO     | trainer:fit:116 - Fold 2 | Epoch 042/150 [0s] -> Train Loss: 34653.37, Val Loss: 36827.83, Val MAE: 152.14g
+2025-10-09 14:09:55.940 | INFO     | trainer:fit:116 - Fold 2 | Epoch 043/150 [0s] -> Train Loss: 34425.08, Val Loss: 35527.79, Val MAE: 147.09g
+2025-10-09 14:09:56.372 | INFO     | trainer:fit:116 - Fold 2 | Epoch 044/150 [0s] -> Train Loss: 34617.18, Val Loss: 35877.17, Val MAE: 149.73g
+2025-10-09 14:09:56.798 | INFO     | trainer:fit:116 - Fold 2 | Epoch 045/150 [0s] -> Train Loss: 34634.46, Val Loss: 35508.54, Val MAE: 148.14g
+2025-10-09 14:09:57.227 | INFO     | trainer:fit:116 - Fold 2 | Epoch 046/150 [0s] -> Train Loss: 34359.23, Val Loss: 37691.06, Val MAE: 154.72g
+2025-10-09 14:09:57.647 | INFO     | trainer:fit:116 - Fold 2 | Epoch 047/150 [0s] -> Train Loss: 34223.23, Val Loss: 35462.59, Val MAE: 147.95g
+2025-10-09 14:09:58.092 | INFO     | trainer:fit:116 - Fold 2 | Epoch 048/150 [0s] -> Train Loss: 34196.03, Val Loss: 35657.60, Val MAE: 148.92g
+2025-10-09 14:09:58.520 | INFO     | trainer:fit:116 - Fold 2 | Epoch 049/150 [0s] -> Train Loss: 34055.44, Val Loss: 35818.53, Val MAE: 149.43g
+2025-10-09 14:09:58.939 | INFO     | trainer:fit:116 - Fold 2 | Epoch 050/150 [0s] -> Train Loss: 34325.52, Val Loss: 36045.69, Val MAE: 150.22g
+2025-10-09 14:09:59.376 | INFO     | trainer:fit:116 - Fold 2 | Epoch 051/150 [0s] -> Train Loss: 34234.07, Val Loss: 36666.41, Val MAE: 152.32g
+2025-10-09 14:09:59.807 | INFO     | trainer:fit:116 - Fold 2 | Epoch 052/150 [0s] -> Train Loss: 34216.60, Val Loss: 36140.81, Val MAE: 150.96g
+2025-10-09 14:10:00.212 | INFO     | trainer:fit:116 - Fold 2 | Epoch 053/150 [0s] -> Train Loss: 34325.98, Val Loss: 35261.85, Val MAE: 147.67g
+2025-10-09 14:10:00.639 | INFO     | trainer:fit:116 - Fold 2 | Epoch 054/150 [0s] -> Train Loss: 34192.25, Val Loss: 35518.46, Val MAE: 149.16g
+2025-10-09 14:10:01.058 | INFO     | trainer:fit:116 - Fold 2 | Epoch 055/150 [0s] -> Train Loss: 34262.19, Val Loss: 35533.05, Val MAE: 148.78g
+2025-10-09 14:10:01.474 | INFO     | trainer:fit:116 - Fold 2 | Epoch 056/150 [0s] -> Train Loss: 33984.39, Val Loss: 37324.84, Val MAE: 154.15g
+2025-10-09 14:10:01.895 | INFO     | trainer:fit:116 - Fold 2 | Epoch 057/150 [0s] -> Train Loss: 33976.81, Val Loss: 36220.94, Val MAE: 151.12g
+2025-10-09 14:10:02.305 | INFO     | trainer:fit:116 - Fold 2 | Epoch 058/150 [0s] -> Train Loss: 34033.15, Val Loss: 35663.36, Val MAE: 149.51g
+2025-10-09 14:10:02.720 | INFO     | trainer:fit:116 - Fold 2 | Epoch 059/150 [0s] -> Train Loss: 34553.61, Val Loss: 35153.70, Val MAE: 146.56g
+2025-10-09 14:10:03.140 | INFO     | trainer:fit:116 - Fold 2 | Epoch 060/150 [0s] -> Train Loss: 33867.22, Val Loss: 35954.02, Val MAE: 150.46g
+2025-10-09 14:10:03.560 | INFO     | trainer:fit:116 - Fold 2 | Epoch 061/150 [0s] -> Train Loss: 33645.28, Val Loss: 35669.91, Val MAE: 149.36g
+2025-10-09 14:10:03.991 | INFO     | trainer:fit:116 - Fold 2 | Epoch 062/150 [0s] -> Train Loss: 33868.08, Val Loss: 35340.43, Val MAE: 148.13g
+2025-10-09 14:10:04.413 | INFO     | trainer:fit:116 - Fold 2 | Epoch 063/150 [0s] -> Train Loss: 33691.32, Val Loss: 36899.15, Val MAE: 152.98g
+2025-10-09 14:10:04.835 | INFO     | trainer:fit:116 - Fold 2 | Epoch 064/150 [0s] -> Train Loss: 34036.81, Val Loss: 37867.93, Val MAE: 155.63g
+2025-10-09 14:10:05.248 | INFO     | trainer:fit:116 - Fold 2 | Epoch 065/150 [0s] -> Train Loss: 34061.67, Val Loss: 35475.85, Val MAE: 148.46g
+2025-10-09 14:10:05.666 | INFO     | trainer:fit:116 - Fold 2 | Epoch 066/150 [0s] -> Train Loss: 34058.77, Val Loss: 36337.52, Val MAE: 151.31g
+2025-10-09 14:10:06.085 | INFO     | trainer:fit:116 - Fold 2 | Epoch 067/150 [0s] -> Train Loss: 33362.12, Val Loss: 36387.61, Val MAE: 151.43g
+2025-10-09 14:10:06.510 | INFO     | trainer:fit:116 - Fold 2 | Epoch 068/150 [0s] -> Train Loss: 33393.83, Val Loss: 37831.30, Val MAE: 155.69g
+2025-10-09 14:10:06.934 | INFO     | trainer:fit:116 - Fold 2 | Epoch 069/150 [0s] -> Train Loss: 34003.51, Val Loss: 36502.27, Val MAE: 151.88g
+2025-10-09 14:10:07.354 | INFO     | trainer:fit:116 - Fold 2 | Epoch 070/150 [0s] -> Train Loss: 33521.11, Val Loss: 35627.52, Val MAE: 148.77g
+2025-10-09 14:10:07.772 | INFO     | trainer:fit:116 - Fold 2 | Epoch 071/150 [0s] -> Train Loss: 33286.53, Val Loss: 36177.80, Val MAE: 150.74g
+2025-10-09 14:10:08.198 | INFO     | trainer:fit:116 - Fold 2 | Epoch 072/150 [0s] -> Train Loss: 33299.16, Val Loss: 36678.50, Val MAE: 152.15g
+2025-10-09 14:10:08.618 | INFO     | trainer:fit:116 - Fold 2 | Epoch 073/150 [0s] -> Train Loss: 33713.21, Val Loss: 36830.74, Val MAE: 152.56g
+2025-10-09 14:10:09.049 | INFO     | trainer:fit:116 - Fold 2 | Epoch 074/150 [0s] -> Train Loss: 33472.67, Val Loss: 35392.05, Val MAE: 147.52g
+2025-10-09 14:10:09.461 | INFO     | trainer:fit:116 - Fold 2 | Epoch 075/150 [0s] -> Train Loss: 34079.63, Val Loss: 35519.91, Val MAE: 148.23g
+2025-10-09 14:10:09.891 | INFO     | trainer:fit:116 - Fold 2 | Epoch 076/150 [0s] -> Train Loss: 33778.34, Val Loss: 36146.84, Val MAE: 150.49g
+2025-10-09 14:10:10.316 | INFO     | trainer:fit:116 - Fold 2 | Epoch 077/150 [0s] -> Train Loss: 33103.42, Val Loss: 37243.45, Val MAE: 153.54g
+2025-10-09 14:10:10.735 | INFO     | trainer:fit:116 - Fold 2 | Epoch 078/150 [0s] -> Train Loss: 33343.89, Val Loss: 35728.58, Val MAE: 148.82g
+2025-10-09 14:10:11.161 | INFO     | trainer:fit:116 - Fold 2 | Epoch 079/150 [0s] -> Train Loss: 33304.74, Val Loss: 36159.48, Val MAE: 150.74g
+2025-10-09 14:10:11.592 | INFO     | trainer:fit:116 - Fold 2 | Epoch 080/150 [0s] -> Train Loss: 33505.12, Val Loss: 39146.47, Val MAE: 158.94g
+2025-10-09 14:10:12.037 | INFO     | trainer:fit:116 - Fold 2 | Epoch 081/150 [0s] -> Train Loss: 33352.93, Val Loss: 36453.04, Val MAE: 151.42g
+2025-10-09 14:10:12.454 | INFO     | trainer:fit:116 - Fold 2 | Epoch 082/150 [0s] -> Train Loss: 33003.69, Val Loss: 37745.07, Val MAE: 154.97g
+2025-10-09 14:10:12.898 | INFO     | trainer:fit:116 - Fold 2 | Epoch 083/150 [0s] -> Train Loss: 33718.03, Val Loss: 35830.65, Val MAE: 148.96g
+2025-10-09 14:10:13.322 | INFO     | trainer:fit:116 - Fold 2 | Epoch 084/150 [0s] -> Train Loss: 33141.50, Val Loss: 36155.07, Val MAE: 150.46g
+2025-10-09 14:10:13.755 | INFO     | trainer:fit:116 - Fold 2 | Epoch 085/150 [0s] -> Train Loss: 33161.03, Val Loss: 36530.40, Val MAE: 151.53g
+2025-10-09 14:10:14.170 | INFO     | trainer:fit:116 - Fold 2 | Epoch 086/150 [0s] -> Train Loss: 32604.71, Val Loss: 36140.67, Val MAE: 150.36g
+2025-10-09 14:10:14.586 | INFO     | trainer:fit:116 - Fold 2 | Epoch 087/150 [0s] -> Train Loss: 32554.76, Val Loss: 36244.16, Val MAE: 150.65g
+2025-10-09 14:10:15.018 | INFO     | trainer:fit:116 - Fold 2 | Epoch 088/150 [0s] -> Train Loss: 32567.94, Val Loss: 36201.22, Val MAE: 150.52g
+2025-10-09 14:10:15.454 | INFO     | trainer:fit:116 - Fold 2 | Epoch 089/150 [0s] -> Train Loss: 32552.25, Val Loss: 36176.96, Val MAE: 150.43g
+2025-10-09 14:10:15.880 | INFO     | trainer:fit:116 - Fold 2 | Epoch 090/150 [0s] -> Train Loss: 32563.22, Val Loss: 36197.20, Val MAE: 150.50g
+2025-10-09 14:10:16.291 | INFO     | trainer:fit:116 - Fold 2 | Epoch 091/150 [0s] -> Train Loss: 32549.95, Val Loss: 36122.48, Val MAE: 150.20g
+2025-10-09 14:10:16.734 | INFO     | trainer:fit:116 - Fold 2 | Epoch 092/150 [0s] -> Train Loss: 32537.92, Val Loss: 36300.82, Val MAE: 150.84g
+2025-10-09 14:10:17.160 | INFO     | trainer:fit:116 - Fold 2 | Epoch 093/150 [0s] -> Train Loss: 32568.07, Val Loss: 36237.00, Val MAE: 150.58g
+2025-10-09 14:10:17.573 | INFO     | trainer:fit:116 - Fold 2 | Epoch 094/150 [0s] -> Train Loss: 32605.50, Val Loss: 36167.31, Val MAE: 150.33g
+2025-10-09 14:10:18.010 | INFO     | trainer:fit:116 - Fold 2 | Epoch 095/150 [0s] -> Train Loss: 32588.33, Val Loss: 36077.86, Val MAE: 150.00g
+2025-10-09 14:10:18.426 | INFO     | trainer:fit:116 - Fold 2 | Epoch 096/150 [0s] -> Train Loss: 32542.02, Val Loss: 36201.83, Val MAE: 150.46g
+2025-10-09 14:10:18.861 | INFO     | trainer:fit:116 - Fold 2 | Epoch 097/150 [0s] -> Train Loss: 32517.30, Val Loss: 36316.88, Val MAE: 150.85g
+2025-10-09 14:10:19.295 | INFO     | trainer:fit:116 - Fold 2 | Epoch 098/150 [0s] -> Train Loss: 32539.51, Val Loss: 36161.62, Val MAE: 150.34g
+2025-10-09 14:10:19.713 | INFO     | trainer:fit:116 - Fold 2 | Epoch 099/150 [0s] -> Train Loss: 32556.05, Val Loss: 36155.38, Val MAE: 150.29g
+2025-10-09 14:10:20.127 | INFO     | trainer:fit:116 - Fold 2 | Epoch 100/150 [0s] -> Train Loss: 32539.18, Val Loss: 36174.20, Val MAE: 150.35g
+2025-10-09 14:10:20.555 | INFO     | trainer:fit:116 - Fold 2 | Epoch 101/150 [0s] -> Train Loss: 32567.35, Val Loss: 36150.30, Val MAE: 150.31g
+2025-10-09 14:10:21.002 | INFO     | trainer:fit:116 - Fold 2 | Epoch 102/150 [0s] -> Train Loss: 32509.06, Val Loss: 36291.85, Val MAE: 150.70g
+2025-10-09 14:10:21.435 | INFO     | trainer:fit:116 - Fold 2 | Epoch 103/150 [0s] -> Train Loss: 32493.51, Val Loss: 36239.40, Val MAE: 150.56g
+2025-10-09 14:10:21.858 | INFO     | trainer:fit:116 - Fold 2 | Epoch 104/150 [0s] -> Train Loss: 32514.27, Val Loss: 36427.67, Val MAE: 151.16g
+2025-10-09 14:10:22.282 | INFO     | trainer:fit:116 - Fold 2 | Epoch 105/150 [0s] -> Train Loss: 32579.71, Val Loss: 36080.79, Val MAE: 149.99g
+2025-10-09 14:10:22.708 | INFO     | trainer:fit:116 - Fold 2 | Epoch 106/150 [0s] -> Train Loss: 32484.55, Val Loss: 36419.08, Val MAE: 151.13g
+2025-10-09 14:10:23.138 | INFO     | trainer:fit:116 - Fold 2 | Epoch 107/150 [0s] -> Train Loss: 32521.21, Val Loss: 36314.22, Val MAE: 150.83g
+2025-10-09 14:10:23.563 | INFO     | trainer:fit:116 - Fold 2 | Epoch 108/150 [0s] -> Train Loss: 32526.31, Val Loss: 36219.00, Val MAE: 150.47g
+2025-10-09 14:10:23.995 | INFO     | trainer:fit:116 - Fold 2 | Epoch 109/150 [0s] -> Train Loss: 32563.37, Val Loss: 36212.40, Val MAE: 150.46g
+2025-10-09 14:10:23.995 | WARNING  | trainer:fit:134 - Early stopping triggered at epoch 109.
+2025-10-09 14:10:23.996 | INFO     | trainer:fit:144 - Finished training Fold 2. Loaded best model weights.
+2025-10-09 14:10:23.998 | SUCCESS  | trainer:fit:152 - Best model for Fold 2 saved.
+2025-10-09 14:10:23.998 | SUCCESS  | __main__:main:177 - Fold 2 Best Validation MAE: 146.56g
+2025-10-09 14:10:23.998 | INFO     | __main__:main:145 - ----- FOLD 3/5 -----
+2025-10-09 14:10:24.431 | INFO     | trainer:fit:116 - Fold 3 | Epoch 001/150 [0s] -> Train Loss: 11005388.95, Val Loss: 11098018.06, Val MAE: 3307.82g
+2025-10-09 14:10:24.852 | INFO     | trainer:fit:116 - Fold 3 | Epoch 002/150 [0s] -> Train Loss: 10849819.08, Val Loss: 10756044.08, Val MAE: 3256.44g
+2025-10-09 14:10:25.265 | INFO     | trainer:fit:116 - Fold 3 | Epoch 003/150 [0s] -> Train Loss: 10146221.77, Val Loss: 9508190.78, Val MAE: 3061.02g
+2025-10-09 14:10:25.689 | INFO     | trainer:fit:116 - Fold 3 | Epoch 004/150 [0s] -> Train Loss: 8296360.53, Val Loss: 6937702.49, Val MAE: 2611.14g
+2025-10-09 14:10:26.124 | INFO     | trainer:fit:116 - Fold 3 | Epoch 005/150 [0s] -> Train Loss: 5176900.16, Val Loss: 3312867.28, Val MAE: 1790.69g
+2025-10-09 14:10:26.544 | INFO     | trainer:fit:116 - Fold 3 | Epoch 006/150 [0s] -> Train Loss: 1864272.05, Val Loss: 691433.80, Val MAE: 761.71g
+2025-10-09 14:10:26.977 | INFO     | trainer:fit:116 - Fold 3 | Epoch 007/150 [0s] -> Train Loss: 323506.95, Val Loss: 150342.76, Val MAE: 317.13g
+2025-10-09 14:10:27.411 | INFO     | trainer:fit:116 - Fold 3 | Epoch 008/150 [0s] -> Train Loss: 129377.32, Val Loss: 129647.09, Val MAE: 287.33g
+2025-10-09 14:10:27.840 | INFO     | trainer:fit:116 - Fold 3 | Epoch 009/150 [0s] -> Train Loss: 117496.15, Val Loss: 121608.38, Val MAE: 278.11g
+2025-10-09 14:10:28.264 | INFO     | trainer:fit:116 - Fold 3 | Epoch 010/150 [0s] -> Train Loss: 109952.43, Val Loss: 113666.78, Val MAE: 268.83g
+2025-10-09 14:10:28.814 | INFO     | trainer:fit:116 - Fold 3 | Epoch 011/150 [0s] -> Train Loss: 102205.67, Val Loss: 105060.99, Val MAE: 258.23g
+2025-10-09 14:10:29.332 | INFO     | trainer:fit:116 - Fold 3 | Epoch 012/150 [0s] -> Train Loss: 94610.70, Val Loss: 96096.23, Val MAE: 246.91g
+2025-10-09 14:10:29.758 | INFO     | trainer:fit:116 - Fold 3 | Epoch 013/150 [0s] -> Train Loss: 86567.46, Val Loss: 87297.91, Val MAE: 234.72g
+2025-10-09 14:10:30.189 | INFO     | trainer:fit:116 - Fold 3 | Epoch 014/150 [0s] -> Train Loss: 78753.59, Val Loss: 78565.87, Val MAE: 221.07g
+2025-10-09 14:10:30.610 | INFO     | trainer:fit:116 - Fold 3 | Epoch 015/150 [0s] -> Train Loss: 71490.41, Val Loss: 71005.45, Val MAE: 209.05g
+2025-10-09 14:10:31.035 | INFO     | trainer:fit:116 - Fold 3 | Epoch 016/150 [0s] -> Train Loss: 64989.61, Val Loss: 63734.84, Val MAE: 196.55g
+2025-10-09 14:10:31.456 | INFO     | trainer:fit:116 - Fold 3 | Epoch 017/150 [0s] -> Train Loss: 59138.11, Val Loss: 58003.51, Val MAE: 185.93g
+2025-10-09 14:10:31.873 | INFO     | trainer:fit:116 - Fold 3 | Epoch 018/150 [0s] -> Train Loss: 53911.70, Val Loss: 52750.94, Val MAE: 176.51g
+2025-10-09 14:10:32.291 | INFO     | trainer:fit:116 - Fold 3 | Epoch 019/150 [0s] -> Train Loss: 49456.87, Val Loss: 49288.08, Val MAE: 169.57g
+2025-10-09 14:10:32.713 | INFO     | trainer:fit:116 - Fold 3 | Epoch 020/150 [0s] -> Train Loss: 45963.34, Val Loss: 45946.06, Val MAE: 163.83g
+2025-10-09 14:10:33.144 | INFO     | trainer:fit:116 - Fold 3 | Epoch 021/150 [0s] -> Train Loss: 43173.76, Val Loss: 43890.19, Val MAE: 159.96g
+2025-10-09 14:10:33.570 | INFO     | trainer:fit:116 - Fold 3 | Epoch 022/150 [0s] -> Train Loss: 41062.25, Val Loss: 42406.29, Val MAE: 157.69g
+2025-10-09 14:10:34.009 | INFO     | trainer:fit:116 - Fold 3 | Epoch 023/150 [0s] -> Train Loss: 39595.52, Val Loss: 41720.90, Val MAE: 156.64g
+2025-10-09 14:10:34.434 | INFO     | trainer:fit:116 - Fold 3 | Epoch 024/150 [0s] -> Train Loss: 38674.42, Val Loss: 42396.08, Val MAE: 157.69g
+2025-10-09 14:10:34.865 | INFO     | trainer:fit:116 - Fold 3 | Epoch 025/150 [0s] -> Train Loss: 38071.04, Val Loss: 40152.60, Val MAE: 154.04g
+2025-10-09 14:10:35.293 | INFO     | trainer:fit:116 - Fold 3 | Epoch 026/150 [0s] -> Train Loss: 37083.87, Val Loss: 40299.97, Val MAE: 154.19g
+2025-10-09 14:10:35.723 | INFO     | trainer:fit:116 - Fold 3 | Epoch 027/150 [0s] -> Train Loss: 37063.38, Val Loss: 39544.31, Val MAE: 153.15g
+2025-10-09 14:10:36.155 | INFO     | trainer:fit:116 - Fold 3 | Epoch 028/150 [0s] -> Train Loss: 36171.95, Val Loss: 39285.41, Val MAE: 152.82g
+2025-10-09 14:10:36.576 | INFO     | trainer:fit:116 - Fold 3 | Epoch 029/150 [0s] -> Train Loss: 36415.85, Val Loss: 39226.86, Val MAE: 152.96g
+2025-10-09 14:10:36.987 | INFO     | trainer:fit:116 - Fold 3 | Epoch 030/150 [0s] -> Train Loss: 35402.65, Val Loss: 39055.62, Val MAE: 152.46g
+2025-10-09 14:10:37.409 | INFO     | trainer:fit:116 - Fold 3 | Epoch 031/150 [0s] -> Train Loss: 35390.39, Val Loss: 39400.01, Val MAE: 153.18g
+2025-10-09 14:10:37.826 | INFO     | trainer:fit:116 - Fold 3 | Epoch 032/150 [0s] -> Train Loss: 35039.28, Val Loss: 38981.09, Val MAE: 152.45g
+2025-10-09 14:10:38.260 | INFO     | trainer:fit:116 - Fold 3 | Epoch 033/150 [0s] -> Train Loss: 34940.40, Val Loss: 38755.50, Val MAE: 152.12g
+2025-10-09 14:10:38.686 | INFO     | trainer:fit:116 - Fold 3 | Epoch 034/150 [0s] -> Train Loss: 34700.78, Val Loss: 39412.77, Val MAE: 153.25g
+2025-10-09 14:10:39.119 | INFO     | trainer:fit:116 - Fold 3 | Epoch 035/150 [0s] -> Train Loss: 34482.34, Val Loss: 38391.43, Val MAE: 151.65g
+2025-10-09 14:10:39.555 | INFO     | trainer:fit:116 - Fold 3 | Epoch 036/150 [0s] -> Train Loss: 34415.33, Val Loss: 38408.17, Val MAE: 151.78g
+2025-10-09 14:10:39.989 | INFO     | trainer:fit:116 - Fold 3 | Epoch 037/150 [0s] -> Train Loss: 34532.02, Val Loss: 38413.89, Val MAE: 151.50g
+2025-10-09 14:10:40.421 | INFO     | trainer:fit:116 - Fold 3 | Epoch 038/150 [0s] -> Train Loss: 34593.42, Val Loss: 38795.26, Val MAE: 152.14g
+2025-10-09 14:10:40.852 | INFO     | trainer:fit:116 - Fold 3 | Epoch 039/150 [0s] -> Train Loss: 34174.75, Val Loss: 38118.29, Val MAE: 150.93g
+2025-10-09 14:10:41.279 | INFO     | trainer:fit:116 - Fold 3 | Epoch 040/150 [0s] -> Train Loss: 34236.64, Val Loss: 38193.38, Val MAE: 151.38g
+2025-10-09 14:10:41.698 | INFO     | trainer:fit:116 - Fold 3 | Epoch 041/150 [0s] -> Train Loss: 34289.61, Val Loss: 38664.66, Val MAE: 151.42g
+2025-10-09 14:10:42.119 | INFO     | trainer:fit:116 - Fold 3 | Epoch 042/150 [0s] -> Train Loss: 34310.45, Val Loss: 38072.54, Val MAE: 151.08g
+2025-10-09 14:10:42.564 | INFO     | trainer:fit:116 - Fold 3 | Epoch 043/150 [0s] -> Train Loss: 34136.12, Val Loss: 37848.38, Val MAE: 150.39g
+2025-10-09 14:10:42.993 | INFO     | trainer:fit:116 - Fold 3 | Epoch 044/150 [0s] -> Train Loss: 33958.70, Val Loss: 38509.89, Val MAE: 150.86g
+2025-10-09 14:10:43.430 | INFO     | trainer:fit:116 - Fold 3 | Epoch 045/150 [0s] -> Train Loss: 33898.06, Val Loss: 37892.22, Val MAE: 150.12g
+2025-10-09 14:10:43.862 | INFO     | trainer:fit:116 - Fold 3 | Epoch 046/150 [0s] -> Train Loss: 33871.91, Val Loss: 38381.56, Val MAE: 150.63g
+2025-10-09 14:10:44.288 | INFO     | trainer:fit:116 - Fold 3 | Epoch 047/150 [0s] -> Train Loss: 34040.25, Val Loss: 37679.38, Val MAE: 149.70g
+2025-10-09 14:10:44.720 | INFO     | trainer:fit:116 - Fold 3 | Epoch 048/150 [0s] -> Train Loss: 33756.77, Val Loss: 38145.77, Val MAE: 150.11g
+2025-10-09 14:10:45.141 | INFO     | trainer:fit:116 - Fold 3 | Epoch 049/150 [0s] -> Train Loss: 33801.76, Val Loss: 37925.78, Val MAE: 149.83g
+2025-10-09 14:10:45.566 | INFO     | trainer:fit:116 - Fold 3 | Epoch 050/150 [0s] -> Train Loss: 34012.93, Val Loss: 37585.28, Val MAE: 149.36g
+2025-10-09 14:10:45.993 | INFO     | trainer:fit:116 - Fold 3 | Epoch 051/150 [0s] -> Train Loss: 33629.26, Val Loss: 37769.93, Val MAE: 149.62g
+2025-10-09 14:10:46.421 | INFO     | trainer:fit:116 - Fold 3 | Epoch 052/150 [0s] -> Train Loss: 33499.89, Val Loss: 39670.81, Val MAE: 152.75g
+2025-10-09 14:10:46.847 | INFO     | trainer:fit:116 - Fold 3 | Epoch 053/150 [0s] -> Train Loss: 34043.71, Val Loss: 38044.36, Val MAE: 149.73g
+2025-10-09 14:10:47.279 | INFO     | trainer:fit:116 - Fold 3 | Epoch 054/150 [0s] -> Train Loss: 33559.27, Val Loss: 37653.19, Val MAE: 149.12g
+2025-10-09 14:10:47.708 | INFO     | trainer:fit:116 - Fold 3 | Epoch 055/150 [0s] -> Train Loss: 33731.83, Val Loss: 37784.02, Val MAE: 149.24g
+2025-10-09 14:10:48.139 | INFO     | trainer:fit:116 - Fold 3 | Epoch 056/150 [0s] -> Train Loss: 33346.79, Val Loss: 37822.62, Val MAE: 149.31g
+2025-10-09 14:10:48.568 | INFO     | trainer:fit:116 - Fold 3 | Epoch 057/150 [0s] -> Train Loss: 33709.88, Val Loss: 37948.15, Val MAE: 149.29g
+2025-10-09 14:10:48.993 | INFO     | trainer:fit:116 - Fold 3 | Epoch 058/150 [0s] -> Train Loss: 33419.26, Val Loss: 37411.82, Val MAE: 148.75g
+2025-10-09 14:10:49.425 | INFO     | trainer:fit:116 - Fold 3 | Epoch 059/150 [0s] -> Train Loss: 33062.67, Val Loss: 37671.40, Val MAE: 148.77g
+2025-10-09 14:10:49.847 | INFO     | trainer:fit:116 - Fold 3 | Epoch 060/150 [0s] -> Train Loss: 33317.37, Val Loss: 37571.38, Val MAE: 148.62g
+2025-10-09 14:10:50.270 | INFO     | trainer:fit:116 - Fold 3 | Epoch 061/150 [0s] -> Train Loss: 33358.99, Val Loss: 37363.55, Val MAE: 148.85g
+2025-10-09 14:10:50.703 | INFO     | trainer:fit:116 - Fold 3 | Epoch 062/150 [0s] -> Train Loss: 33306.25, Val Loss: 37281.87, Val MAE: 148.42g
+2025-10-09 14:10:51.126 | INFO     | trainer:fit:116 - Fold 3 | Epoch 063/150 [0s] -> Train Loss: 33680.10, Val Loss: 37285.78, Val MAE: 148.41g
+2025-10-09 14:10:51.551 | INFO     | trainer:fit:116 - Fold 3 | Epoch 064/150 [0s] -> Train Loss: 33333.97, Val Loss: 37405.54, Val MAE: 148.35g
+2025-10-09 14:10:51.970 | INFO     | trainer:fit:116 - Fold 3 | Epoch 065/150 [0s] -> Train Loss: 33174.75, Val Loss: 37975.00, Val MAE: 149.03g
+2025-10-09 14:10:52.389 | INFO     | trainer:fit:116 - Fold 3 | Epoch 066/150 [0s] -> Train Loss: 33305.30, Val Loss: 38196.83, Val MAE: 149.34g
+2025-10-09 14:10:52.811 | INFO     | trainer:fit:116 - Fold 3 | Epoch 067/150 [0s] -> Train Loss: 33330.63, Val Loss: 37559.41, Val MAE: 149.85g
+2025-10-09 14:10:53.243 | INFO     | trainer:fit:116 - Fold 3 | Epoch 068/150 [0s] -> Train Loss: 33235.81, Val Loss: 37271.23, Val MAE: 148.72g
+2025-10-09 14:10:53.674 | INFO     | trainer:fit:116 - Fold 3 | Epoch 069/150 [0s] -> Train Loss: 33052.14, Val Loss: 37115.97, Val MAE: 147.96g
+2025-10-09 14:10:54.088 | INFO     | trainer:fit:116 - Fold 3 | Epoch 070/150 [0s] -> Train Loss: 33220.02, Val Loss: 37529.86, Val MAE: 149.58g
+2025-10-09 14:10:54.510 | INFO     | trainer:fit:116 - Fold 3 | Epoch 071/150 [0s] -> Train Loss: 33072.89, Val Loss: 38087.91, Val MAE: 148.84g
+2025-10-09 14:10:54.938 | INFO     | trainer:fit:116 - Fold 3 | Epoch 072/150 [0s] -> Train Loss: 33045.39, Val Loss: 37631.70, Val MAE: 148.13g
+2025-10-09 14:10:55.376 | INFO     | trainer:fit:116 - Fold 3 | Epoch 073/150 [0s] -> Train Loss: 33250.93, Val Loss: 37170.84, Val MAE: 148.02g
+2025-10-09 14:10:55.805 | INFO     | trainer:fit:116 - Fold 3 | Epoch 074/150 [0s] -> Train Loss: 33344.88, Val Loss: 37200.19, Val MAE: 147.94g
+2025-10-09 14:10:56.239 | INFO     | trainer:fit:116 - Fold 3 | Epoch 075/150 [0s] -> Train Loss: 33081.13, Val Loss: 38916.25, Val MAE: 150.19g
+2025-10-09 14:10:56.682 | INFO     | trainer:fit:116 - Fold 3 | Epoch 076/150 [0s] -> Train Loss: 32794.04, Val Loss: 39624.58, Val MAE: 151.46g
+2025-10-09 14:10:57.109 | INFO     | trainer:fit:116 - Fold 3 | Epoch 077/150 [0s] -> Train Loss: 32821.31, Val Loss: 37230.87, Val MAE: 148.62g
+2025-10-09 14:10:57.540 | INFO     | trainer:fit:116 - Fold 3 | Epoch 078/150 [0s] -> Train Loss: 33029.04, Val Loss: 37498.46, Val MAE: 148.12g
+2025-10-09 14:10:57.962 | INFO     | trainer:fit:116 - Fold 3 | Epoch 079/150 [0s] -> Train Loss: 33583.69, Val Loss: 37669.67, Val MAE: 148.22g
+2025-10-09 14:10:58.387 | INFO     | trainer:fit:116 - Fold 3 | Epoch 080/150 [0s] -> Train Loss: 33383.68, Val Loss: 38061.67, Val MAE: 148.69g
+2025-10-09 14:10:58.816 | INFO     | trainer:fit:116 - Fold 3 | Epoch 081/150 [0s] -> Train Loss: 32688.98, Val Loss: 37806.09, Val MAE: 150.18g
+2025-10-09 14:10:59.242 | INFO     | trainer:fit:116 - Fold 3 | Epoch 082/150 [0s] -> Train Loss: 33243.66, Val Loss: 38338.44, Val MAE: 149.00g
+2025-10-09 14:10:59.668 | INFO     | trainer:fit:116 - Fold 3 | Epoch 083/150 [0s] -> Train Loss: 32809.71, Val Loss: 37332.40, Val MAE: 147.81g
+2025-10-09 14:11:00.103 | INFO     | trainer:fit:116 - Fold 3 | Epoch 084/150 [0s] -> Train Loss: 33003.05, Val Loss: 37227.68, Val MAE: 148.08g
+2025-10-09 14:11:00.545 | INFO     | trainer:fit:116 - Fold 3 | Epoch 085/150 [0s] -> Train Loss: 32743.65, Val Loss: 37169.43, Val MAE: 147.96g
+2025-10-09 14:11:00.977 | INFO     | trainer:fit:116 - Fold 3 | Epoch 086/150 [0s] -> Train Loss: 32972.40, Val Loss: 37882.10, Val MAE: 148.22g
+2025-10-09 14:11:01.402 | INFO     | trainer:fit:116 - Fold 3 | Epoch 087/150 [0s] -> Train Loss: 32851.60, Val Loss: 38057.27, Val MAE: 148.48g
+2025-10-09 14:11:01.834 | INFO     | trainer:fit:116 - Fold 3 | Epoch 088/150 [0s] -> Train Loss: 33191.24, Val Loss: 37649.33, Val MAE: 147.84g
+2025-10-09 14:11:02.259 | INFO     | trainer:fit:116 - Fold 3 | Epoch 089/150 [0s] -> Train Loss: 32535.57, Val Loss: 39097.16, Val MAE: 150.23g
+2025-10-09 14:11:02.687 | INFO     | trainer:fit:116 - Fold 3 | Epoch 090/150 [0s] -> Train Loss: 33228.98, Val Loss: 37116.50, Val MAE: 147.82g
+2025-10-09 14:11:03.120 | INFO     | trainer:fit:116 - Fold 3 | Epoch 091/150 [0s] -> Train Loss: 32602.64, Val Loss: 39193.46, Val MAE: 150.31g
+2025-10-09 14:11:03.565 | INFO     | trainer:fit:116 - Fold 3 | Epoch 092/150 [0s] -> Train Loss: 32624.23, Val Loss: 37740.41, Val MAE: 148.02g
+2025-10-09 14:11:04.015 | INFO     | trainer:fit:116 - Fold 3 | Epoch 093/150 [0s] -> Train Loss: 32579.72, Val Loss: 37199.06, Val MAE: 147.48g
+2025-10-09 14:11:04.442 | INFO     | trainer:fit:116 - Fold 3 | Epoch 094/150 [0s] -> Train Loss: 32795.75, Val Loss: 37291.35, Val MAE: 147.71g
+2025-10-09 14:11:04.872 | INFO     | trainer:fit:116 - Fold 3 | Epoch 095/150 [0s] -> Train Loss: 32593.96, Val Loss: 37177.62, Val MAE: 147.74g
+2025-10-09 14:11:05.297 | INFO     | trainer:fit:116 - Fold 3 | Epoch 096/150 [0s] -> Train Loss: 32209.32, Val Loss: 37503.64, Val MAE: 147.56g
+2025-10-09 14:11:05.713 | INFO     | trainer:fit:116 - Fold 3 | Epoch 097/150 [0s] -> Train Loss: 32192.39, Val Loss: 37371.27, Val MAE: 147.50g
+2025-10-09 14:11:06.146 | INFO     | trainer:fit:116 - Fold 3 | Epoch 098/150 [0s] -> Train Loss: 32149.01, Val Loss: 37359.39, Val MAE: 147.52g
+2025-10-09 14:11:06.583 | INFO     | trainer:fit:116 - Fold 3 | Epoch 099/150 [0s] -> Train Loss: 32117.93, Val Loss: 37375.91, Val MAE: 147.54g
+2025-10-09 14:11:07.027 | INFO     | trainer:fit:116 - Fold 3 | Epoch 100/150 [0s] -> Train Loss: 32124.06, Val Loss: 37490.95, Val MAE: 147.55g
+2025-10-09 14:11:07.450 | INFO     | trainer:fit:116 - Fold 3 | Epoch 101/150 [0s] -> Train Loss: 32151.37, Val Loss: 37452.01, Val MAE: 147.50g
+2025-10-09 14:11:07.875 | INFO     | trainer:fit:116 - Fold 3 | Epoch 102/150 [0s] -> Train Loss: 32081.96, Val Loss: 37268.54, Val MAE: 147.49g
+2025-10-09 14:11:08.292 | INFO     | trainer:fit:116 - Fold 3 | Epoch 103/150 [0s] -> Train Loss: 32107.07, Val Loss: 37441.01, Val MAE: 147.49g
+2025-10-09 14:11:08.736 | INFO     | trainer:fit:116 - Fold 3 | Epoch 104/150 [0s] -> Train Loss: 32100.55, Val Loss: 37193.23, Val MAE: 147.48g
+2025-10-09 14:11:09.161 | INFO     | trainer:fit:116 - Fold 3 | Epoch 105/150 [0s] -> Train Loss: 32087.92, Val Loss: 37404.98, Val MAE: 147.46g
+2025-10-09 14:11:09.589 | INFO     | trainer:fit:116 - Fold 3 | Epoch 106/150 [0s] -> Train Loss: 32159.19, Val Loss: 37348.41, Val MAE: 147.45g
+2025-10-09 14:11:10.011 | INFO     | trainer:fit:116 - Fold 3 | Epoch 107/150 [0s] -> Train Loss: 32142.17, Val Loss: 37523.93, Val MAE: 147.53g
+2025-10-09 14:11:10.433 | INFO     | trainer:fit:116 - Fold 3 | Epoch 108/150 [0s] -> Train Loss: 32171.03, Val Loss: 37246.68, Val MAE: 147.45g
+2025-10-09 14:11:10.859 | INFO     | trainer:fit:116 - Fold 3 | Epoch 109/150 [0s] -> Train Loss: 32236.52, Val Loss: 37528.99, Val MAE: 147.54g
+2025-10-09 14:11:11.291 | INFO     | trainer:fit:116 - Fold 3 | Epoch 110/150 [0s] -> Train Loss: 32099.23, Val Loss: 37293.24, Val MAE: 147.43g
+2025-10-09 14:11:11.716 | INFO     | trainer:fit:116 - Fold 3 | Epoch 111/150 [0s] -> Train Loss: 32119.41, Val Loss: 37372.76, Val MAE: 147.40g
+2025-10-09 14:11:12.147 | INFO     | trainer:fit:116 - Fold 3 | Epoch 112/150 [0s] -> Train Loss: 32115.77, Val Loss: 37363.35, Val MAE: 147.46g
+2025-10-09 14:11:12.578 | INFO     | trainer:fit:116 - Fold 3 | Epoch 113/150 [0s] -> Train Loss: 32104.72, Val Loss: 37293.97, Val MAE: 147.44g
+2025-10-09 14:11:12.990 | INFO     | trainer:fit:116 - Fold 3 | Epoch 114/150 [0s] -> Train Loss: 32069.03, Val Loss: 37349.53, Val MAE: 147.45g
+2025-10-09 14:11:13.412 | INFO     | trainer:fit:116 - Fold 3 | Epoch 115/150 [0s] -> Train Loss: 32104.64, Val Loss: 37354.17, Val MAE: 147.43g
+2025-10-09 14:11:13.843 | INFO     | trainer:fit:116 - Fold 3 | Epoch 116/150 [0s] -> Train Loss: 32107.12, Val Loss: 37364.20, Val MAE: 147.44g
+2025-10-09 14:11:14.269 | INFO     | trainer:fit:116 - Fold 3 | Epoch 117/150 [0s] -> Train Loss: 32067.78, Val Loss: 37377.56, Val MAE: 147.44g
+2025-10-09 14:11:14.696 | INFO     | trainer:fit:116 - Fold 3 | Epoch 118/150 [0s] -> Train Loss: 32126.46, Val Loss: 37234.68, Val MAE: 147.37g
+2025-10-09 14:11:15.127 | INFO     | trainer:fit:116 - Fold 3 | Epoch 119/150 [0s] -> Train Loss: 32106.11, Val Loss: 37302.55, Val MAE: 147.39g
+2025-10-09 14:11:15.127 | WARNING  | trainer:fit:134 - Early stopping triggered at epoch 119.
+2025-10-09 14:11:15.128 | INFO     | trainer:fit:144 - Finished training Fold 3. Loaded best model weights.
+2025-10-09 14:11:15.131 | SUCCESS  | trainer:fit:152 - Best model for Fold 3 saved.
+2025-10-09 14:11:15.131 | SUCCESS  | __main__:main:177 - Fold 3 Best Validation MAE: 147.96g
+2025-10-09 14:11:15.131 | INFO     | __main__:main:145 - ----- FOLD 4/5 -----
+2025-10-09 14:11:15.568 | INFO     | trainer:fit:116 - Fold 4 | Epoch 001/150 [0s] -> Train Loss: 11003347.10, Val Loss: 11082136.46, Val MAE: 3303.94g
+2025-10-09 14:11:15.993 | INFO     | trainer:fit:116 - Fold 4 | Epoch 002/150 [0s] -> Train Loss: 10809683.03, Val Loss: 10658694.74, Val MAE: 3240.52g
+2025-10-09 14:11:16.418 | INFO     | trainer:fit:116 - Fold 4 | Epoch 003/150 [0s] -> Train Loss: 9903475.69, Val Loss: 9082319.22, Val MAE: 2990.99g
+2025-10-09 14:11:16.844 | INFO     | trainer:fit:116 - Fold 4 | Epoch 004/150 [0s] -> Train Loss: 7535003.62, Val Loss: 5892979.05, Val MAE: 2405.67g
+2025-10-09 14:11:17.266 | INFO     | trainer:fit:116 - Fold 4 | Epoch 005/150 [0s] -> Train Loss: 3858540.96, Val Loss: 2019041.80, Val MAE: 1389.34g
+2025-10-09 14:11:17.689 | INFO     | trainer:fit:116 - Fold 4 | Epoch 006/150 [0s] -> Train Loss: 886817.96, Val Loss: 253906.59, Val MAE: 424.55g
+2025-10-09 14:11:18.125 | INFO     | trainer:fit:116 - Fold 4 | Epoch 007/150 [0s] -> Train Loss: 159811.67, Val Loss: 112047.11, Val MAE: 263.45g
+2025-10-09 14:11:18.554 | INFO     | trainer:fit:116 - Fold 4 | Epoch 008/150 [0s] -> Train Loss: 126347.76, Val Loss: 104106.81, Val MAE: 253.16g
+2025-10-09 14:11:18.979 | INFO     | trainer:fit:116 - Fold 4 | Epoch 009/150 [0s] -> Train Loss: 116521.11, Val Loss: 96704.43, Val MAE: 243.72g
+2025-10-09 14:11:19.411 | INFO     | trainer:fit:116 - Fold 4 | Epoch 010/150 [0s] -> Train Loss: 106979.18, Val Loss: 89351.97, Val MAE: 234.17g
+2025-10-09 14:11:19.845 | INFO     | trainer:fit:116 - Fold 4 | Epoch 011/150 [0s] -> Train Loss: 96697.59, Val Loss: 81162.45, Val MAE: 223.26g
+2025-10-09 14:11:20.275 | INFO     | trainer:fit:116 - Fold 4 | Epoch 012/150 [0s] -> Train Loss: 86194.94, Val Loss: 75509.99, Val MAE: 215.06g
+2025-10-09 14:11:20.713 | INFO     | trainer:fit:116 - Fold 4 | Epoch 013/150 [0s] -> Train Loss: 76586.24, Val Loss: 69631.63, Val MAE: 207.42g
+2025-10-09 14:11:21.142 | INFO     | trainer:fit:116 - Fold 4 | Epoch 014/150 [0s] -> Train Loss: 67663.58, Val Loss: 62584.96, Val MAE: 198.52g
+2025-10-09 14:11:21.574 | INFO     | trainer:fit:116 - Fold 4 | Epoch 015/150 [0s] -> Train Loss: 60354.87, Val Loss: 57635.23, Val MAE: 192.42g
+2025-10-09 14:11:21.997 | INFO     | trainer:fit:116 - Fold 4 | Epoch 016/150 [0s] -> Train Loss: 54422.89, Val Loss: 53630.87, Val MAE: 187.11g
+2025-10-09 14:11:22.423 | INFO     | trainer:fit:116 - Fold 4 | Epoch 017/150 [0s] -> Train Loss: 49647.51, Val Loss: 51228.26, Val MAE: 182.56g
+2025-10-09 14:11:22.840 | INFO     | trainer:fit:116 - Fold 4 | Epoch 018/150 [0s] -> Train Loss: 46092.00, Val Loss: 48302.05, Val MAE: 180.20g
+2025-10-09 14:11:23.270 | INFO     | trainer:fit:116 - Fold 4 | Epoch 019/150 [0s] -> Train Loss: 43226.31, Val Loss: 46607.29, Val MAE: 175.36g
+2025-10-09 14:11:23.703 | INFO     | trainer:fit:116 - Fold 4 | Epoch 020/150 [0s] -> Train Loss: 41007.98, Val Loss: 45171.06, Val MAE: 172.91g
+2025-10-09 14:11:24.128 | INFO     | trainer:fit:116 - Fold 4 | Epoch 021/150 [0s] -> Train Loss: 39521.91, Val Loss: 44230.09, Val MAE: 170.77g
+2025-10-09 14:11:24.561 | INFO     | trainer:fit:116 - Fold 4 | Epoch 022/150 [0s] -> Train Loss: 38313.44, Val Loss: 43661.33, Val MAE: 168.79g
+2025-10-09 14:11:24.992 | INFO     | trainer:fit:116 - Fold 4 | Epoch 023/150 [0s] -> Train Loss: 37358.92, Val Loss: 43480.53, Val MAE: 167.92g
+2025-10-09 14:11:25.427 | INFO     | trainer:fit:116 - Fold 4 | Epoch 024/150 [0s] -> Train Loss: 36989.99, Val Loss: 42788.28, Val MAE: 166.97g
+2025-10-09 14:11:25.855 | INFO     | trainer:fit:116 - Fold 4 | Epoch 025/150 [0s] -> Train Loss: 36894.47, Val Loss: 42260.28, Val MAE: 166.90g
+2025-10-09 14:11:26.285 | INFO     | trainer:fit:116 - Fold 4 | Epoch 026/150 [0s] -> Train Loss: 35630.96, Val Loss: 41876.15, Val MAE: 165.98g
+2025-10-09 14:11:26.719 | INFO     | trainer:fit:116 - Fold 4 | Epoch 027/150 [0s] -> Train Loss: 35301.45, Val Loss: 41550.48, Val MAE: 165.01g
+2025-10-09 14:11:27.154 | INFO     | trainer:fit:116 - Fold 4 | Epoch 028/150 [0s] -> Train Loss: 35095.33, Val Loss: 41337.44, Val MAE: 164.64g
+2025-10-09 14:11:27.603 | INFO     | trainer:fit:116 - Fold 4 | Epoch 029/150 [0s] -> Train Loss: 34988.01, Val Loss: 41071.24, Val MAE: 164.06g
+2025-10-09 14:11:28.013 | INFO     | trainer:fit:116 - Fold 4 | Epoch 030/150 [0s] -> Train Loss: 34759.30, Val Loss: 40911.81, Val MAE: 163.78g
+2025-10-09 14:11:28.452 | INFO     | trainer:fit:116 - Fold 4 | Epoch 031/150 [0s] -> Train Loss: 34539.41, Val Loss: 40819.73, Val MAE: 163.80g
+2025-10-09 14:11:28.894 | INFO     | trainer:fit:116 - Fold 4 | Epoch 032/150 [0s] -> Train Loss: 34523.07, Val Loss: 41717.93, Val MAE: 165.01g
+2025-10-09 14:11:29.326 | INFO     | trainer:fit:116 - Fold 4 | Epoch 033/150 [0s] -> Train Loss: 34585.96, Val Loss: 40594.15, Val MAE: 163.34g
+2025-10-09 14:11:29.757 | INFO     | trainer:fit:116 - Fold 4 | Epoch 034/150 [0s] -> Train Loss: 34005.19, Val Loss: 40549.16, Val MAE: 163.22g
+2025-10-09 14:11:30.198 | INFO     | trainer:fit:116 - Fold 4 | Epoch 035/150 [0s] -> Train Loss: 34267.91, Val Loss: 40493.61, Val MAE: 163.09g
+2025-10-09 14:11:30.631 | INFO     | trainer:fit:116 - Fold 4 | Epoch 036/150 [0s] -> Train Loss: 34057.15, Val Loss: 40431.39, Val MAE: 162.78g
+2025-10-09 14:11:31.056 | INFO     | trainer:fit:116 - Fold 4 | Epoch 037/150 [0s] -> Train Loss: 33719.56, Val Loss: 40212.77, Val MAE: 162.37g
+2025-10-09 14:11:31.482 | INFO     | trainer:fit:116 - Fold 4 | Epoch 038/150 [0s] -> Train Loss: 33626.08, Val Loss: 40078.70, Val MAE: 162.19g
+2025-10-09 14:11:31.909 | INFO     | trainer:fit:116 - Fold 4 | Epoch 039/150 [0s] -> Train Loss: 33800.03, Val Loss: 40112.90, Val MAE: 162.43g
+2025-10-09 14:11:32.342 | INFO     | trainer:fit:116 - Fold 4 | Epoch 040/150 [0s] -> Train Loss: 33382.67, Val Loss: 40099.24, Val MAE: 162.03g
+2025-10-09 14:11:32.769 | INFO     | trainer:fit:116 - Fold 4 | Epoch 041/150 [0s] -> Train Loss: 33565.23, Val Loss: 39886.01, Val MAE: 161.79g
+2025-10-09 14:11:33.195 | INFO     | trainer:fit:116 - Fold 4 | Epoch 042/150 [0s] -> Train Loss: 33439.35, Val Loss: 39740.90, Val MAE: 161.29g
+2025-10-09 14:11:33.622 | INFO     | trainer:fit:116 - Fold 4 | Epoch 043/150 [0s] -> Train Loss: 33411.50, Val Loss: 39858.42, Val MAE: 161.59g
+2025-10-09 14:11:34.047 | INFO     | trainer:fit:116 - Fold 4 | Epoch 044/150 [0s] -> Train Loss: 33603.44, Val Loss: 39791.62, Val MAE: 161.66g
+2025-10-09 14:11:34.463 | INFO     | trainer:fit:116 - Fold 4 | Epoch 045/150 [0s] -> Train Loss: 33526.55, Val Loss: 39570.19, Val MAE: 161.12g
+2025-10-09 14:11:34.877 | INFO     | trainer:fit:116 - Fold 4 | Epoch 046/150 [0s] -> Train Loss: 33532.42, Val Loss: 39953.19, Val MAE: 162.22g
+2025-10-09 14:11:35.292 | INFO     | trainer:fit:116 - Fold 4 | Epoch 047/150 [0s] -> Train Loss: 33262.41, Val Loss: 39707.28, Val MAE: 161.78g
+2025-10-09 14:11:35.718 | INFO     | trainer:fit:116 - Fold 4 | Epoch 048/150 [0s] -> Train Loss: 33275.79, Val Loss: 39535.22, Val MAE: 161.27g
+2025-10-09 14:11:36.147 | INFO     | trainer:fit:116 - Fold 4 | Epoch 049/150 [0s] -> Train Loss: 33121.53, Val Loss: 39310.57, Val MAE: 160.81g
+2025-10-09 14:11:36.560 | INFO     | trainer:fit:116 - Fold 4 | Epoch 050/150 [0s] -> Train Loss: 33035.38, Val Loss: 39978.20, Val MAE: 162.31g
+2025-10-09 14:11:36.988 | INFO     | trainer:fit:116 - Fold 4 | Epoch 051/150 [0s] -> Train Loss: 33505.07, Val Loss: 39346.73, Val MAE: 160.76g
+2025-10-09 14:11:37.409 | INFO     | trainer:fit:116 - Fold 4 | Epoch 052/150 [0s] -> Train Loss: 32934.15, Val Loss: 39203.42, Val MAE: 160.49g
+2025-10-09 14:11:37.833 | INFO     | trainer:fit:116 - Fold 4 | Epoch 053/150 [0s] -> Train Loss: 32989.09, Val Loss: 39474.28, Val MAE: 160.70g
+2025-10-09 14:11:38.273 | INFO     | trainer:fit:116 - Fold 4 | Epoch 054/150 [0s] -> Train Loss: 32951.05, Val Loss: 39128.33, Val MAE: 160.26g
+2025-10-09 14:11:38.705 | INFO     | trainer:fit:116 - Fold 4 | Epoch 055/150 [0s] -> Train Loss: 32861.17, Val Loss: 39182.24, Val MAE: 160.44g
+2025-10-09 14:11:39.134 | INFO     | trainer:fit:116 - Fold 4 | Epoch 056/150 [0s] -> Train Loss: 33160.78, Val Loss: 39265.59, Val MAE: 160.68g
+2025-10-09 14:11:39.556 | INFO     | trainer:fit:116 - Fold 4 | Epoch 057/150 [0s] -> Train Loss: 33528.18, Val Loss: 39106.34, Val MAE: 160.16g
+2025-10-09 14:11:39.990 | INFO     | trainer:fit:116 - Fold 4 | Epoch 058/150 [0s] -> Train Loss: 32938.28, Val Loss: 39259.95, Val MAE: 160.72g
+2025-10-09 14:11:40.421 | INFO     | trainer:fit:116 - Fold 4 | Epoch 059/150 [0s] -> Train Loss: 32713.70, Val Loss: 39079.89, Val MAE: 160.39g
+2025-10-09 14:11:40.845 | INFO     | trainer:fit:116 - Fold 4 | Epoch 060/150 [0s] -> Train Loss: 32736.80, Val Loss: 39022.43, Val MAE: 160.09g
+2025-10-09 14:11:41.270 | INFO     | trainer:fit:116 - Fold 4 | Epoch 061/150 [0s] -> Train Loss: 32536.61, Val Loss: 39194.74, Val MAE: 160.74g
+2025-10-09 14:11:41.699 | INFO     | trainer:fit:116 - Fold 4 | Epoch 062/150 [0s] -> Train Loss: 32647.57, Val Loss: 38910.59, Val MAE: 159.91g
+2025-10-09 14:11:42.118 | INFO     | trainer:fit:116 - Fold 4 | Epoch 063/150 [0s] -> Train Loss: 32570.19, Val Loss: 39997.19, Val MAE: 161.45g
+2025-10-09 14:11:42.537 | INFO     | trainer:fit:116 - Fold 4 | Epoch 064/150 [0s] -> Train Loss: 33021.68, Val Loss: 39188.44, Val MAE: 160.21g
+2025-10-09 14:11:42.967 | INFO     | trainer:fit:116 - Fold 4 | Epoch 065/150 [0s] -> Train Loss: 32928.52, Val Loss: 38836.92, Val MAE: 159.83g
+2025-10-09 14:11:43.398 | INFO     | trainer:fit:116 - Fold 4 | Epoch 066/150 [0s] -> Train Loss: 32531.19, Val Loss: 38853.39, Val MAE: 159.82g
+2025-10-09 14:11:43.829 | INFO     | trainer:fit:116 - Fold 4 | Epoch 067/150 [0s] -> Train Loss: 32534.37, Val Loss: 38811.80, Val MAE: 159.76g
+2025-10-09 14:11:44.259 | INFO     | trainer:fit:116 - Fold 4 | Epoch 068/150 [0s] -> Train Loss: 32950.93, Val Loss: 40766.79, Val MAE: 162.37g
+2025-10-09 14:11:44.686 | INFO     | trainer:fit:116 - Fold 4 | Epoch 069/150 [0s] -> Train Loss: 32521.75, Val Loss: 39225.28, Val MAE: 160.11g
+2025-10-09 14:11:45.124 | INFO     | trainer:fit:116 - Fold 4 | Epoch 070/150 [0s] -> Train Loss: 32379.49, Val Loss: 39121.70, Val MAE: 160.77g
+2025-10-09 14:11:45.558 | INFO     | trainer:fit:116 - Fold 4 | Epoch 071/150 [0s] -> Train Loss: 32676.85, Val Loss: 39083.45, Val MAE: 160.26g
+2025-10-09 14:11:45.988 | INFO     | trainer:fit:116 - Fold 4 | Epoch 072/150 [0s] -> Train Loss: 32824.70, Val Loss: 38917.70, Val MAE: 159.77g
+2025-10-09 14:11:46.417 | INFO     | trainer:fit:116 - Fold 4 | Epoch 073/150 [0s] -> Train Loss: 32546.03, Val Loss: 39429.07, Val MAE: 161.63g
+2025-10-09 14:11:46.851 | INFO     | trainer:fit:116 - Fold 4 | Epoch 074/150 [0s] -> Train Loss: 32373.18, Val Loss: 39095.29, Val MAE: 159.92g
+2025-10-09 14:11:47.281 | INFO     | trainer:fit:116 - Fold 4 | Epoch 075/150 [0s] -> Train Loss: 32414.43, Val Loss: 39089.67, Val MAE: 160.73g
+2025-10-09 14:11:47.707 | INFO     | trainer:fit:116 - Fold 4 | Epoch 076/150 [0s] -> Train Loss: 32369.17, Val Loss: 38911.37, Val MAE: 160.28g
+2025-10-09 14:11:48.128 | INFO     | trainer:fit:116 - Fold 4 | Epoch 077/150 [0s] -> Train Loss: 32524.37, Val Loss: 38924.75, Val MAE: 160.28g
+2025-10-09 14:11:48.561 | INFO     | trainer:fit:116 - Fold 4 | Epoch 078/150 [0s] -> Train Loss: 32702.66, Val Loss: 38955.25, Val MAE: 159.79g
+2025-10-09 14:11:48.995 | INFO     | trainer:fit:116 - Fold 4 | Epoch 079/150 [0s] -> Train Loss: 32234.93, Val Loss: 38621.74, Val MAE: 159.47g
+2025-10-09 14:11:49.428 | INFO     | trainer:fit:116 - Fold 4 | Epoch 080/150 [0s] -> Train Loss: 32101.10, Val Loss: 38539.47, Val MAE: 159.49g
+2025-10-09 14:11:49.859 | INFO     | trainer:fit:116 - Fold 4 | Epoch 081/150 [0s] -> Train Loss: 32483.21, Val Loss: 40284.28, Val MAE: 163.78g
+2025-10-09 14:11:50.300 | INFO     | trainer:fit:116 - Fold 4 | Epoch 082/150 [0s] -> Train Loss: 32593.95, Val Loss: 38608.76, Val MAE: 159.31g
+2025-10-09 14:11:50.723 | INFO     | trainer:fit:116 - Fold 4 | Epoch 083/150 [0s] -> Train Loss: 32377.79, Val Loss: 40294.06, Val MAE: 163.75g
+2025-10-09 14:11:51.153 | INFO     | trainer:fit:116 - Fold 4 | Epoch 084/150 [0s] -> Train Loss: 32353.64, Val Loss: 39087.44, Val MAE: 159.84g
+2025-10-09 14:11:51.580 | INFO     | trainer:fit:116 - Fold 4 | Epoch 085/150 [0s] -> Train Loss: 31988.10, Val Loss: 38543.14, Val MAE: 159.15g
+2025-10-09 14:11:52.015 | INFO     | trainer:fit:116 - Fold 4 | Epoch 086/150 [0s] -> Train Loss: 32180.91, Val Loss: 38835.66, Val MAE: 160.19g
+2025-10-09 14:11:52.435 | INFO     | trainer:fit:116 - Fold 4 | Epoch 087/150 [0s] -> Train Loss: 32150.11, Val Loss: 40379.30, Val MAE: 163.96g
+2025-10-09 14:11:52.859 | INFO     | trainer:fit:116 - Fold 4 | Epoch 088/150 [0s] -> Train Loss: 32378.43, Val Loss: 38925.93, Val MAE: 160.47g
+2025-10-09 14:11:53.287 | INFO     | trainer:fit:116 - Fold 4 | Epoch 089/150 [0s] -> Train Loss: 32077.28, Val Loss: 38753.29, Val MAE: 159.66g
+2025-10-09 14:11:53.706 | INFO     | trainer:fit:116 - Fold 4 | Epoch 090/150 [0s] -> Train Loss: 32366.45, Val Loss: 38668.18, Val MAE: 159.57g
+2025-10-09 14:11:54.119 | INFO     | trainer:fit:116 - Fold 4 | Epoch 091/150 [0s] -> Train Loss: 32362.78, Val Loss: 38613.41, Val MAE: 159.32g
+2025-10-09 14:11:54.567 | INFO     | trainer:fit:116 - Fold 4 | Epoch 092/150 [0s] -> Train Loss: 31780.62, Val Loss: 39049.65, Val MAE: 159.66g
+2025-10-09 14:11:55.012 | INFO     | trainer:fit:116 - Fold 4 | Epoch 093/150 [0s] -> Train Loss: 32076.87, Val Loss: 38690.71, Val MAE: 159.78g
+2025-10-09 14:11:55.450 | INFO     | trainer:fit:116 - Fold 4 | Epoch 094/150 [0s] -> Train Loss: 31914.94, Val Loss: 38535.95, Val MAE: 159.18g
+2025-10-09 14:11:55.872 | INFO     | trainer:fit:116 - Fold 4 | Epoch 095/150 [0s] -> Train Loss: 31967.92, Val Loss: 39059.31, Val MAE: 159.78g
+2025-10-09 14:11:56.315 | INFO     | trainer:fit:116 - Fold 4 | Epoch 096/150 [0s] -> Train Loss: 31530.44, Val Loss: 39092.83, Val MAE: 159.94g
+2025-10-09 14:11:56.807 | INFO     | trainer:fit:116 - Fold 4 | Epoch 097/150 [0s] -> Train Loss: 31535.22, Val Loss: 39263.58, Val MAE: 159.95g
+2025-10-09 14:11:57.254 | INFO     | trainer:fit:116 - Fold 4 | Epoch 098/150 [0s] -> Train Loss: 31764.25, Val Loss: 38858.67, Val MAE: 160.20g
+2025-10-09 14:11:57.736 | INFO     | trainer:fit:116 - Fold 4 | Epoch 099/150 [0s] -> Train Loss: 31683.37, Val Loss: 38788.56, Val MAE: 160.01g
+2025-10-09 14:11:58.204 | INFO     | trainer:fit:116 - Fold 4 | Epoch 100/150 [0s] -> Train Loss: 31550.32, Val Loss: 38554.03, Val MAE: 159.38g
+2025-10-09 14:11:58.666 | INFO     | trainer:fit:116 - Fold 4 | Epoch 101/150 [0s] -> Train Loss: 31513.15, Val Loss: 38640.98, Val MAE: 159.51g
+2025-10-09 14:11:59.106 | INFO     | trainer:fit:116 - Fold 4 | Epoch 102/150 [0s] -> Train Loss: 31181.64, Val Loss: 39058.52, Val MAE: 160.89g
+2025-10-09 14:11:59.537 | INFO     | trainer:fit:116 - Fold 4 | Epoch 103/150 [0s] -> Train Loss: 31538.54, Val Loss: 38900.86, Val MAE: 160.36g
+2025-10-09 14:12:00.241 | INFO     | trainer:fit:116 - Fold 4 | Epoch 104/150 [1s] -> Train Loss: 31773.64, Val Loss: 38994.77, Val MAE: 160.63g
+2025-10-09 14:12:00.759 | INFO     | trainer:fit:116 - Fold 4 | Epoch 105/150 [0s] -> Train Loss: 31214.29, Val Loss: 38978.47, Val MAE: 160.59g
+2025-10-09 14:12:01.186 | INFO     | trainer:fit:116 - Fold 4 | Epoch 106/150 [0s] -> Train Loss: 31260.92, Val Loss: 38879.95, Val MAE: 160.38g
+2025-10-09 14:12:01.695 | INFO     | trainer:fit:116 - Fold 4 | Epoch 107/150 [0s] -> Train Loss: 30670.66, Val Loss: 38719.24, Val MAE: 159.81g
+2025-10-09 14:12:02.182 | INFO     | trainer:fit:116 - Fold 4 | Epoch 108/150 [0s] -> Train Loss: 30663.24, Val Loss: 38739.62, Val MAE: 159.92g
+2025-10-09 14:12:02.680 | INFO     | trainer:fit:116 - Fold 4 | Epoch 109/150 [0s] -> Train Loss: 30622.08, Val Loss: 38708.57, Val MAE: 159.61g
+2025-10-09 14:12:03.112 | INFO     | trainer:fit:116 - Fold 4 | Epoch 110/150 [0s] -> Train Loss: 30634.10, Val Loss: 38715.33, Val MAE: 159.82g
+2025-10-09 14:12:03.552 | INFO     | trainer:fit:116 - Fold 4 | Epoch 111/150 [0s] -> Train Loss: 30635.95, Val Loss: 38718.58, Val MAE: 159.71g
+2025-10-09 14:12:04.036 | INFO     | trainer:fit:116 - Fold 4 | Epoch 112/150 [0s] -> Train Loss: 30624.00, Val Loss: 38731.06, Val MAE: 159.85g
+2025-10-09 14:12:04.482 | INFO     | trainer:fit:116 - Fold 4 | Epoch 113/150 [0s] -> Train Loss: 30610.72, Val Loss: 38737.18, Val MAE: 159.87g
+2025-10-09 14:12:04.906 | INFO     | trainer:fit:116 - Fold 4 | Epoch 114/150 [0s] -> Train Loss: 30619.27, Val Loss: 38716.05, Val MAE: 159.62g
+2025-10-09 14:12:05.347 | INFO     | trainer:fit:116 - Fold 4 | Epoch 115/150 [0s] -> Train Loss: 30626.74, Val Loss: 38724.86, Val MAE: 159.80g
+2025-10-09 14:12:05.801 | INFO     | trainer:fit:116 - Fold 4 | Epoch 116/150 [0s] -> Train Loss: 30597.95, Val Loss: 38726.31, Val MAE: 159.78g
+2025-10-09 14:12:06.246 | INFO     | trainer:fit:116 - Fold 4 | Epoch 117/150 [0s] -> Train Loss: 30618.14, Val Loss: 38719.30, Val MAE: 159.72g
+2025-10-09 14:12:06.733 | INFO     | trainer:fit:116 - Fold 4 | Epoch 118/150 [0s] -> Train Loss: 30605.78, Val Loss: 38729.26, Val MAE: 159.70g
+2025-10-09 14:12:07.224 | INFO     | trainer:fit:116 - Fold 4 | Epoch 119/150 [0s] -> Train Loss: 30564.03, Val Loss: 38727.90, Val MAE: 159.64g
+2025-10-09 14:12:07.750 | INFO     | trainer:fit:116 - Fold 4 | Epoch 120/150 [0s] -> Train Loss: 30637.16, Val Loss: 38730.53, Val MAE: 159.58g
+2025-10-09 14:12:08.192 | INFO     | trainer:fit:116 - Fold 4 | Epoch 121/150 [0s] -> Train Loss: 30562.37, Val Loss: 38757.60, Val MAE: 159.90g
+2025-10-09 14:12:08.690 | INFO     | trainer:fit:116 - Fold 4 | Epoch 122/150 [0s] -> Train Loss: 30581.46, Val Loss: 38732.76, Val MAE: 159.67g
+2025-10-09 14:12:09.232 | INFO     | trainer:fit:116 - Fold 4 | Epoch 123/150 [1s] -> Train Loss: 30581.76, Val Loss: 38757.06, Val MAE: 159.86g
+2025-10-09 14:12:09.724 | INFO     | trainer:fit:116 - Fold 4 | Epoch 124/150 [0s] -> Train Loss: 30537.08, Val Loss: 38725.63, Val MAE: 159.60g
+2025-10-09 14:12:10.216 | INFO     | trainer:fit:116 - Fold 4 | Epoch 125/150 [0s] -> Train Loss: 30599.83, Val Loss: 38754.63, Val MAE: 159.88g
+2025-10-09 14:12:10.716 | INFO     | trainer:fit:116 - Fold 4 | Epoch 126/150 [0s] -> Train Loss: 30526.98, Val Loss: 38754.24, Val MAE: 159.62g
+2025-10-09 14:12:11.178 | INFO     | trainer:fit:116 - Fold 4 | Epoch 127/150 [0s] -> Train Loss: 30534.40, Val Loss: 38760.22, Val MAE: 159.79g
+2025-10-09 14:12:11.634 | INFO     | trainer:fit:116 - Fold 4 | Epoch 128/150 [0s] -> Train Loss: 30552.76, Val Loss: 38752.83, Val MAE: 159.77g
+2025-10-09 14:12:12.079 | INFO     | trainer:fit:116 - Fold 4 | Epoch 129/150 [0s] -> Train Loss: 30551.63, Val Loss: 38751.35, Val MAE: 159.76g
+2025-10-09 14:12:12.558 | INFO     | trainer:fit:116 - Fold 4 | Epoch 130/150 [0s] -> Train Loss: 30541.74, Val Loss: 38755.21, Val MAE: 159.62g
+2025-10-09 14:12:12.994 | INFO     | trainer:fit:116 - Fold 4 | Epoch 131/150 [0s] -> Train Loss: 30576.87, Val Loss: 38860.72, Val MAE: 160.19g
+2025-10-09 14:12:13.414 | INFO     | trainer:fit:116 - Fold 4 | Epoch 132/150 [0s] -> Train Loss: 30522.46, Val Loss: 38767.86, Val MAE: 159.84g
+2025-10-09 14:12:13.863 | INFO     | trainer:fit:116 - Fold 4 | Epoch 133/150 [0s] -> Train Loss: 30447.91, Val Loss: 38760.08, Val MAE: 159.79g
+2025-10-09 14:12:14.319 | INFO     | trainer:fit:116 - Fold 4 | Epoch 134/150 [0s] -> Train Loss: 30456.89, Val Loss: 38760.31, Val MAE: 159.79g
+2025-10-09 14:12:14.775 | INFO     | trainer:fit:116 - Fold 4 | Epoch 135/150 [0s] -> Train Loss: 30449.26, Val Loss: 38760.29, Val MAE: 159.79g
+2025-10-09 14:12:15.209 | INFO     | trainer:fit:116 - Fold 4 | Epoch 136/150 [0s] -> Train Loss: 30453.87, Val Loss: 38753.97, Val MAE: 159.73g
+2025-10-09 14:12:15.670 | INFO     | trainer:fit:116 - Fold 4 | Epoch 137/150 [0s] -> Train Loss: 30442.96, Val Loss: 38756.47, Val MAE: 159.75g
+2025-10-09 14:12:16.163 | INFO     | trainer:fit:116 - Fold 4 | Epoch 138/150 [0s] -> Train Loss: 30447.45, Val Loss: 38755.29, Val MAE: 159.75g
+2025-10-09 14:12:16.608 | INFO     | trainer:fit:116 - Fold 4 | Epoch 139/150 [0s] -> Train Loss: 30441.71, Val Loss: 38756.25, Val MAE: 159.75g
+2025-10-09 14:12:17.049 | INFO     | trainer:fit:116 - Fold 4 | Epoch 140/150 [0s] -> Train Loss: 30445.54, Val Loss: 38752.61, Val MAE: 159.71g
+2025-10-09 14:12:17.503 | INFO     | trainer:fit:116 - Fold 4 | Epoch 141/150 [0s] -> Train Loss: 30444.45, Val Loss: 38752.88, Val MAE: 159.72g
+2025-10-09 14:12:17.924 | INFO     | trainer:fit:116 - Fold 4 | Epoch 142/150 [0s] -> Train Loss: 30443.88, Val Loss: 38755.69, Val MAE: 159.74g
+2025-10-09 14:12:18.350 | INFO     | trainer:fit:116 - Fold 4 | Epoch 143/150 [0s] -> Train Loss: 30442.07, Val Loss: 38753.96, Val MAE: 159.72g
+2025-10-09 14:12:18.802 | INFO     | trainer:fit:116 - Fold 4 | Epoch 144/150 [0s] -> Train Loss: 30440.15, Val Loss: 38754.50, Val MAE: 159.71g
+2025-10-09 14:12:18.802 | WARNING  | trainer:fit:134 - Early stopping triggered at epoch 144.
+2025-10-09 14:12:18.804 | INFO     | trainer:fit:144 - Finished training Fold 4. Loaded best model weights.
+2025-10-09 14:12:18.808 | SUCCESS  | trainer:fit:152 - Best model for Fold 4 saved.
+2025-10-09 14:12:18.808 | SUCCESS  | __main__:main:177 - Fold 4 Best Validation MAE: 159.18g
+2025-10-09 14:12:18.808 | INFO     | __main__:main:145 - ----- FOLD 5/5 -----
+2025-10-09 14:12:19.313 | INFO     | trainer:fit:116 - Fold 5 | Epoch 001/150 [0s] -> Train Loss: 11005621.78, Val Loss: 11051450.67, Val MAE: 3298.68g
+2025-10-09 14:12:19.778 | INFO     | trainer:fit:116 - Fold 5 | Epoch 002/150 [0s] -> Train Loss: 10802898.21, Val Loss: 10622979.16, Val MAE: 3234.58g
+2025-10-09 14:12:20.222 | INFO     | trainer:fit:116 - Fold 5 | Epoch 003/150 [0s] -> Train Loss: 9931710.48, Val Loss: 9127175.54, Val MAE: 2998.52g
+2025-10-09 14:12:20.683 | INFO     | trainer:fit:116 - Fold 5 | Epoch 004/150 [0s] -> Train Loss: 7737612.85, Val Loss: 6160029.79, Val MAE: 2461.23g
+2025-10-09 14:12:21.118 | INFO     | trainer:fit:116 - Fold 5 | Epoch 005/150 [0s] -> Train Loss: 4285368.05, Val Loss: 2406922.95, Val MAE: 1524.97g
+2025-10-09 14:12:21.590 | INFO     | trainer:fit:116 - Fold 5 | Epoch 006/150 [0s] -> Train Loss: 1189258.38, Val Loss: 352899.07, Val MAE: 518.39g
+2025-10-09 14:12:22.019 | INFO     | trainer:fit:116 - Fold 5 | Epoch 007/150 [0s] -> Train Loss: 199308.56, Val Loss: 113206.07, Val MAE: 273.14g
+2025-10-09 14:12:22.449 | INFO     | trainer:fit:116 - Fold 5 | Epoch 008/150 [0s] -> Train Loss: 130517.79, Val Loss: 101616.85, Val MAE: 261.10g
+2025-10-09 14:12:22.873 | INFO     | trainer:fit:116 - Fold 5 | Epoch 009/150 [0s] -> Train Loss: 120607.91, Val Loss: 93716.00, Val MAE: 250.48g
+2025-10-09 14:12:23.297 | INFO     | trainer:fit:116 - Fold 5 | Epoch 010/150 [0s] -> Train Loss: 111312.56, Val Loss: 85451.44, Val MAE: 239.69g
+2025-10-09 14:12:23.736 | INFO     | trainer:fit:116 - Fold 5 | Epoch 011/150 [0s] -> Train Loss: 100774.42, Val Loss: 76479.72, Val MAE: 226.83g
+2025-10-09 14:12:24.166 | INFO     | trainer:fit:116 - Fold 5 | Epoch 012/150 [0s] -> Train Loss: 88902.48, Val Loss: 68332.84, Val MAE: 213.83g
+2025-10-09 14:12:24.604 | INFO     | trainer:fit:116 - Fold 5 | Epoch 013/150 [0s] -> Train Loss: 78135.10, Val Loss: 59333.03, Val MAE: 199.19g
+2025-10-09 14:12:25.055 | INFO     | trainer:fit:116 - Fold 5 | Epoch 014/150 [0s] -> Train Loss: 68139.38, Val Loss: 53271.91, Val MAE: 188.90g
+2025-10-09 14:12:25.480 | INFO     | trainer:fit:116 - Fold 5 | Epoch 015/150 [0s] -> Train Loss: 60609.88, Val Loss: 48268.71, Val MAE: 179.90g
+2025-10-09 14:12:25.918 | INFO     | trainer:fit:116 - Fold 5 | Epoch 016/150 [0s] -> Train Loss: 54413.11, Val Loss: 43971.18, Val MAE: 171.91g
+2025-10-09 14:12:26.351 | INFO     | trainer:fit:116 - Fold 5 | Epoch 017/150 [0s] -> Train Loss: 49567.49, Val Loss: 41274.70, Val MAE: 166.49g
+2025-10-09 14:12:26.792 | INFO     | trainer:fit:116 - Fold 5 | Epoch 018/150 [0s] -> Train Loss: 46739.78, Val Loss: 39697.55, Val MAE: 161.92g
+2025-10-09 14:12:27.218 | INFO     | trainer:fit:116 - Fold 5 | Epoch 019/150 [0s] -> Train Loss: 43265.52, Val Loss: 39260.86, Val MAE: 161.03g
+2025-10-09 14:12:27.647 | INFO     | trainer:fit:116 - Fold 5 | Epoch 020/150 [0s] -> Train Loss: 41893.07, Val Loss: 37717.27, Val MAE: 157.10g
+2025-10-09 14:12:28.086 | INFO     | trainer:fit:116 - Fold 5 | Epoch 021/150 [0s] -> Train Loss: 40266.99, Val Loss: 36772.46, Val MAE: 154.38g
+2025-10-09 14:12:28.530 | INFO     | trainer:fit:116 - Fold 5 | Epoch 022/150 [0s] -> Train Loss: 39533.91, Val Loss: 35809.86, Val MAE: 152.05g
+2025-10-09 14:12:28.955 | INFO     | trainer:fit:116 - Fold 5 | Epoch 023/150 [0s] -> Train Loss: 38696.56, Val Loss: 35379.45, Val MAE: 151.19g
+2025-10-09 14:12:29.402 | INFO     | trainer:fit:116 - Fold 5 | Epoch 024/150 [0s] -> Train Loss: 37937.76, Val Loss: 34835.07, Val MAE: 150.22g
+2025-10-09 14:12:29.844 | INFO     | trainer:fit:116 - Fold 5 | Epoch 025/150 [0s] -> Train Loss: 37832.66, Val Loss: 34762.77, Val MAE: 149.99g
+2025-10-09 14:12:30.282 | INFO     | trainer:fit:116 - Fold 5 | Epoch 026/150 [0s] -> Train Loss: 37130.77, Val Loss: 34419.22, Val MAE: 148.87g
+2025-10-09 14:12:30.721 | INFO     | trainer:fit:116 - Fold 5 | Epoch 027/150 [0s] -> Train Loss: 36857.53, Val Loss: 34222.26, Val MAE: 148.38g
+2025-10-09 14:12:31.161 | INFO     | trainer:fit:116 - Fold 5 | Epoch 028/150 [0s] -> Train Loss: 36467.64, Val Loss: 33990.40, Val MAE: 147.40g
+2025-10-09 14:12:31.587 | INFO     | trainer:fit:116 - Fold 5 | Epoch 029/150 [0s] -> Train Loss: 36311.88, Val Loss: 34950.00, Val MAE: 148.49g
+2025-10-09 14:12:32.018 | INFO     | trainer:fit:116 - Fold 5 | Epoch 030/150 [0s] -> Train Loss: 36137.02, Val Loss: 33990.72, Val MAE: 146.69g
+2025-10-09 14:12:32.479 | INFO     | trainer:fit:116 - Fold 5 | Epoch 031/150 [0s] -> Train Loss: 35932.11, Val Loss: 34066.89, Val MAE: 146.88g
+2025-10-09 14:12:32.938 | INFO     | trainer:fit:116 - Fold 5 | Epoch 032/150 [0s] -> Train Loss: 35564.01, Val Loss: 34170.70, Val MAE: 147.49g
+2025-10-09 14:12:33.371 | INFO     | trainer:fit:116 - Fold 5 | Epoch 033/150 [0s] -> Train Loss: 35410.74, Val Loss: 33797.93, Val MAE: 146.22g
+2025-10-09 14:12:33.914 | INFO     | trainer:fit:116 - Fold 5 | Epoch 034/150 [0s] -> Train Loss: 35256.97, Val Loss: 34392.59, Val MAE: 146.58g
+2025-10-09 14:12:34.529 | INFO     | trainer:fit:116 - Fold 5 | Epoch 035/150 [1s] -> Train Loss: 35231.52, Val Loss: 33743.06, Val MAE: 145.86g
+2025-10-09 14:12:34.967 | INFO     | trainer:fit:116 - Fold 5 | Epoch 036/150 [0s] -> Train Loss: 35336.81, Val Loss: 33782.76, Val MAE: 145.28g
+2025-10-09 14:12:35.413 | INFO     | trainer:fit:116 - Fold 5 | Epoch 037/150 [0s] -> Train Loss: 34961.35, Val Loss: 34028.27, Val MAE: 145.58g
+2025-10-09 14:12:35.859 | INFO     | trainer:fit:116 - Fold 5 | Epoch 038/150 [0s] -> Train Loss: 34899.04, Val Loss: 33884.36, Val MAE: 145.90g
+2025-10-09 14:12:36.316 | INFO     | trainer:fit:116 - Fold 5 | Epoch 039/150 [0s] -> Train Loss: 34858.51, Val Loss: 33827.33, Val MAE: 145.65g
+2025-10-09 14:12:36.807 | INFO     | trainer:fit:116 - Fold 5 | Epoch 040/150 [0s] -> Train Loss: 35177.26, Val Loss: 33708.48, Val MAE: 145.17g
+2025-10-09 14:12:37.279 | INFO     | trainer:fit:116 - Fold 5 | Epoch 041/150 [0s] -> Train Loss: 34739.01, Val Loss: 34086.66, Val MAE: 145.46g
+2025-10-09 14:12:37.708 | INFO     | trainer:fit:116 - Fold 5 | Epoch 042/150 [0s] -> Train Loss: 34376.02, Val Loss: 34029.89, Val MAE: 145.74g
+2025-10-09 14:12:38.153 | INFO     | trainer:fit:116 - Fold 5 | Epoch 043/150 [0s] -> Train Loss: 34454.84, Val Loss: 34583.22, Val MAE: 146.27g
+2025-10-09 14:12:38.600 | INFO     | trainer:fit:116 - Fold 5 | Epoch 044/150 [0s] -> Train Loss: 34966.68, Val Loss: 34049.76, Val MAE: 145.23g
+2025-10-09 14:12:39.068 | INFO     | trainer:fit:116 - Fold 5 | Epoch 045/150 [0s] -> Train Loss: 34283.83, Val Loss: 34013.76, Val MAE: 145.30g
+2025-10-09 14:12:39.585 | INFO     | trainer:fit:116 - Fold 5 | Epoch 046/150 [0s] -> Train Loss: 34119.51, Val Loss: 34168.33, Val MAE: 145.85g
+2025-10-09 14:12:40.017 | INFO     | trainer:fit:116 - Fold 5 | Epoch 047/150 [0s] -> Train Loss: 34127.10, Val Loss: 34353.02, Val MAE: 145.62g
+2025-10-09 14:12:40.448 | INFO     | trainer:fit:116 - Fold 5 | Epoch 048/150 [0s] -> Train Loss: 34283.04, Val Loss: 34236.07, Val MAE: 145.71g
+2025-10-09 14:12:40.897 | INFO     | trainer:fit:116 - Fold 5 | Epoch 049/150 [0s] -> Train Loss: 34143.88, Val Loss: 34323.74, Val MAE: 146.17g
+2025-10-09 14:12:41.328 | INFO     | trainer:fit:116 - Fold 5 | Epoch 050/150 [0s] -> Train Loss: 33965.16, Val Loss: 34322.38, Val MAE: 145.96g
+2025-10-09 14:12:41.783 | INFO     | trainer:fit:116 - Fold 5 | Epoch 051/150 [0s] -> Train Loss: 34021.44, Val Loss: 34742.24, Val MAE: 147.03g
+2025-10-09 14:12:42.224 | INFO     | trainer:fit:116 - Fold 5 | Epoch 052/150 [0s] -> Train Loss: 34029.87, Val Loss: 34250.27, Val MAE: 146.04g
+2025-10-09 14:12:42.664 | INFO     | trainer:fit:116 - Fold 5 | Epoch 053/150 [0s] -> Train Loss: 33902.42, Val Loss: 34816.05, Val MAE: 146.53g
+2025-10-09 14:12:43.113 | INFO     | trainer:fit:116 - Fold 5 | Epoch 054/150 [0s] -> Train Loss: 33788.93, Val Loss: 34519.80, Val MAE: 146.52g
+2025-10-09 14:12:43.562 | INFO     | trainer:fit:116 - Fold 5 | Epoch 055/150 [0s] -> Train Loss: 34099.78, Val Loss: 34288.42, Val MAE: 145.60g
+2025-10-09 14:12:44.012 | INFO     | trainer:fit:116 - Fold 5 | Epoch 056/150 [0s] -> Train Loss: 33727.19, Val Loss: 34714.33, Val MAE: 146.40g
+2025-10-09 14:12:44.573 | INFO     | trainer:fit:116 - Fold 5 | Epoch 057/150 [1s] -> Train Loss: 33731.80, Val Loss: 35492.52, Val MAE: 148.18g
+2025-10-09 14:12:45.006 | INFO     | trainer:fit:116 - Fold 5 | Epoch 058/150 [0s] -> Train Loss: 34066.62, Val Loss: 35043.20, Val MAE: 146.89g
+2025-10-09 14:12:45.473 | INFO     | trainer:fit:116 - Fold 5 | Epoch 059/150 [0s] -> Train Loss: 33841.36, Val Loss: 35173.99, Val MAE: 147.71g
+2025-10-09 14:12:45.976 | INFO     | trainer:fit:116 - Fold 5 | Epoch 060/150 [0s] -> Train Loss: 33446.73, Val Loss: 35652.38, Val MAE: 148.50g
+2025-10-09 14:12:46.489 | INFO     | trainer:fit:116 - Fold 5 | Epoch 061/150 [0s] -> Train Loss: 33789.59, Val Loss: 34774.68, Val MAE: 146.77g
+2025-10-09 14:12:46.925 | INFO     | trainer:fit:116 - Fold 5 | Epoch 062/150 [0s] -> Train Loss: 33757.92, Val Loss: 34800.97, Val MAE: 146.57g
+2025-10-09 14:12:47.370 | INFO     | trainer:fit:116 - Fold 5 | Epoch 063/150 [0s] -> Train Loss: 34124.74, Val Loss: 35169.00, Val MAE: 147.62g
+2025-10-09 14:12:47.821 | INFO     | trainer:fit:116 - Fold 5 | Epoch 064/150 [0s] -> Train Loss: 33525.14, Val Loss: 35049.86, Val MAE: 147.24g
+2025-10-09 14:12:48.264 | INFO     | trainer:fit:116 - Fold 5 | Epoch 065/150 [0s] -> Train Loss: 34053.48, Val Loss: 35031.69, Val MAE: 147.24g
+2025-10-09 14:12:48.709 | INFO     | trainer:fit:116 - Fold 5 | Epoch 066/150 [0s] -> Train Loss: 33613.93, Val Loss: 35105.49, Val MAE: 147.44g
+2025-10-09 14:12:49.146 | INFO     | trainer:fit:116 - Fold 5 | Epoch 067/150 [0s] -> Train Loss: 33113.33, Val Loss: 34882.17, Val MAE: 146.71g
+2025-10-09 14:12:49.576 | INFO     | trainer:fit:116 - Fold 5 | Epoch 068/150 [0s] -> Train Loss: 33040.01, Val Loss: 34886.90, Val MAE: 146.72g
+2025-10-09 14:12:50.018 | INFO     | trainer:fit:116 - Fold 5 | Epoch 069/150 [0s] -> Train Loss: 33012.80, Val Loss: 34890.90, Val MAE: 146.72g
+2025-10-09 14:12:50.460 | INFO     | trainer:fit:116 - Fold 5 | Epoch 070/150 [0s] -> Train Loss: 32993.29, Val Loss: 34912.12, Val MAE: 146.81g
+2025-10-09 14:12:50.907 | INFO     | trainer:fit:116 - Fold 5 | Epoch 071/150 [0s] -> Train Loss: 32977.41, Val Loss: 34927.67, Val MAE: 146.80g
+2025-10-09 14:12:51.354 | INFO     | trainer:fit:116 - Fold 5 | Epoch 072/150 [0s] -> Train Loss: 33034.24, Val Loss: 34949.34, Val MAE: 146.87g
+2025-10-09 14:12:51.827 | INFO     | trainer:fit:116 - Fold 5 | Epoch 073/150 [0s] -> Train Loss: 32969.59, Val Loss: 34918.48, Val MAE: 146.81g
+2025-10-09 14:12:52.272 | INFO     | trainer:fit:116 - Fold 5 | Epoch 074/150 [0s] -> Train Loss: 32979.83, Val Loss: 34953.06, Val MAE: 146.86g
+2025-10-09 14:12:52.859 | INFO     | trainer:fit:116 - Fold 5 | Epoch 075/150 [1s] -> Train Loss: 33003.33, Val Loss: 34959.66, Val MAE: 146.91g
+2025-10-09 14:12:53.392 | INFO     | trainer:fit:116 - Fold 5 | Epoch 076/150 [0s] -> Train Loss: 33017.84, Val Loss: 34996.82, Val MAE: 146.97g
+2025-10-09 14:12:53.834 | INFO     | trainer:fit:116 - Fold 5 | Epoch 077/150 [0s] -> Train Loss: 32993.07, Val Loss: 35011.50, Val MAE: 147.05g
+2025-10-09 14:12:54.263 | INFO     | trainer:fit:116 - Fold 5 | Epoch 078/150 [0s] -> Train Loss: 32977.52, Val Loss: 35019.36, Val MAE: 146.98g
+2025-10-09 14:12:54.708 | INFO     | trainer:fit:116 - Fold 5 | Epoch 079/150 [0s] -> Train Loss: 33021.73, Val Loss: 35000.53, Val MAE: 146.96g
+2025-10-09 14:12:55.153 | INFO     | trainer:fit:116 - Fold 5 | Epoch 080/150 [0s] -> Train Loss: 32951.54, Val Loss: 35025.01, Val MAE: 147.02g
+2025-10-09 14:12:55.603 | INFO     | trainer:fit:116 - Fold 5 | Epoch 081/150 [0s] -> Train Loss: 32957.52, Val Loss: 35035.83, Val MAE: 147.06g
+2025-10-09 14:12:56.066 | INFO     | trainer:fit:116 - Fold 5 | Epoch 082/150 [0s] -> Train Loss: 32969.50, Val Loss: 35036.57, Val MAE: 147.06g
+2025-10-09 14:12:56.524 | INFO     | trainer:fit:116 - Fold 5 | Epoch 083/150 [0s] -> Train Loss: 32926.59, Val Loss: 35051.26, Val MAE: 147.09g
+2025-10-09 14:12:57.036 | INFO     | trainer:fit:116 - Fold 5 | Epoch 084/150 [0s] -> Train Loss: 32978.63, Val Loss: 35067.72, Val MAE: 147.08g
+2025-10-09 14:12:57.467 | INFO     | trainer:fit:116 - Fold 5 | Epoch 085/150 [0s] -> Train Loss: 32932.82, Val Loss: 35076.98, Val MAE: 147.13g
+2025-10-09 14:12:57.911 | INFO     | trainer:fit:116 - Fold 5 | Epoch 086/150 [0s] -> Train Loss: 32939.66, Val Loss: 35068.61, Val MAE: 147.13g
+2025-10-09 14:12:58.375 | INFO     | trainer:fit:116 - Fold 5 | Epoch 087/150 [0s] -> Train Loss: 32934.78, Val Loss: 35057.31, Val MAE: 147.09g
+2025-10-09 14:12:58.819 | INFO     | trainer:fit:116 - Fold 5 | Epoch 088/150 [0s] -> Train Loss: 32973.49, Val Loss: 35072.47, Val MAE: 147.12g
+2025-10-09 14:12:59.264 | INFO     | trainer:fit:116 - Fold 5 | Epoch 089/150 [0s] -> Train Loss: 32909.38, Val Loss: 35077.96, Val MAE: 147.12g
+2025-10-09 14:12:59.710 | INFO     | trainer:fit:116 - Fold 5 | Epoch 090/150 [0s] -> Train Loss: 32921.35, Val Loss: 35079.68, Val MAE: 147.13g
+2025-10-09 14:12:59.710 | WARNING  | trainer:fit:134 - Early stopping triggered at epoch 90.
+2025-10-09 14:12:59.711 | INFO     | trainer:fit:144 - Finished training Fold 5. Loaded best model weights.
+2025-10-09 14:12:59.713 | SUCCESS  | trainer:fit:152 - Best model for Fold 5 saved.
+2025-10-09 14:12:59.713 | SUCCESS  | __main__:main:177 - Fold 5 Best Validation MAE: 145.17g
+2025-10-09 14:12:59.714 | SUCCESS  | __main__:main:182 - K-Fold CV Summary: Average Validation MAE = 150.86g ± 5.47g
+2025-10-09 14:12:59.714 | INFO     | __main__:main:185 - Saving hyperparameters and metrics to TensorBoard...
+2025-10-09 14:12:59.720 | SUCCESS  | __main__:main:197 - Hyperparameters and metrics saved successfully.
+2025-10-09 14:12:59.720 | INFO     | __main__:main:200 - ----- Training Final Model on All Training Data -----
+2025-10-09 14:13:00.201 | INFO     | trainer:fit:137 - Final Train | Epoch 001/150 [0s] -> Train Loss: 11019216.2343
+2025-10-09 14:13:00.698 | INFO     | trainer:fit:137 - Final Train | Epoch 002/150 [0s] -> Train Loss: 10647639.5124
+2025-10-09 14:13:01.212 | INFO     | trainer:fit:137 - Final Train | Epoch 003/150 [1s] -> Train Loss: 8756691.9019
+2025-10-09 14:13:01.743 | INFO     | trainer:fit:137 - Final Train | Epoch 004/150 [1s] -> Train Loss: 4649576.2060
+2025-10-09 14:13:02.272 | INFO     | trainer:fit:137 - Final Train | Epoch 005/150 [1s] -> Train Loss: 888129.7452
+2025-10-09 14:13:02.775 | INFO     | trainer:fit:137 - Final Train | Epoch 006/150 [1s] -> Train Loss: 133823.3447
+2025-10-09 14:13:03.291 | INFO     | trainer:fit:137 - Final Train | Epoch 007/150 [1s] -> Train Loss: 114923.7128
+2025-10-09 14:13:03.828 | INFO     | trainer:fit:137 - Final Train | Epoch 008/150 [1s] -> Train Loss: 104831.3314
+2025-10-09 14:13:04.318 | INFO     | trainer:fit:137 - Final Train | Epoch 009/150 [0s] -> Train Loss: 95388.4621
+2025-10-09 14:13:04.858 | INFO     | trainer:fit:137 - Final Train | Epoch 010/150 [1s] -> Train Loss: 85966.8513
+2025-10-09 14:13:05.347 | INFO     | trainer:fit:137 - Final Train | Epoch 011/150 [0s] -> Train Loss: 76569.7598
+2025-10-09 14:13:05.848 | INFO     | trainer:fit:137 - Final Train | Epoch 012/150 [0s] -> Train Loss: 68455.6037
+2025-10-09 14:13:06.349 | INFO     | trainer:fit:137 - Final Train | Epoch 013/150 [1s] -> Train Loss: 61554.0320
+2025-10-09 14:13:06.893 | INFO     | trainer:fit:137 - Final Train | Epoch 014/150 [1s] -> Train Loss: 55863.2955
+2025-10-09 14:13:07.402 | INFO     | trainer:fit:137 - Final Train | Epoch 015/150 [1s] -> Train Loss: 51529.3441
+2025-10-09 14:13:07.893 | INFO     | trainer:fit:137 - Final Train | Epoch 016/150 [0s] -> Train Loss: 47682.4375
+2025-10-09 14:13:08.382 | INFO     | trainer:fit:137 - Final Train | Epoch 017/150 [0s] -> Train Loss: 45009.2779
+2025-10-09 14:13:08.886 | INFO     | trainer:fit:137 - Final Train | Epoch 018/150 [1s] -> Train Loss: 42640.5542
+2025-10-09 14:13:09.386 | INFO     | trainer:fit:137 - Final Train | Epoch 019/150 [0s] -> Train Loss: 40755.9866
+2025-10-09 14:13:09.869 | INFO     | trainer:fit:137 - Final Train | Epoch 020/150 [0s] -> Train Loss: 39432.5128
+2025-10-09 14:13:10.362 | INFO     | trainer:fit:137 - Final Train | Epoch 021/150 [0s] -> Train Loss: 38657.8055
+2025-10-09 14:13:10.842 | INFO     | trainer:fit:137 - Final Train | Epoch 022/150 [0s] -> Train Loss: 37731.1507
+2025-10-09 14:13:11.333 | INFO     | trainer:fit:137 - Final Train | Epoch 023/150 [0s] -> Train Loss: 37206.7801
+2025-10-09 14:13:11.827 | INFO     | trainer:fit:137 - Final Train | Epoch 024/150 [0s] -> Train Loss: 36582.3511
+2025-10-09 14:13:12.326 | INFO     | trainer:fit:137 - Final Train | Epoch 025/150 [0s] -> Train Loss: 36308.3380
+2025-10-09 14:13:12.819 | INFO     | trainer:fit:137 - Final Train | Epoch 026/150 [0s] -> Train Loss: 35977.9159
+2025-10-09 14:13:13.309 | INFO     | trainer:fit:137 - Final Train | Epoch 027/150 [0s] -> Train Loss: 35620.7522
+2025-10-09 14:13:13.805 | INFO     | trainer:fit:137 - Final Train | Epoch 028/150 [0s] -> Train Loss: 35470.9673
+2025-10-09 14:13:14.300 | INFO     | trainer:fit:137 - Final Train | Epoch 029/150 [0s] -> Train Loss: 35205.5311
+2025-10-09 14:13:14.800 | INFO     | trainer:fit:137 - Final Train | Epoch 030/150 [0s] -> Train Loss: 35190.5964
+2025-10-09 14:13:15.299 | INFO     | trainer:fit:137 - Final Train | Epoch 031/150 [0s] -> Train Loss: 34948.7694
+2025-10-09 14:13:15.786 | INFO     | trainer:fit:137 - Final Train | Epoch 032/150 [0s] -> Train Loss: 34827.1364
+2025-10-09 14:13:16.274 | INFO     | trainer:fit:137 - Final Train | Epoch 033/150 [0s] -> Train Loss: 35149.4189
+2025-10-09 14:13:16.765 | INFO     | trainer:fit:137 - Final Train | Epoch 034/150 [0s] -> Train Loss: 34829.6652
+2025-10-09 14:13:17.268 | INFO     | trainer:fit:137 - Final Train | Epoch 035/150 [1s] -> Train Loss: 34650.1800
+2025-10-09 14:13:17.761 | INFO     | trainer:fit:137 - Final Train | Epoch 036/150 [0s] -> Train Loss: 34536.8547
+2025-10-09 14:13:18.251 | INFO     | trainer:fit:137 - Final Train | Epoch 037/150 [0s] -> Train Loss: 34383.0586
+2025-10-09 14:13:18.730 | INFO     | trainer:fit:137 - Final Train | Epoch 038/150 [0s] -> Train Loss: 34993.9757
+2025-10-09 14:13:19.227 | INFO     | trainer:fit:137 - Final Train | Epoch 039/150 [0s] -> Train Loss: 34269.0126
+2025-10-09 14:13:19.723 | INFO     | trainer:fit:137 - Final Train | Epoch 040/150 [0s] -> Train Loss: 34345.3594
+2025-10-09 14:13:20.229 | INFO     | trainer:fit:137 - Final Train | Epoch 041/150 [1s] -> Train Loss: 34031.1530
+2025-10-09 14:13:20.737 | INFO     | trainer:fit:137 - Final Train | Epoch 042/150 [1s] -> Train Loss: 34482.2486
+2025-10-09 14:13:21.234 | INFO     | trainer:fit:137 - Final Train | Epoch 043/150 [0s] -> Train Loss: 34195.1183
+2025-10-09 14:13:21.727 | INFO     | trainer:fit:137 - Final Train | Epoch 044/150 [0s] -> Train Loss: 33949.6870
+2025-10-09 14:13:22.216 | INFO     | trainer:fit:137 - Final Train | Epoch 045/150 [0s] -> Train Loss: 34014.8596
+2025-10-09 14:13:22.717 | INFO     | trainer:fit:137 - Final Train | Epoch 046/150 [1s] -> Train Loss: 34051.0179
+2025-10-09 14:13:23.190 | INFO     | trainer:fit:137 - Final Train | Epoch 047/150 [0s] -> Train Loss: 33933.4496
+2025-10-09 14:13:23.699 | INFO     | trainer:fit:137 - Final Train | Epoch 048/150 [1s] -> Train Loss: 34113.7046
+2025-10-09 14:13:24.196 | INFO     | trainer:fit:137 - Final Train | Epoch 049/150 [0s] -> Train Loss: 33999.9346
+2025-10-09 14:13:24.690 | INFO     | trainer:fit:137 - Final Train | Epoch 050/150 [0s] -> Train Loss: 33865.3550
+2025-10-09 14:13:25.189 | INFO     | trainer:fit:137 - Final Train | Epoch 051/150 [0s] -> Train Loss: 33798.4982
+2025-10-09 14:13:25.678 | INFO     | trainer:fit:137 - Final Train | Epoch 052/150 [0s] -> Train Loss: 33877.2176
+2025-10-09 14:13:26.180 | INFO     | trainer:fit:137 - Final Train | Epoch 053/150 [1s] -> Train Loss: 33669.4767
+2025-10-09 14:13:26.682 | INFO     | trainer:fit:137 - Final Train | Epoch 054/150 [1s] -> Train Loss: 33788.2032
+2025-10-09 14:13:27.176 | INFO     | trainer:fit:137 - Final Train | Epoch 055/150 [0s] -> Train Loss: 34291.9837
+2025-10-09 14:13:27.668 | INFO     | trainer:fit:137 - Final Train | Epoch 056/150 [0s] -> Train Loss: 33720.1690
+2025-10-09 14:13:28.142 | INFO     | trainer:fit:137 - Final Train | Epoch 057/150 [0s] -> Train Loss: 34148.3556
+2025-10-09 14:13:28.629 | INFO     | trainer:fit:137 - Final Train | Epoch 058/150 [0s] -> Train Loss: 33565.7384
+2025-10-09 14:13:29.137 | INFO     | trainer:fit:137 - Final Train | Epoch 059/150 [1s] -> Train Loss: 33636.6657
+2025-10-09 14:13:29.624 | INFO     | trainer:fit:137 - Final Train | Epoch 060/150 [0s] -> Train Loss: 33829.3810
+2025-10-09 14:13:30.111 | INFO     | trainer:fit:137 - Final Train | Epoch 061/150 [0s] -> Train Loss: 33588.1473
+2025-10-09 14:13:30.606 | INFO     | trainer:fit:137 - Final Train | Epoch 062/150 [0s] -> Train Loss: 33465.3326
+2025-10-09 14:13:31.097 | INFO     | trainer:fit:137 - Final Train | Epoch 063/150 [0s] -> Train Loss: 33465.5505
+2025-10-09 14:13:31.573 | INFO     | trainer:fit:137 - Final Train | Epoch 064/150 [0s] -> Train Loss: 33452.1383
+2025-10-09 14:13:32.055 | INFO     | trainer:fit:137 - Final Train | Epoch 065/150 [0s] -> Train Loss: 34131.2200
+2025-10-09 14:13:32.539 | INFO     | trainer:fit:137 - Final Train | Epoch 066/150 [0s] -> Train Loss: 33375.7463
+2025-10-09 14:13:33.023 | INFO     | trainer:fit:137 - Final Train | Epoch 067/150 [0s] -> Train Loss: 33316.2774
+2025-10-09 14:13:33.506 | INFO     | trainer:fit:137 - Final Train | Epoch 068/150 [0s] -> Train Loss: 33536.9761
+2025-10-09 14:13:33.988 | INFO     | trainer:fit:137 - Final Train | Epoch 069/150 [0s] -> Train Loss: 33627.4144
+2025-10-09 14:13:34.467 | INFO     | trainer:fit:137 - Final Train | Epoch 070/150 [0s] -> Train Loss: 33385.6134
+2025-10-09 14:13:34.958 | INFO     | trainer:fit:137 - Final Train | Epoch 071/150 [0s] -> Train Loss: 33445.9208
+2025-10-09 14:13:35.438 | INFO     | trainer:fit:137 - Final Train | Epoch 072/150 [0s] -> Train Loss: 33317.8918
+2025-10-09 14:13:35.910 | INFO     | trainer:fit:137 - Final Train | Epoch 073/150 [0s] -> Train Loss: 33399.9962
+2025-10-09 14:13:36.394 | INFO     | trainer:fit:137 - Final Train | Epoch 074/150 [0s] -> Train Loss: 33643.2818
+2025-10-09 14:13:36.868 | INFO     | trainer:fit:137 - Final Train | Epoch 075/150 [0s] -> Train Loss: 33390.0539
+2025-10-09 14:13:37.351 | INFO     | trainer:fit:137 - Final Train | Epoch 076/150 [0s] -> Train Loss: 33412.6897
+2025-10-09 14:13:37.835 | INFO     | trainer:fit:137 - Final Train | Epoch 077/150 [0s] -> Train Loss: 33280.0916
+2025-10-09 14:13:38.324 | INFO     | trainer:fit:137 - Final Train | Epoch 078/150 [0s] -> Train Loss: 33997.1589
+2025-10-09 14:13:38.816 | INFO     | trainer:fit:137 - Final Train | Epoch 079/150 [0s] -> Train Loss: 33095.3927
+2025-10-09 14:13:39.306 | INFO     | trainer:fit:137 - Final Train | Epoch 080/150 [0s] -> Train Loss: 33579.3269
+2025-10-09 14:13:39.792 | INFO     | trainer:fit:137 - Final Train | Epoch 081/150 [0s] -> Train Loss: 32824.6814
+2025-10-09 14:13:40.270 | INFO     | trainer:fit:137 - Final Train | Epoch 082/150 [0s] -> Train Loss: 33347.8088
+2025-10-09 14:13:40.752 | INFO     | trainer:fit:137 - Final Train | Epoch 083/150 [0s] -> Train Loss: 33129.9011
+2025-10-09 14:13:41.244 | INFO     | trainer:fit:137 - Final Train | Epoch 084/150 [0s] -> Train Loss: 33125.7551
+2025-10-09 14:13:41.728 | INFO     | trainer:fit:137 - Final Train | Epoch 085/150 [0s] -> Train Loss: 33046.8460
+2025-10-09 14:13:42.232 | INFO     | trainer:fit:137 - Final Train | Epoch 086/150 [1s] -> Train Loss: 33631.9395
+2025-10-09 14:13:42.726 | INFO     | trainer:fit:137 - Final Train | Epoch 087/150 [0s] -> Train Loss: 33391.1845
+2025-10-09 14:13:43.211 | INFO     | trainer:fit:137 - Final Train | Epoch 088/150 [0s] -> Train Loss: 33034.7763
+2025-10-09 14:13:43.710 | INFO     | trainer:fit:137 - Final Train | Epoch 089/150 [0s] -> Train Loss: 32973.7185
+2025-10-09 14:13:44.200 | INFO     | trainer:fit:137 - Final Train | Epoch 090/150 [0s] -> Train Loss: 32911.6161
+2025-10-09 14:13:44.712 | INFO     | trainer:fit:137 - Final Train | Epoch 091/150 [1s] -> Train Loss: 32975.8786
+2025-10-09 14:13:45.231 | INFO     | trainer:fit:137 - Final Train | Epoch 092/150 [1s] -> Train Loss: 32973.3690
+2025-10-09 14:13:45.745 | INFO     | trainer:fit:137 - Final Train | Epoch 093/150 [1s] -> Train Loss: 32790.5225
+2025-10-09 14:13:46.255 | INFO     | trainer:fit:137 - Final Train | Epoch 094/150 [1s] -> Train Loss: 32639.6784
+2025-10-09 14:13:46.762 | INFO     | trainer:fit:137 - Final Train | Epoch 095/150 [1s] -> Train Loss: 32654.0612
+2025-10-09 14:13:47.268 | INFO     | trainer:fit:137 - Final Train | Epoch 096/150 [1s] -> Train Loss: 32753.1569
+2025-10-09 14:13:47.789 | INFO     | trainer:fit:137 - Final Train | Epoch 097/150 [1s] -> Train Loss: 32588.1179
+2025-10-09 14:13:48.319 | INFO     | trainer:fit:137 - Final Train | Epoch 098/150 [1s] -> Train Loss: 33148.0902
+2025-10-09 14:13:48.902 | INFO     | trainer:fit:137 - Final Train | Epoch 099/150 [1s] -> Train Loss: 32455.3964
+2025-10-09 14:13:49.496 | INFO     | trainer:fit:137 - Final Train | Epoch 100/150 [1s] -> Train Loss: 32497.8230
+2025-10-09 14:13:50.145 | INFO     | trainer:fit:137 - Final Train | Epoch 101/150 [1s] -> Train Loss: 32805.6272
+2025-10-09 14:13:50.669 | INFO     | trainer:fit:137 - Final Train | Epoch 102/150 [1s] -> Train Loss: 32685.9898
+2025-10-09 14:13:51.228 | INFO     | trainer:fit:137 - Final Train | Epoch 103/150 [1s] -> Train Loss: 32349.5815
+2025-10-09 14:13:51.720 | INFO     | trainer:fit:137 - Final Train | Epoch 104/150 [0s] -> Train Loss: 32740.0661
+2025-10-09 14:13:52.204 | INFO     | trainer:fit:137 - Final Train | Epoch 105/150 [0s] -> Train Loss: 32252.4168
+2025-10-09 14:13:52.718 | INFO     | trainer:fit:137 - Final Train | Epoch 106/150 [1s] -> Train Loss: 32275.4320
+2025-10-09 14:13:53.199 | INFO     | trainer:fit:137 - Final Train | Epoch 107/150 [0s] -> Train Loss: 32357.6582
+2025-10-09 14:13:54.054 | INFO     | trainer:fit:137 - Final Train | Epoch 108/150 [1s] -> Train Loss: 32476.3175
+2025-10-09 14:13:54.535 | INFO     | trainer:fit:137 - Final Train | Epoch 109/150 [0s] -> Train Loss: 32237.8356
+2025-10-09 14:13:55.000 | INFO     | trainer:fit:137 - Final Train | Epoch 110/150 [0s] -> Train Loss: 32112.6441
+2025-10-09 14:13:55.492 | INFO     | trainer:fit:137 - Final Train | Epoch 111/150 [0s] -> Train Loss: 32014.2219
+2025-10-09 14:13:55.960 | INFO     | trainer:fit:137 - Final Train | Epoch 112/150 [0s] -> Train Loss: 32196.8404
+2025-10-09 14:13:56.468 | INFO     | trainer:fit:137 - Final Train | Epoch 113/150 [1s] -> Train Loss: 32237.3932
+2025-10-09 14:13:56.927 | INFO     | trainer:fit:137 - Final Train | Epoch 114/150 [0s] -> Train Loss: 31855.8196
+2025-10-09 14:13:57.434 | INFO     | trainer:fit:137 - Final Train | Epoch 115/150 [1s] -> Train Loss: 31889.2535
+2025-10-09 14:13:57.945 | INFO     | trainer:fit:137 - Final Train | Epoch 116/150 [1s] -> Train Loss: 32524.4411
+2025-10-09 14:13:58.411 | INFO     | trainer:fit:137 - Final Train | Epoch 117/150 [0s] -> Train Loss: 31897.7594
+2025-10-09 14:13:58.873 | INFO     | trainer:fit:137 - Final Train | Epoch 118/150 [0s] -> Train Loss: 31789.7699
+2025-10-09 14:13:59.403 | INFO     | trainer:fit:137 - Final Train | Epoch 119/150 [1s] -> Train Loss: 31856.0755
+2025-10-09 14:13:59.976 | INFO     | trainer:fit:137 - Final Train | Epoch 120/150 [1s] -> Train Loss: 32235.5865
+2025-10-09 14:14:00.474 | INFO     | trainer:fit:137 - Final Train | Epoch 121/150 [0s] -> Train Loss: 31393.8307
+2025-10-09 14:14:00.928 | INFO     | trainer:fit:137 - Final Train | Epoch 122/150 [0s] -> Train Loss: 31926.3984
+2025-10-09 14:14:01.404 | INFO     | trainer:fit:137 - Final Train | Epoch 123/150 [0s] -> Train Loss: 31585.2774
+2025-10-09 14:14:01.936 | INFO     | trainer:fit:137 - Final Train | Epoch 124/150 [1s] -> Train Loss: 32194.5785
+2025-10-09 14:14:02.418 | INFO     | trainer:fit:137 - Final Train | Epoch 125/150 [0s] -> Train Loss: 31579.5732
+2025-10-09 14:14:02.881 | INFO     | trainer:fit:137 - Final Train | Epoch 126/150 [0s] -> Train Loss: 31305.4936
+2025-10-09 14:14:03.353 | INFO     | trainer:fit:137 - Final Train | Epoch 127/150 [0s] -> Train Loss: 31189.5333
+2025-10-09 14:14:03.938 | INFO     | trainer:fit:137 - Final Train | Epoch 128/150 [1s] -> Train Loss: 30981.6346
+2025-10-09 14:14:04.558 | INFO     | trainer:fit:137 - Final Train | Epoch 129/150 [1s] -> Train Loss: 30918.8374
+2025-10-09 14:14:05.054 | INFO     | trainer:fit:137 - Final Train | Epoch 130/150 [0s] -> Train Loss: 30967.3975
+2025-10-09 14:14:05.714 | INFO     | trainer:fit:137 - Final Train | Epoch 131/150 [1s] -> Train Loss: 31122.2306
+2025-10-09 14:14:06.574 | INFO     | trainer:fit:137 - Final Train | Epoch 132/150 [1s] -> Train Loss: 31207.1311
+2025-10-09 14:14:07.165 | INFO     | trainer:fit:137 - Final Train | Epoch 133/150 [1s] -> Train Loss: 30879.6298
+2025-10-09 14:14:07.808 | INFO     | trainer:fit:137 - Final Train | Epoch 134/150 [1s] -> Train Loss: 31222.2652
+2025-10-09 14:14:08.310 | INFO     | trainer:fit:137 - Final Train | Epoch 135/150 [1s] -> Train Loss: 31128.5617
+2025-10-09 14:14:08.802 | INFO     | trainer:fit:137 - Final Train | Epoch 136/150 [0s] -> Train Loss: 30873.9668
+2025-10-09 14:14:09.272 | INFO     | trainer:fit:137 - Final Train | Epoch 137/150 [0s] -> Train Loss: 30259.7625
+2025-10-09 14:14:09.798 | INFO     | trainer:fit:137 - Final Train | Epoch 138/150 [1s] -> Train Loss: 30388.8603
+2025-10-09 14:14:10.266 | INFO     | trainer:fit:137 - Final Train | Epoch 139/150 [0s] -> Train Loss: 30370.9224
+2025-10-09 14:14:10.763 | INFO     | trainer:fit:137 - Final Train | Epoch 140/150 [0s] -> Train Loss: 30032.3322
+2025-10-09 14:14:11.264 | INFO     | trainer:fit:137 - Final Train | Epoch 141/150 [1s] -> Train Loss: 30165.9361
+2025-10-09 14:14:11.768 | INFO     | trainer:fit:137 - Final Train | Epoch 142/150 [1s] -> Train Loss: 29955.4540
+2025-10-09 14:14:12.282 | INFO     | trainer:fit:137 - Final Train | Epoch 143/150 [1s] -> Train Loss: 29875.3515
+2025-10-09 14:14:12.767 | INFO     | trainer:fit:137 - Final Train | Epoch 144/150 [0s] -> Train Loss: 29873.4937
+2025-10-09 14:14:13.236 | INFO     | trainer:fit:137 - Final Train | Epoch 145/150 [0s] -> Train Loss: 29770.4471
+2025-10-09 14:14:13.724 | INFO     | trainer:fit:137 - Final Train | Epoch 146/150 [0s] -> Train Loss: 30093.5078
+2025-10-09 14:14:14.228 | INFO     | trainer:fit:137 - Final Train | Epoch 147/150 [1s] -> Train Loss: 29613.4979
+2025-10-09 14:14:14.729 | INFO     | trainer:fit:137 - Final Train | Epoch 148/150 [0s] -> Train Loss: 30003.7564
+2025-10-09 14:14:15.251 | INFO     | trainer:fit:137 - Final Train | Epoch 149/150 [1s] -> Train Loss: 30072.2609
+2025-10-09 14:14:15.759 | INFO     | trainer:fit:137 - Final Train | Epoch 150/150 [1s] -> Train Loss: 29556.9926
+2025-10-09 14:14:15.760 | INFO     | trainer:fit:144 - Finished training Fold Final. Loaded best model weights.
+2025-10-09 14:14:15.763 | SUCCESS  | trainer:fit:152 - Best model for Fold Final saved.
+2025-10-09 14:14:15.763 | INFO     | __main__:main:224 - ----- Evaluating Final Model on Held-Out Test Set -----
+2025-10-09 14:14:15.796 | SUCCESS  | __main__:main:233 - Final Test Set Performance -> MSE: 35015.5682, RMSE: 187.12g, MAE: 147.09g
