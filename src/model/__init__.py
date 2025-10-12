@@ -10,3 +10,9 @@
 """
 from .mlp import MLP
 from .kan import KAN
+from .fourier_kan import FourierKAN
+from .drop_kan import DropKAN
+from .wavelet_kan import WaveletKAN
+from .jacobi_kan import JacobiKAN
+from .taylor_kan import TaylorKAN
+from .cheby_kan import ChebyKAN

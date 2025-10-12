@@ -11,7 +11,6 @@
 import os
 import random
 import sys
-import time
 
 import pandas as pd
 import torch.distributed as dist
@@ -20,7 +19,8 @@ import torch
 from loguru import logger
 from torch.optim import AdamW, SGD, LBFGS
 from muon import MuonWithAuxAdam
-from model import MLP, KAN
+
+from model import *
 
 
 def get_optimizer(model, optimizer, lr):
@@ -55,14 +55,63 @@ def get_optimizer(model, optimizer, lr):
     return optimizer
 
 
-def get_model(args, input_dim):
-    """根据参数初始化模型"""
-    if args.model == 'MLP':
-        model = MLP(input_dim=input_dim, hidden_layers=args.hidden_layers, dropout_rate=args.dropout, init_type=args.init_type)
-    elif args.model == 'KAN':
-        model = KAN(layers_hidden=[input_dim] + args.hidden_layers + [1])
+def get_scheduler(optimizer, scheduler_cfg):
+    """根据参数初始化学习率调度器"""
+    if scheduler_cfg.name == 'ReduceLROnPlateau':
+        from torch.optim.lr_scheduler import ReduceLROnPlateau
+        scheduler = ReduceLROnPlateau(optimizer, mode='min', factor=0.1, patience=scheduler_cfg.patience)
+        logger.info(f"Using ReduceLROnPlateau scheduler with patience={scheduler_cfg.patience}.")
+    elif scheduler_cfg.name == 'CosineAnnealingWarmRestarts':
+        from torch.optim.lr_scheduler import CosineAnnealingWarmRestarts
+        # T_0: 初始重启周期长度，T_mult: 周期倍增因子，eta_min: 最小学习率
+        scheduler = CosineAnnealingWarmRestarts(optimizer, scheduler_cfg.T_0, T_mult=scheduler_cfg.T_mult, eta_min=scheduler_cfg.eta_min)
+        logger.info(f"Using CosineAnnealingWarmRestarts scheduler with T_0={scheduler_cfg.T_0}, T_mult={scheduler_cfg.T_mult}, eta_min={scheduler_cfg.eta_min}.")
+    elif scheduler_cfg.name == 'StepLR':
+        from torch.optim.lr_scheduler import StepLR
+        # step_size: 学习率衰减的步长，gamma: 衰减系数
+        scheduler = StepLR(optimizer, step_size=scheduler_cfg.step_size, gamma=scheduler_cfg.gamma)
+        logger.info(f"Using StepLR scheduler with step_size={scheduler_cfg.step_size}, gamma={scheduler_cfg.gamma}.")
+    elif scheduler_cfg.name == 'MultiStepLR':
+        from torch.optim.lr_scheduler import MultiStepLR
+        scheduler = MultiStepLR(optimizer, milestones=scheduler_cfg.milestones, gamma=scheduler_cfg.gamma)
+        logger.info(f"Using MultiStepLR scheduler with milestones={scheduler_cfg.milestones}, gamma={scheduler_cfg.gamma}.")
+    elif scheduler_cfg.name == 'ExponentialLR':
+        from torch.optim.lr_scheduler import ExponentialLR
+        # gamma: 指数衰减系数
+        scheduler = ExponentialLR(optimizer, gamma=scheduler_cfg.gamma)
+        logger.info(f"Using ExponentialLR scheduler with gamma={scheduler_cfg.gamma}.")
+    elif scheduler_cfg.name == 'CosineAnnealingLR':
+        from torch.optim.lr_scheduler import CosineAnnealingLR
+        # T_max: 最大迭代次数，eta_min: 最小学习率
+        scheduler = CosineAnnealingLR(optimizer, T_max=scheduler_cfg.T_max, eta_min=scheduler_cfg.eta_min)
+        logger.info(f"Using CosineAnnealingLR scheduler with T_max={scheduler_cfg.T_max}, eta_min={scheduler_cfg.eta_min}.")
     else:
-        raise ValueError(f"Invalid model: {args.model}. Please choose from ['MLP', KAN].")
+        raise ValueError(f"Invalid scheduler: {scheduler_cfg.scheduler}. Please choose from ['ReduceLROnPlateau', "
+                         f"'CosineAnnealingWarmRestarts', 'StepLR', 'MultiStepLR', 'ExponentialLR', 'CosineAnnealingLR'].")
+    return scheduler
+
+
+def get_model(model_cfg, input_dim):
+    """根据参数初始化模型"""
+    if model_cfg.name == 'MLP':
+        model = MLP(input_dim=input_dim, hidden_layers=model_cfg.hidden_layers, dropout_rate=model_cfg.dropout, init_type=model_cfg.init_type)
+    elif model_cfg.name == 'KAN': # MAE 150g
+        model = KAN(layers_hidden=[input_dim] + model_cfg.hidden_layers + [1])
+    elif model_cfg.name == 'Fourier-KAN':
+        model = FourierKAN(layers_hidden=[input_dim] + model_cfg.hidden_layers + [1])
+    elif model_cfg.name == 'DropKAN':
+        model = DropKAN(layers_hidden=[input_dim] + model_cfg.hidden_layers + [1], drop_rate=model_cfg.dropout)
+    elif model_cfg.name == 'Wavelet-KAN':
+        model = WaveletKAN(layers_hidden=[input_dim] + model_cfg.hidden_layers + [1])
+    elif model_cfg.name == 'Jacobi-KAN': # MAE 148
+        model = JacobiKAN(layers_hidden=[input_dim] + model_cfg.hidden_layers + [1])
+    elif model_cfg.name == 'Taylor-KAN': # best variant now MAE 148g
+        model = TaylorKAN(layers_hidden=[input_dim] + model_cfg.hidden_layers + [1])
+    elif model_cfg.name == 'Cheby-KAN':
+        model = ChebyKAN(layers_hidden=[input_dim] + model_cfg.hidden_layers + [1])
+    else:
+        raise ValueError(f"Invalid model: {model_cfg.name}. Please choose from "
+                         f"['MLP', 'KAN', 'Taylor-KAN', 'Fourier-KAN', 'Wavelet-KAN', 'Jacobi-KAN', 'Cheby-KAN'].")
     return model
 
 

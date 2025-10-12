@@ -1,0 +1,55 @@
+# ===================================================================
+#                    项目配置文件 (config.yaml)
+# ===================================================================
+
+# -------------------------- 数据预处理配置 ---------------------------
+data:
+  path: '../data/my_dataset.xlsx'
+  target_column: '出生体重'
+  feature_engineering: false # 是否执行专门为私有数据集设计的特征工程
+  test_size: 0.15          # 最终测试集的比例
+  binning: false           # 是否对目标变量进行分箱
+  standardize: true        # 是否对特征进行标准化
+  log_transform: false       # 是否对目标变量应用对数变换
+
+# ---------------------------- 模型配置 -----------------------------
+model:
+  name: 'Taylor-KAN'          # 模型架构, e.g., 'MLP', 'KAN', 'Taylor-KAN', 'Fourier-KAN', 'Wavelet-KAN', 'Jacobi-KAN', 'Cheby-KAN'
+  init_type: 'xavier'         # 权重初始化方法: 'uniform', 'normal', 'xavier', 'kaiming'
+  dropout: 0.0                # Dropout比率
+  hidden_layers: [64, 32]     # 隐藏层神经元数量列表
+
+# ---------------------------- 训练配置 -----------------------------
+training:
+  optimizer: 'AdamW'          # 优化器: 'AdamW', 'SGD', 'Muon', 'LBFGS'
+  lr: 0.001                   # 学习率
+  batch_size: 16              # 批处理大小
+  epochs: 150                 # 最大训练轮数
+  patience: 50                # 早停的耐心轮数
+
+  # 交叉验证配置
+  use_kfold: true            # 是否启用K折交叉验证 (若为false, 则使用简单验证集划分)
+  k_folds: 5                  # K折交叉验证的折数
+
+  # 学习率调度器配置
+  scheduler:
+    name: 'CosineAnnealingLR' # 调度器名称, e.g., 'ReduceLROnPlateau', 'CosineAnnealingWarmRestarts', 'CosineAnnealingLR', 'ExponentialLR'
+    # CosineAnnealingWarmRestarts 参数
+    T_0: 10
+    T_mult: 2
+    T_max: 150
+    eta_min: 0.0005
+    # ReduceLROnPlateau 参数
+    patience: 25
+    # ExponentialLR 参数
+    gamma: 0.1
+    # StepLR 参数
+    step_size: 30
+    # MultiStepLR参数
+    milestones: [30, 80, 130]
+
+# ---------------------------- 其他通用配置 ---------------------------
+others:
+  random_seed: 3407           # 全局随机种子, 保证实验可复现
+  device: 'auto'              # 训练设备: 'cuda', 'cpu', 'auto' (自动检测)
+  save_root: '../experiments' # 保存所有实验结果的根目录
