@@ -52,6 +52,12 @@ class MLP(nn.Module):
         self.init_type = init_type
         self._initialize_weights()
 
+    def regularization_loss(self):
+        """
+        计算模型正则化损失。
+        """
+        return sum(map(lambda m: sum(map(lambda p: p.abs().sum(), m.parameters())), self.model.modules()))
+
     def _initialize_weights(self):
         """
         根据指定的初始化方式初始化网络权重。

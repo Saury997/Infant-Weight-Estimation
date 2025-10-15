@@ -1,5 +1,5 @@
 # ===================================================================
-#                    项目配置文件 (config.yaml)
+#                    项目配置文件 (Taylor-KAN.yaml)
 # ===================================================================
 
 # -------------------------- 数据预处理配置 ---------------------------
@@ -14,29 +14,20 @@ data:
 
 # ---------------------------- 模型配置 -----------------------------
 model:
-  name: 'F-KAN'          # 模型架构, e.g., 'MLP', 'KAN', 'Taylor-KAN', 'Fourier-KAN', 'Wavelet-KAN', 'Jacobi-KAN', 'Cheby-KAN'
-  hidden_layers: [25, 10]       # 隐藏层神经元数量列表
+  name: 'Taylor-KAN'          # 模型架构, e.g., 'MLP', 'KAN', 'Taylor-KAN', 'Fourier-KAN', 'Wavelet-KAN', 'Jacobi-KAN', 'Cheby-KAN'
+  hidden_layers: [25]     # 隐藏层神经元数量列表
   params:
-    families: ["bspline", "taylor", "jacobi"]  # 函数族
-    bs_grid: 8                  # B-spline网格点数
-    bs_order: 3                 # B-spline阶数
-    taylor_order: 4             # Taylor阶数
-    jacobi_degree: 4            # Jacobi阶数
-    jacobi_a: 1.0               # Jacobi参数a
-    jacobi_b: 1.0               # Jacobi参数b
-    cheby_degree: 4             # Cheby阶数
-    fourier_frequencies: 8      # Fourier频率数
-    wavelet_type: "mexican_hat" # 波lets类型
-    wavelet_channels: 4         # 波lets通道数
-    mix_mode: "input"           # 混合模式: 'static', 'input'
-    use_bias: true              # 是否使用偏置项
+    order: 3                  # Taylor级数
+    scale_base: 0.3           # 缩放基
+    scale_taylor: 0.1         # Taylor级数缩放参数
+    use_bias: true            # 是否使用偏置项
 
 # ---------------------------- 训练配置 -----------------------------
 training:
   optimizer: 'AdamW'          # 优化器: 'AdamW', 'SGD', 'Muon', 'LBFGS'
   lr: 0.005                   # 学习率
   batch_size: 16              # 批处理大小
-  epochs: 100                 # 最大训练轮数
+  epochs: 200                 # 最大训练轮数
   patience: 50                # 早停的耐心轮数
 
   # 交叉验证配置
@@ -49,7 +40,7 @@ training:
     # CosineAnnealingWarmRestarts 参数
     T_0: 10
     T_mult: 2
-    T_max: 100
+    T_max: 150
     eta_min: 0.0005
     # ReduceLROnPlateau 参数
     patience: 25

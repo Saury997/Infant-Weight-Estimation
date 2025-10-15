@@ -20,8 +20,6 @@ from loguru import logger
 from torch.optim import AdamW, SGD, LBFGS
 from muon import MuonWithAuxAdam
 
-from model import *
-
 
 def get_optimizer(model, optimizer, lr):
     """根据参数初始化优化器"""
@@ -93,22 +91,34 @@ def get_scheduler(optimizer, scheduler_cfg):
 
 def get_model(model_cfg, input_dim):
     """根据参数初始化模型"""
+    params = vars(model_cfg.params)
     if model_cfg.name == 'MLP':
-        model = MLP(input_dim=input_dim, hidden_layers=model_cfg.hidden_layers, dropout_rate=model_cfg.dropout, init_type=model_cfg.init_type)
+        from model.mlp import MLP
+        model = MLP(input_dim=input_dim, **params)
     elif model_cfg.name == 'KAN': # MAE 150g
-        model = KAN(layers_hidden=[input_dim] + model_cfg.hidden_layers + [1])
+        from model.kan import KAN
+        model = KAN(layers_hidden=[input_dim] + model_cfg.hidden_layers + [1], **params)
     elif model_cfg.name == 'Fourier-KAN':
-        model = FourierKAN(layers_hidden=[input_dim] + model_cfg.hidden_layers + [1])
+        from model.fourier_kan import FourierKAN
+        model = FourierKAN(layers_hidden=[input_dim] + model_cfg.hidden_layers + [1], **params)
     elif model_cfg.name == 'DropKAN':
-        model = DropKAN(layers_hidden=[input_dim] + model_cfg.hidden_layers + [1], drop_rate=model_cfg.dropout)
+        from model.drop_kan import DropKAN
+        model = DropKAN(layers_hidden=[input_dim] + model_cfg.hidden_layers + [1], **params)
     elif model_cfg.name == 'Wavelet-KAN':
-        model = WaveletKAN(layers_hidden=[input_dim] + model_cfg.hidden_layers + [1])
+        from model.wavelet_kan import WaveletKAN
+        model = WaveletKAN(layers_hidden=[input_dim] + model_cfg.hidden_layers + [1], **params)
     elif model_cfg.name == 'Jacobi-KAN': # MAE 148
-        model = JacobiKAN(layers_hidden=[input_dim] + model_cfg.hidden_layers + [1])
+        from model.jacobi_kan import JacobiKAN
+        model = JacobiKAN(layers_hidden=[input_dim] + model_cfg.hidden_layers + [1], **params)
     elif model_cfg.name == 'Taylor-KAN': # best variant now MAE 148g
-        model = TaylorKAN(layers_hidden=[input_dim] + model_cfg.hidden_layers + [1])
+        from model.taylor_kan import TaylorKAN
+        model = TaylorKAN(layers_hidden=[input_dim] + model_cfg.hidden_layers + [1], **params)
     elif model_cfg.name == 'Cheby-KAN':
+        from model.cheby_kan import ChebyKAN
         model = ChebyKAN(layers_hidden=[input_dim] + model_cfg.hidden_layers + [1])
+    elif model_cfg.name == 'F-KAN':
+        from model.fkan import FKAN
+        model = FKAN(layers_hidden=[input_dim] + model_cfg.hidden_layers + [1], **params)
     else:
         raise ValueError(f"Invalid model: {model_cfg.name}. Please choose from "
                          f"['MLP', 'KAN', 'Taylor-KAN', 'Fourier-KAN', 'Wavelet-KAN', 'Jacobi-KAN', 'Cheby-KAN'].")

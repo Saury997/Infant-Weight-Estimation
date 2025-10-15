@@ -1,5 +1,5 @@
 # ===================================================================
-#                    项目配置文件 (config.yaml)
+#                    项目配置文件 (KAN.yaml)
 # ===================================================================
 
 # -------------------------- 数据预处理配置 ---------------------------
@@ -14,33 +14,26 @@ data:
 
 # ---------------------------- 模型配置 -----------------------------
 model:
-  name: 'F-KAN'          # 模型架构, e.g., 'MLP', 'KAN', 'Taylor-KAN', 'Fourier-KAN', 'Wavelet-KAN', 'Jacobi-KAN', 'Cheby-KAN'
-  hidden_layers: [25, 10]       # 隐藏层神经元数量列表
+  name: 'KAN'          # 模型架构, e.g., 'MLP', 'KAN', 'Taylor-KAN', 'Fourier-KAN', 'Wavelet-KAN', 'Jacobi-KAN', 'Cheby-KAN' and our 'F-KAN'
+  hidden_layers: [64, 32]     # 隐藏层神经元数量列表
   params:
-    families: ["bspline", "taylor", "jacobi"]  # 函数族
-    bs_grid: 8                  # B-spline网格点数
-    bs_order: 3                 # B-spline阶数
-    taylor_order: 4             # Taylor阶数
-    jacobi_degree: 4            # Jacobi阶数
-    jacobi_a: 1.0               # Jacobi参数a
-    jacobi_b: 1.0               # Jacobi参数b
-    cheby_degree: 4             # Cheby阶数
-    fourier_frequencies: 8      # Fourier频率数
-    wavelet_type: "mexican_hat" # 波lets类型
-    wavelet_channels: 4         # 波lets通道数
-    mix_mode: "input"           # 混合模式: 'static', 'input'
-    use_bias: true              # 是否使用偏置项
+    grid_size: 1              # 样条的网格大小
+    spline_order: 3           # 样条的阶数
+    scale_noise: 0.01         # 噪声的缩放因子
+    scale_base: 0.03          # 基函数的缩放因子
+    scale_spline: 0.1         # 样条的缩放因子
+    grid_eps: 0.02            # 样条的网格eps
 
 # ---------------------------- 训练配置 -----------------------------
 training:
   optimizer: 'AdamW'          # 优化器: 'AdamW', 'SGD', 'Muon', 'LBFGS'
-  lr: 0.005                   # 学习率
+  lr: 0.001                   # 学习率
   batch_size: 16              # 批处理大小
-  epochs: 100                 # 最大训练轮数
+  epochs: 150                 # 最大训练轮数
   patience: 50                # 早停的耐心轮数
 
   # 交叉验证配置
-  use_kfold: true            # 是否启用K折交叉验证 (若为false, 则使用简单验证集划分)
+  use_kfold: false            # 是否启用K折交叉验证 (若为false, 则使用简单验证集划分)
   k_folds: 5                  # K折交叉验证的折数
 
   # 学习率调度器配置
@@ -49,7 +42,7 @@ training:
     # CosineAnnealingWarmRestarts 参数
     T_0: 10
     T_mult: 2
-    T_max: 100
+    T_max: 150
     eta_min: 0.0005
     # ReduceLROnPlateau 参数
     patience: 25

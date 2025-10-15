@@ -16,3 +16,4 @@ from .wavelet_kan import WaveletKAN
 from .jacobi_kan import JacobiKAN
 from .taylor_kan import TaylorKAN
 from .cheby_kan import ChebyKAN
+from .fkan import FKAN

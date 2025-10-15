@@ -112,6 +112,7 @@ def main():
 
     if config.others.device == 'auto':
         config.others.device = 'cuda' if torch.cuda.is_available() else 'cpu'
+    logger.info(f"Using device: {config.others.device}")
     set_seed(config.others.random_seed)
     if not os.path.exists(config.others.save_root):
         os.makedirs(config.others.save_root)
@@ -131,13 +132,11 @@ def main():
     writer = SummaryWriter(log_dir=tensorboard_dir)
 
     logger.info(f"Experiment run directory: {run_dir}")
-    logger.info(f"Using device: {config.others.device}")
 
     # 超参数保存
     with open(args.config, 'r', encoding='utf-8') as f_in, open(config_file_path, 'w', encoding='utf-8') as f_out:
         f_out.write(f_in.read())
     logger.info(f"Configuration for this run saved to {config_file_path}")
-    logger.info(f"Using device: {config.others.device}")
     logger.info(f"Experiments are conducted on {config.model.name}.")
 
     # --- 1. 数据加载和预处理 ---

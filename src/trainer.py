@@ -64,7 +64,7 @@ class Trainer:
                     outputs = torch.exp(self.model(inputs))
                 else:
                     outputs = self.model(inputs)
-                loss = self.criterion(outputs, targets) + self.model.regularization_loss()
+                loss = self.criterion(outputs, targets) #+ self.model.regularization_loss()
                 loss.backward()
                 self.optimizer.step()
                 running_loss += loss.item() * inputs.size(0)
@@ -123,7 +123,7 @@ class Trainer:
                     self.writer.add_scalar(f'{log_prefix}Learning_Rate', self.optimizer.param_groups[0]['lr'], epoch)
                 scheduler.step(val_loss)
 
-                if val_loss < self.best_val_loss:
+                if val_mae < self.best_val_mae:
                     self.best_val_loss, self.best_val_mae = val_loss, val_mae
                     self.best_model_wts = copy.deepcopy(self.model.state_dict())
                     patience_counter = 0
