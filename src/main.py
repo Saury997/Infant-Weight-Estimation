@@ -1,7 +1,18 @@
-# main.py
+#!/usr/bin/env python
+# -*- coding: UTF-8 -*-
+"""
+* Author: Zongjian Yang
+* Date: 2025/10/09
+* Project: InfantWeight
+* File: main.py
+* Function: Main training script for fetal weight prediction models.
+  Supports multiple model architectures (MLP, KAN, Fourier-KAN, etc.) and training modes (k-fold cross-validation or simple validation).
+  Handles data loading, preprocessing, model training, evaluation, and result logging with TensorBoard support.
+"""
 import os
 import time
 from types import SimpleNamespace
+import warnings
 
 import torch
 import torch.nn as nn
@@ -18,66 +29,7 @@ from data_loader import load_and_preprocess_data
 from trainer import Trainer
 from utils import get_optimizer, set_seed, get_model, check_distribution, setup_logger, get_scheduler
 
-
-def parse_args():
-    """解析命令行参数"""
-    parser = argparse.ArgumentParser(description='Fetal Weight Prediction Model Training')
-
-    # data hyperparameters
-    parser.add_argument('--data-path', type=str, default='../data/my_dataset.xlsx',
-                        help='Path to the dataset file')
-    parser.add_argument('--target-column', type=str, default='出生体重',
-                        help='Target column name in the dataset')
-    parser.add_argument('--feature-engineering', action='store_true', default=False,
-                        help='Perform advanced feature engineering, specifically designed for private datasets.')
-    parser.add_argument('--test-size', type=float, default=0.15,
-                        help='Proportion of the dataset to hold out for the final test set')
-    parser.add_argument('--bin', action='store_true', default=False,
-                        help='Perform binning of the target variable.')
-    parser.add_argument('--standardize', action='store_true', default=False,
-                        help='Whether to standardize the features.')
-    parser.add_argument('--log-transform', action='store_true', default=False,
-                        help='Apply log transformation to target variable')
-
-    # model hyperparameters
-    parser.add_argument('--model', type=str, default='MLP', help='Model architecture')
-    parser.add_argument('--init-type', type=str, default='xavier',
-                        choices=['uniform', 'normal', 'xavier', 'kaiming'], help='Initialization type for model weights')
-    parser.add_argument('--dropout', type=float, default=0.2,
-                        help='Dropout rate for the model')
-    parser.add_argument('--hidden-layers', type=int, nargs='+', default=[128, 64],
-                        help='Hidden layer sizes')
-
-    # training hyperparameters
-    parser.add_argument('--optimizer', type=str, default='AdamW',
-                        choices=['AdamW', 'SGD', 'Muon', 'LBFGS'], help='Optimizer for training')
-    parser.add_argument('--lr', type=float, default=0.001,
-                        help='Learning rate for the optimizer')
-    parser.add_argument('--batch-size', type=int, default=32,
-                        help='Batch size for training')
-    parser.add_argument('--epochs', type=int, default=200,
-                        help='Maximum number of training epochs')
-    parser.add_argument('--patience', type=int, default=50,
-                        help='Patience for early stopping')
-    parser.add_argument('--use-kfold', action='store_true',
-                        help='Enable K-Fold Cross-Validation. If not set, uses a simple train/val split.')
-    parser.add_argument('--k-folds', type=int, default=5,
-                        help='Number of folds for K-Fold Cross-Validation')
-    parser.add_argument('--scheduler', type=str, default='ReduceLROnPlateau',
-                        help='Scheduler for training')
-    parser.add_argument('--T_0', type=int, default=10, help='Number of iterations before reducing learning rate')
-    parser.add_argument('--eta_min', type=float, default=1e-5, help='Minimum learning rate for scheduler')
-    parser.add_argument('--gamma', type=float, default=0.1, help='Multiplicative factor for learning rate reduction')
-
-    # others
-    parser.add_argument('--random-seed', type=int, default=3407,
-                        help='Random seed for reproducibility')
-    parser.add_argument('--device', type=str, default='cuda' if torch.cuda.is_available() else 'cpu',
-                        help='Device to use for training (cuda or cpu)')
-    parser.add_argument('--save-root', type=str, default='../experiments',
-                        help='Root directory to save all experiment results')
-
-    return parser.parse_args()
+warnings.filterwarnings("ignore")
 
 
 def load_config(config_path):
@@ -98,6 +50,7 @@ def load_config(config_path):
         return namespace
 
     return dict_to_namespace(config_dict)
+
 
 def main():
     parser = argparse.ArgumentParser(description='Fetal Weight Prediction Model Training')

@@ -6,10 +6,12 @@
 * Project: InfantWeight 
 * File: data_loader.py
 * IDE: PyCharm 
-* Function:
+* Function: Data loading and preprocessing module for fetal weight prediction.
+  Provides feature engineering capabilities and data preparation functions including target variable binning and log transformation.
 """
 import pandas as pd
 import numpy as np
+from loguru import logger
 
 
 def feature_engineering(df):
@@ -22,7 +24,7 @@ def feature_engineering(df):
     Returns:
         pd.DataFrame: 经过特征工程后的数据框。
     """
-    print("Performing advanced feature engineering...")
+    logger.info("Performing advanced feature engineering...")
 
     # --- I. 创建生理学综合指标 ---
     # 计算孕妇BMI (注意单位转换: cm -> m)
@@ -80,6 +82,7 @@ def load_and_preprocess_data(file_path, target_column, feat_eng=False, binning=F
         target_column (str): 目标变量的列名 (e.g., '出生体重')。
         feat_eng (bool, optional): 是否进行高级特征工程。默认为 True。
         binning (bool, optional): 是否进行目标变量的分箱。默认为 False。
+        log_transform (bool, optional): 是否对目标变量进行对数变换。默认为 False。
 
     Returns:
         tuple: 包含 X, y 和 input_dim。
@@ -88,7 +91,7 @@ def load_and_preprocess_data(file_path, target_column, feat_eng=False, binning=F
     try:
         df = pd.read_excel(file_path)
     except FileNotFoundError:
-        print(f"错误: 数据文件 '{file_path}' 未找到。请确保文件在正确的路径下。")
+        logger.error(f"错误: 数据文件 '{file_path}' 未找到。请确保文件在正确的路径下。")
         return None, None, None, None, None
 
     # 2. 剔除无关或导致数据泄漏的列
@@ -96,7 +99,6 @@ def load_and_preprocess_data(file_path, target_column, feat_eng=False, binning=F
 
     # 3. 执行高级特征工程
     if feat_eng:
-        print("Performing advanced feature engineering...")
         df = feature_engineering(df)
 
     # 4. 划分特征 (X) 和目标 (y)
@@ -108,7 +110,7 @@ def load_and_preprocess_data(file_path, target_column, feat_eng=False, binning=F
 
     # 5. 对目标变量进行分箱
     if binning:
-        print("Binning target variable...")
+        logger.info("Binning target variable...")
         bins = list(np.arange(1470, 4800 + 500, 500))
         labels = list(range(len(bins) - 1))
         y_bins = pd.cut(y, bins=bins, labels=labels, include_lowest=True)

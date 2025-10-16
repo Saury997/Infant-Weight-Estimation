@@ -6,7 +6,9 @@
 * Project: InfantWeight 
 * File: trainer.py
 * IDE: PyCharm 
-* Function:
+* Function: Model training and evaluation module for fetal weight prediction.
+  Provides the trainer class that encapsulates training loop, validation, early stopping, and model saving functionality.
+  Supports various optimizers including LBFGS and handles both k-fold cross-validation and final model training modes.
 """
 import os
 import torch

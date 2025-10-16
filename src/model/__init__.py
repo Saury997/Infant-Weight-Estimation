@@ -17,3 +17,6 @@ from .jacobi_kan import JacobiKAN
 from .taylor_kan import TaylorKAN
 from .cheby_kan import ChebyKAN
 from .fkan import FKAN
+from .cnn import CNNRegressor1D
+from .rnn import RNNRegressor
+from .lstm import LSTMRegressor

@@ -17,8 +17,35 @@ import torch.distributed as dist
 import numpy as np
 import torch
 from loguru import logger
+from sklearn.neighbors import KNeighborsRegressor
+from sklearn.pipeline import Pipeline
+from sklearn.preprocessing import StandardScaler
 from torch.optim import AdamW, SGD, LBFGS
 from muon import MuonWithAuxAdam
+from sklearn.metrics import mean_squared_error, mean_absolute_error, r2_score
+from sklearn.linear_model import LinearRegression, Ridge, Lasso, ElasticNet
+from sklearn.svm import SVR
+from sklearn.kernel_ridge import KernelRidge
+from sklearn.ensemble import (
+    RandomForestRegressor,
+    ExtraTreesRegressor,
+    GradientBoostingRegressor
+)
+try:
+    from xgboost import XGBRegressor
+    _HAS_XGB = True
+except ImportError:
+    _HAS_XGB = False
+try:
+    from lightgbm import LGBMRegressor
+    _HAS_LGBM = True
+except ImportError:
+    _HAS_LGBM = False
+try:
+    from catboost import CatBoostRegressor
+    _HAS_CAT = True
+except ImportError:
+    _HAS_CAT = False
 
 
 def get_optimizer(model, optimizer, lr):
@@ -95,7 +122,16 @@ def get_model(model_cfg, input_dim):
     if model_cfg.name == 'MLP':
         from model.mlp import MLP
         model = MLP(input_dim=input_dim, **params)
-    elif model_cfg.name == 'KAN': # MAE 150g
+    elif model_cfg.name == 'CNN':
+        from model.cnn import CNNRegressor1D
+        model = CNNRegressor1D(num_features=input_dim, **params)
+    elif model_cfg.name == 'RNN':
+        from model.rnn import RNNRegressor
+        model = RNNRegressor(**params)
+    elif model_cfg.name == 'LSTM':
+        from model.lstm import LSTMRegressor
+        model = LSTMRegressor(**params)
+    elif model_cfg.name == 'KAN':
         from model.kan import KAN
         model = KAN(layers_hidden=[input_dim] + model_cfg.hidden_layers + [1], **params)
     elif model_cfg.name == 'Fourier-KAN':
@@ -107,10 +143,10 @@ def get_model(model_cfg, input_dim):
     elif model_cfg.name == 'Wavelet-KAN':
         from model.wavelet_kan import WaveletKAN
         model = WaveletKAN(layers_hidden=[input_dim] + model_cfg.hidden_layers + [1], **params)
-    elif model_cfg.name == 'Jacobi-KAN': # MAE 148
+    elif model_cfg.name == 'Jacobi-KAN':
         from model.jacobi_kan import JacobiKAN
         model = JacobiKAN(layers_hidden=[input_dim] + model_cfg.hidden_layers + [1], **params)
-    elif model_cfg.name == 'Taylor-KAN': # best variant now MAE 148g
+    elif model_cfg.name == 'Taylor-KAN':
         from model.taylor_kan import TaylorKAN
         model = TaylorKAN(layers_hidden=[input_dim] + model_cfg.hidden_layers + [1], **params)
     elif model_cfg.name == 'Cheby-KAN':
@@ -166,7 +202,6 @@ def check_distribution(y_train, y_test, y_bins_train, y_bins_test):
     stats_summary(y_test, y_bins_test, "测试集")
 
 
-
 def setup_logger(log_file_path):
     """初始化日志记录器"""
     log_format = (
@@ -178,3 +213,59 @@ def setup_logger(log_file_path):
     logger.add(sys.stderr, format=log_format, level="INFO")
     logger.add(log_file_path, rotation="10 MB", level="DEBUG")
     logger.info("Logger initialized.")
+
+
+def evaluate_regression(y_true, y_pred):
+    """计算回归任务的各项评估指标"""
+    mse = mean_squared_error(y_true, y_pred)
+    rmse = float(np.sqrt(mse))
+    mae = mean_absolute_error(y_true, y_pred)
+    r2 = r2_score(y_true, y_pred)
+    return {"MSE": mse, "RMSE": rmse, "MAE": mae, "R2": r2}
+
+
+def build_regressor(algo: str, cfg_ml, standardize:bool=False) -> Pipeline:
+    """根据算法名称和配置构建一个 scikit-learn Pipeline"""
+    steps = []
+
+    if standardize or algo in ['KNN', 'SVR', 'Ridge', 'Lasso', 'ElasticNet']:
+        steps.append(('scaler', StandardScaler()))
+
+    algo = algo.strip()
+    if algo == 'KNN':
+        base = KNeighborsRegressor(**vars(cfg_ml.knn))
+    elif algo == 'RandomForest':
+        base = RandomForestRegressor(**vars(cfg_ml.random_forest))
+    elif algo == 'ExtraTrees':
+        base = ExtraTreesRegressor(**vars(cfg_ml.extra_trees))
+    elif algo == 'XGBoost':
+        if not _HAS_XGB:
+            raise ImportError("XGBoost not installed, please `pip install xgboost`")
+        base = XGBRegressor(**vars(cfg_ml.xgboost))
+    elif algo == 'LightGBM':
+        if not _HAS_LGBM:
+            raise ImportError("LightGBM not installed, please `pip install lightgbm`")
+        base = LGBMRegressor(**vars(cfg_ml.lightgbm))
+    elif algo == 'CatBoost':
+        if not _HAS_CAT:
+            raise ImportError("CatBoost not installed, please `pip install catboost`")
+        base = CatBoostRegressor(**vars(cfg_ml.catboost))
+    elif algo == 'Linear':
+        base = LinearRegression(**vars(cfg_ml.linear))
+    elif algo == 'Ridge':
+        base = Ridge(**vars(cfg_ml.ridge))
+    elif algo == 'Lasso':
+        base = Lasso(**vars(cfg_ml.lasso))
+    elif algo == 'ElasticNet':
+        base = ElasticNet(**vars(cfg_ml.elasticnet))
+    elif algo == 'SVR':
+        base = SVR(**vars(cfg_ml.svr))
+    elif algo == 'KernelRidge':
+        base = KernelRidge(**vars(cfg_ml.kernel_ridge))
+    elif algo == 'GBDT':
+        base = GradientBoostingRegressor(**vars(cfg_ml.gbdt))
+    else:
+        raise ValueError(f"Unsupported algorithm: {algo}")
+
+    steps.append(('model', base))
+    return Pipeline(steps)

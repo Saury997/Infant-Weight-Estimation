@@ -1,5 +1,5 @@
 # ===================================================================
-#                    项目配置文件 (MLP.yaml)
+#                    项目配置文件 (RNN.yaml)
 # ===================================================================
 
 # -------------------------- 数据预处理配置 ---------------------------
@@ -14,11 +14,18 @@ data:
 
 # ---------------------------- 模型配置 -----------------------------
 model:
-  name: 'MLP'          # 模型架构, e.g., 'MLP', 'KAN', 'Taylor-KAN', 'Fourier-KAN', 'Wavelet-KAN', 'Jacobi-KAN', 'Cheby-KAN'
-  hidden_layers: [128, 64]     # 隐藏层神经元数量列表
+  name: 'RNN'          # 模型架构, e.g., 'MLP', 'KAN', 'Taylor-KAN', 'Fourier-KAN', 'Wavelet-KAN', 'Jacobi-KAN', 'Cheby-KAN'
+  hidden_layers: [64]
   params:
+    hidden_size: 64
+    num_layers: 1
+    nonlinearity: 'tanh'
+    bidirectional: false
+    mlp_hidden: 64
     init_type: 'xavier'         # 权重初始化方法: 'uniform', 'normal', 'xavier', 'kaiming'
-    dropout: 0.2                # Dropout比率
+    dropout: 0.1                # Dropout比率
+    act: "relu"
+    use_lazy_proj: false
 
 # ---------------------------- 训练配置 -----------------------------
 training:
@@ -52,5 +59,5 @@ training:
 # ---------------------------- 其他通用配置 ---------------------------
 others:
   random_seed: 3407           # 全局随机种子, 保证实验可复现
-  device: 'auto'              # 训练设备: 'cuda', 'cpu', 'auto' (自动检测)
+  device: 'cuda'              # 训练设备: 'cuda', 'cpu', 'auto' (自动检测)
   save_root: '../experiments' # 保存所有实验结果的根目录
