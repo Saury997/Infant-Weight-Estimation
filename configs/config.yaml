@@ -65,3 +65,4 @@ others:
   random_seed: 3407           # 全局随机种子, 保证实验可复现
   device: 'auto'              # 训练设备: 'cuda', 'cpu', 'auto' (自动检测)
   save_root: '../experiments' # 保存所有实验结果的根目录
+  plot: true

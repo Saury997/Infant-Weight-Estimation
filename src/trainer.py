@@ -79,6 +79,7 @@ class Trainer:
         self.model.eval()  # 设置为评估模式
         running_loss = 0.0
         running_mae = 0.0
+        all_outputs = []
         progress_bar = tqdm(data_loader, desc="Evaluating", leave=False)
 
         with torch.no_grad():
@@ -89,6 +90,7 @@ class Trainer:
                     outputs, targets = torch.exp(self.model(inputs)), torch.exp(targets)
                 else:
                     outputs = self.model(inputs)
+                all_outputs.append(outputs)
                 loss = self.criterion(outputs, targets)
 
                 # 计算 MAE (平均绝对误差)
@@ -99,7 +101,8 @@ class Trainer:
 
         epoch_loss = running_loss / len(data_loader.dataset)
         epoch_mae = running_mae / len(data_loader.dataset)
-        return epoch_loss, epoch_mae
+        y_pred = torch.cat(all_outputs, dim=0)
+        return epoch_loss, epoch_mae, y_pred
 
     def fit(self, train_loader, val_loader, save_root, scheduler):
         """
@@ -114,7 +117,7 @@ class Trainer:
             elapsed = time.time() - start_time
 
             if val_loader:
-                val_loss, val_mae = self.evaluate(val_loader)
+                val_loss, val_mae, _ = self.evaluate(val_loader)
                 logger.info(f"Fold {self.fold} | Epoch {epoch+1:03d}/{self.epochs} [{elapsed:.2f}s] -> Train Loss: {train_loss:.2f}, "
                             f"Val Loss: {val_loss:.2f}, Val MAE: {val_mae:.2f}g")
                 if self.writer:

@@ -16,9 +16,11 @@ import joblib
 import numpy as np
 import pandas as pd
 from loguru import logger
+from matplotlib import pyplot as plt
 from sklearn.model_selection import KFold, train_test_split
 
 from data_loader import load_and_preprocess_data
+from src.plot import result_plot
 from utils import set_seed, setup_logger, evaluate_regression, build_regressor
 from main import load_config
 
@@ -129,8 +131,29 @@ def main():
 
         y_test_pred = final_model.predict(X_test)
 
+        y_tr_pred = final_model.predict(X_train_val)
+        y_tr_true = np.exp(y_train_val.values) if config.data.log_transform else y_train_val.values
         y_test_true = np.exp(y_test.values) if config.data.log_transform else y_test.values
         if config.data.log_transform: y_test_pred = np.exp(y_test_pred)
+
+        if config.others.plot:
+            fig, _ = result_plot(
+                y_tr_true, y_tr_pred,
+                y_test_true, y_test_pred,
+                model_name=algo,
+                xlabel="True Values",
+                ylabel="Predicted Values",
+                panel_tag=None,
+                show_top_hist=True,
+                show_right_hist=True,
+                show_bottom_residual=True,
+                bins=20,
+                figsize=(2.6, 3.2), dpi=300
+            )
+            fig_path = os.path.join(algo_dir, f'result_visualization-{algo}.png')
+            fig.savefig(fig_path, dpi=300, bbox_inches="tight")
+            plt.close(fig)
+            logger.info(f"Visualization saved to: {fig_path}")
 
         # 保存预测结果
         predictions_df = pd.DataFrame({'y_true': y_test_true, 'y_pred': y_test_pred})

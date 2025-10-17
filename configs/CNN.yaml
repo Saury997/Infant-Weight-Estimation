@@ -15,7 +15,6 @@ data:
 # ---------------------------- 模型配置 -----------------------------
 model:
   name: 'CNN'          # 模型架构, e.g., 'MLP', 'KAN', 'Taylor-KAN', 'Fourier-KAN', 'Wavelet-KAN', 'Jacobi-KAN', 'Cheby-KAN'
-  hidden_layers: [16, 32]
   params:
     init_type: 'xavier'         # 权重初始化方法: 'uniform', 'normal', 'xavier', 'kaiming'
     dropout: 0.1                # Dropout比率
@@ -59,3 +58,4 @@ others:
   random_seed: 3407           # 全局随机种子, 保证实验可复现
   device: 'auto'              # 训练设备: 'cuda', 'cpu', 'auto' (自动检测)
   save_root: '../experiments' # 保存所有实验结果的根目录
+  plot: true

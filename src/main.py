@@ -13,10 +13,12 @@ import os
 import time
 from types import SimpleNamespace
 import warnings
+from typing import Any, Dict
 
 import torch
 import torch.nn as nn
 import yaml
+from matplotlib import pyplot as plt
 from sklearn.model_selection import KFold, train_test_split
 from sklearn.preprocessing import StandardScaler
 from torch.utils.data import DataLoader, TensorDataset
@@ -28,6 +30,7 @@ import argparse
 from data_loader import load_and_preprocess_data
 from trainer import Trainer
 from utils import get_optimizer, set_seed, get_model, check_distribution, setup_logger, get_scheduler
+from plot import result_plot
 
 warnings.filterwarnings("ignore")
 
@@ -173,13 +176,13 @@ def main():
         logger.success(f"K-Fold CV Summary: Average Validation MAE = {avg_mae:.2f}g ± {std_mae:.2f}g")
 
         # 将 config 对象转为字典以记录超参数
-        def config_to_dict(cfg):
+        def config_to_dict(cfg: Any) -> Dict[str, Any]:
             if not isinstance(cfg, SimpleNamespace):
                 return cfg
             return {key: config_to_dict(value) for key, value in cfg.__dict__.items()}
 
         # 展平嵌套的配置字典
-        def flatten_dict(d, parent_key='', sep='.'):
+        def flatten_dict(d: Dict[str, Any], parent_key:str = '', sep: str = '.'):
             items = []
             for k, v in d.items():
                 new_key = parent_key + sep + k if parent_key else k
@@ -226,10 +229,18 @@ def main():
     test_dataset = TensorDataset(torch.tensor(X_test, dtype=torch.float32), y_test_tensor)
     test_loader = DataLoader(test_dataset, batch_size=config.training.batch_size, shuffle=False)
 
-    test_loss, test_mae = final_trainer.evaluate(test_loader)
+    test_loss, test_mae, y_pred_test = final_trainer.evaluate(test_loader)
     test_rmse = np.sqrt(test_loss)
-
     logger.success(f"Final Test Set Performance -> MSE: {test_loss:.4f}, RMSE: {test_rmse:.2f}g, MAE: {test_mae:.2f}g")
+
+    if config.others.plot:
+        y_pred_train = final_model(torch.tensor(X_train_val, dtype=torch.float32, device=config.others.device)).detach()
+        fig, _ = result_plot(y_train_val, y_pred_train.to('cpu'), y_test, y_pred_test.to('cpu'), model_name=config.model.name)
+        fig_path = os.path.join(run_dir, f'result_visualization-{config.model.name}.png')
+        fig.savefig(fig_path, dpi=300, bbox_inches="tight")
+        plt.close(fig)
+        logger.info(f"Visualization saved to: {fig_path}")
+
     writer.close()
 
 

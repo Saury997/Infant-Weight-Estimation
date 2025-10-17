@@ -11,6 +11,7 @@
 import os
 import random
 import sys
+from types import SimpleNamespace
 
 import pandas as pd
 import torch.distributed as dist
@@ -31,24 +32,12 @@ from sklearn.ensemble import (
     ExtraTreesRegressor,
     GradientBoostingRegressor
 )
-try:
-    from xgboost import XGBRegressor
-    _HAS_XGB = True
-except ImportError:
-    _HAS_XGB = False
-try:
-    from lightgbm import LGBMRegressor
-    _HAS_LGBM = True
-except ImportError:
-    _HAS_LGBM = False
-try:
-    from catboost import CatBoostRegressor
-    _HAS_CAT = True
-except ImportError:
-    _HAS_CAT = False
+from xgboost import XGBRegressor
+from lightgbm import LGBMRegressor
+from catboost import CatBoostRegressor
 
 
-def get_optimizer(model, optimizer, lr):
+def get_optimizer(model: torch.nn.Module, optimizer: str, lr: float) -> torch.optim.Optimizer:
     """根据参数初始化优化器"""
     if optimizer == 'AdamW':
         optimizer = AdamW(model.parameters(), lr=lr)
@@ -80,7 +69,7 @@ def get_optimizer(model, optimizer, lr):
     return optimizer
 
 
-def get_scheduler(optimizer, scheduler_cfg):
+def get_scheduler(optimizer: torch.optim.Optimizer, scheduler_cfg: SimpleNamespace):
     """根据参数初始化学习率调度器"""
     if scheduler_cfg.name == 'ReduceLROnPlateau':
         from torch.optim.lr_scheduler import ReduceLROnPlateau
@@ -116,7 +105,7 @@ def get_scheduler(optimizer, scheduler_cfg):
     return scheduler
 
 
-def get_model(model_cfg, input_dim):
+def get_model(model_cfg: SimpleNamespace, input_dim: int) -> torch.nn.Module:
     """根据参数初始化模型"""
     params = vars(model_cfg.params)
     if model_cfg.name == 'MLP':
@@ -161,7 +150,7 @@ def get_model(model_cfg, input_dim):
     return model
 
 
-def set_seed(seed):
+def set_seed(seed: int = 42) -> None:
     """设置随机种子以确保实验可复现。"""
     random.seed(seed)
     np.random.seed(seed)
@@ -173,7 +162,7 @@ def set_seed(seed):
         torch.backends.cudnn.benchmark = False
 
 
-def check_distribution(y_train, y_test, y_bins_train, y_bins_test):
+def check_distribution(y_train: pd.Series, y_test: pd.Series, y_bins_train: pd.Series, y_bins_test: pd.Series) -> None:
     """
     检查训练集和测试集的分箱类别分布及统计信息。
 
@@ -202,7 +191,7 @@ def check_distribution(y_train, y_test, y_bins_train, y_bins_test):
     stats_summary(y_test, y_bins_test, "测试集")
 
 
-def setup_logger(log_file_path):
+def setup_logger(log_file_path: str) -> None:
     """初始化日志记录器"""
     log_format = (
         "<green>{time:YYYY-MM-DD HH:mm:ss.SSS}</green> | "
@@ -215,7 +204,7 @@ def setup_logger(log_file_path):
     logger.info("Logger initialized.")
 
 
-def evaluate_regression(y_true, y_pred):
+def evaluate_regression(y_true: np.ndarray, y_pred: np.ndarray) -> dict:
     """计算回归任务的各项评估指标"""
     mse = mean_squared_error(y_true, y_pred)
     rmse = float(np.sqrt(mse))
@@ -239,16 +228,10 @@ def build_regressor(algo: str, cfg_ml, standardize:bool=False) -> Pipeline:
     elif algo == 'ExtraTrees':
         base = ExtraTreesRegressor(**vars(cfg_ml.extra_trees))
     elif algo == 'XGBoost':
-        if not _HAS_XGB:
-            raise ImportError("XGBoost not installed, please `pip install xgboost`")
         base = XGBRegressor(**vars(cfg_ml.xgboost))
     elif algo == 'LightGBM':
-        if not _HAS_LGBM:
-            raise ImportError("LightGBM not installed, please `pip install lightgbm`")
         base = LGBMRegressor(**vars(cfg_ml.lightgbm))
     elif algo == 'CatBoost':
-        if not _HAS_CAT:
-            raise ImportError("CatBoost not installed, please `pip install catboost`")
         base = CatBoostRegressor(**vars(cfg_ml.catboost))
     elif algo == 'Linear':
         base = LinearRegression(**vars(cfg_ml.linear))

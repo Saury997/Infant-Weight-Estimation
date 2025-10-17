@@ -5,7 +5,7 @@ data:
   binning: false
   log_transform: false
   standardize: true
-  test_size: 0.2
+  test_size: 0.15
 
 training:
   use_kfold: true
@@ -13,7 +13,8 @@ training:
 
 ml:
   # 依次运行列表中的所有模型
-  algorithms: ["KNN", "RandomForest", "XGBoost", "Ridge", "Lasso", "ElasticNet", "SVR", "KernelRidge", "ExtraTrees", "GBDT"]
+  algorithms: ["KNN", "RandomForest", "XGBoost", "Ridge", "Lasso", "ElasticNet",
+               "SVR", "KernelRidge", "ExtraTrees", "GBDT", "LightGBM", "CatBoost"]
 
   # --- 各个模型的超参数配置 ---
   knn:
@@ -23,52 +24,88 @@ ml:
     p: 2
     n_jobs: -1
   random_forest:
-    n_estimators: 500
-    max_depth: null
-    min_samples_split: 2
-    min_samples_leaf: 1
+    n_estimators: 400
+    max_depth: 10
+    min_samples_split: 9
+    min_samples_leaf: 2
     n_jobs: -1
     random_state: 42
+    bootstrap: true
+    max_features: 0.8
   xgboost:
-    n_estimators: 600
-    learning_rate: 0.05
-    max_depth: 6
-    subsample: 0.8
-    colsample_bytree: 0.8
-    reg_lambda: 1.0
+    n_estimators: 500
+    learning_rate: 0.01
+    max_depth: 3
     random_state: 42
-    n_jobs: -1
-    tree_method: auto   # GPU版本可改为 gpu_hist
+    subsample: 0.6
+    reg_lambda: 0.0
+    reg_alpha: 0.0
+    colsample_bytree: 0.6
+    gamma: 0.0
+    min_child_weight: 7
   ridge:
-    alpha: 1.0
+    alpha: 10.0
     solver: "auto"
     random_state: 42
   lasso:
-    alpha: 0.001
+    alpha: 0.01
     max_iter: 10000
     random_state: 42
   elasticnet:
-    alpha: 0.001
-    l1_ratio: 0.5
+    alpha: 0.01
+    l1_ratio: 0.2
     max_iter: 10000
     random_state: 42
   svr:
     kernel: "rbf"
-    C: 1.0
-    epsilon: 0.1
+    C: 5.0
+    epsilon: 0.05
   kernel_ridge:
-    alpha: 1.0
-    kernel: "rbf"
+    alpha: 0.1
+    kernel: "laplacian"
+    gamma: 0.01
   extra_trees:
     n_estimators: 500
     max_depth: null
     random_state: 42
+    min_samples_split: 10
+    min_samples_leaf: 2
   gbdt:
-    n_estimators: 500
-    learning_rate: 0.05
-    max_depth: 5
-    random_state: 42
-
+    n_estimators: 200
+    max_depth: 3
+    learning_rate: 0.03
+  lightgbm:
+    boosting_type: "gbdt"
+    objective: "regression"
+    metric: [ "rmse", "mae" ]
+    n_estimators: 8000
+    learning_rate: 0.02
+    num_leaves: 15
+    max_depth: -1
+    min_data_in_leaf: 40
+    min_sum_hessian_in_leaf: 1e-2
+    feature_fraction: 0.7
+    bagging_fraction: 0.7
+    bagging_freq: 1
+    lambda_l1: 0.0
+    lambda_l2: 10.0
+    verbosity: -1
+    seed: 42
+  catboost:
+    loss_function: "RMSE"
+    eval_metric: "RMSE"
+    iterations: 8000
+    learning_rate: 0.02
+    depth: 4
+    l2_leaf_reg: 10.0
+    bootstrap_type: "Bayesian"
+    rsm: 0.7
+    random_strength: 1.5
+    leaf_estimation_iterations: 3
+    allow_writing_files: false
+    verbose: False
+    random_seed: 42
 others:
   random_seed: 42
   save_root: ../experiments
+  plot: true

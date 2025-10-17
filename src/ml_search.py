@@ -20,21 +20,22 @@ from typing import Dict, Any, Tuple, List
 import numpy as np
 import pandas as pd
 from loguru import logger
-
 from sklearn.model_selection import KFold, train_test_split, GridSearchCV, RandomizedSearchCV
 from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import StandardScaler
+from skopt import BayesSearchCV
+from skopt.space import Categorical, Integer, Real
 
 from data_loader import load_and_preprocess_data
-from utils import set_seed, setup_logger, build_regressor, evaluate_regression  # 复用统一模型工厂
+from utils import set_seed, setup_logger, build_regressor, evaluate_regression
 from main import load_config
 
 warnings.filterwarnings("ignore")
 
 
-def _make_run_dirs(save_root: str, algo_list: List[str]) -> Tuple[str, str, str, str, str]:
+def _make_run_dirs(save_root: str) -> Tuple[str, str, str, str, str]:
     timestamp = time.strftime('%Y%m%d_%H%M%S')
-    run_name = f"{timestamp}_HP-Search_{'-'.join(algo_list)}"
+    run_name = f"{timestamp}_HP-Search"
     run_dir = os.path.join(save_root, run_name)
     os.makedirs(run_dir, exist_ok=True)
     log_file_path = os.path.join(run_dir, 'run.log')
@@ -63,13 +64,30 @@ ALGO_SECTION_KEY = {
 }
 
 
+def to_skopt_space(param_grid: dict):
+    space = {}
+    for k, v in param_grid.items():
+        if isinstance(v, (list, tuple)):
+            if all(isinstance(x, int) for x in v) and len(v) >= 3:
+                step = v[1] - v[0]
+                if all(v[i+1] - v[i] == step for i in range(len(v)-1)):
+                    space[k] = Integer(min(v), max(v))
+                    continue
+            if all(isinstance(x, float) for x in v) and len(v) >= 3:
+                space[k] = Real(min(v), max(v))
+                continue
+            space[k] = Categorical(list(v))
+        else:
+            space[k] = Categorical([v])
+    return space
+
+
 def _make_cfg_ml_for_algo(algo: str, base_params: Dict[str, Any]) -> SimpleNamespace:
     """为 utils.build_regressor 构造只包含当前算法参数的 cfg_ml 命名空间。
     例如 algo='KNN' -> cfg_ml.knn = SimpleNamespace(**base_params)
     """
     sec = ALGO_SECTION_KEY[algo]
     def _to_namespace(d: Dict[str, Any]) -> SimpleNamespace:
-        # 递归把 dict 转 SimpleNamespace，保证与 utils.build_regressor 的 vars(cfg_ml.xxx) 兼容
         ns = {}
         for k, v in d.items():
             if isinstance(v, dict):
@@ -81,7 +99,6 @@ def _make_cfg_ml_for_algo(algo: str, base_params: Dict[str, Any]) -> SimpleNames
 
 
 def _needs_scaler(algo_name: str, standardize_flag: bool) -> bool:
-    # 与 utils.build_regressor 一致的标准化策略（KNN/SVR/Ridge/Lasso/ElasticNet 强制）
     force = {'KNN', 'SVR', 'Ridge', 'Lasso', 'ElasticNet'}
     return standardize_flag or (algo_name in force)
 
@@ -183,7 +200,7 @@ def main():
                 return_train_score=return_train_score,
                 verbose=0,
             )
-        else:
+        elif mode == 'random':
             if random_iter is None:
                 raise ValueError("ml_search.mode == 'random' 时必须提供 ml_search.random_iter")
             searcher = RandomizedSearchCV(
@@ -198,6 +215,25 @@ def main():
                 random_state=config.others.random_seed,
                 verbose=0,
             )
+        elif mode == 'bayes':
+            if random_iter is None:
+                raise ValueError("ml_search.mode == 'bayes' 时建议用 ml_search.random_iter 作为 n_iter")
+            searcher = BayesSearchCV(
+                estimator=pipe,
+                search_spaces=to_skopt_space(param_grid),  # ← 将你的 dict 转成 skopt 空间
+                n_iter=random_iter,  # 用同一个 random_iter 控制迭代轮数
+                scoring=scoring,
+                cv=kf,
+                n_jobs=search_n_jobs,
+                refit=refit_flag,
+                random_state=config.others.random_seed,
+                # 可选项：一次评估多个候选；小数据通常取 1~3
+                n_points=1,
+                # 可选：探索/开发平衡，默认已足够；也可传 optimizer_kwargs={"acq_func": "EI"}
+                verbose=0,
+            )
+        else:
+            raise ValueError(f"未知的搜索模式: {mode}")
 
         # 执行搜索
         t0 = time.time()
