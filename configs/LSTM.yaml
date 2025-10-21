@@ -15,24 +15,24 @@ data:
 # ---------------------------- 模型配置 -----------------------------
 model:
   name: 'LSTM'          # 模型架构, e.g., 'MLP', 'KAN', 'Taylor-KAN', 'Fourier-KAN', 'Wavelet-KAN', 'Jacobi-KAN', 'Cheby-KAN'
-  hidden_layers: [64]
+  hidden_layers: [128]
   params:
-    hidden_size: 64
-    num_layers: 1
+    hidden_size: 128
+    num_layers: 2
     bidirectional: false
-    mlp_hidden: 64
+    mlp_hidden: 128
     init_type: 'xavier'         # 权重初始化方法: 'uniform', 'normal', 'xavier', 'kaiming'
-    dropout: 0.1                # Dropout比率
+    dropout: 0.2                # Dropout比率
     act: "relu"
     use_lazy_proj: false
 
 # ---------------------------- 训练配置 -----------------------------
 training:
   optimizer: 'AdamW'          # 优化器: 'AdamW', 'SGD', 'Muon', 'LBFGS'
-  lr: 0.01                   # 学习率
-  batch_size: 16              # 批处理大小
+  lr: 0.001                   # 学习率
+  batch_size: 32              # 批处理大小
   epochs: 150                 # 最大训练轮数
-  patience: 50                # 早停的耐心轮数
+  patience: 40                # 早停的耐心轮数
 
   # 交叉验证配置
   use_kfold: true            # 是否启用K折交叉验证 (若为false, 则使用简单验证集划分)
@@ -58,6 +58,6 @@ training:
 # ---------------------------- 其他通用配置 ---------------------------
 others:
   random_seed: 3407           # 全局随机种子, 保证实验可复现
-  device: 'cuda'              # 训练设备: 'cuda', 'cpu', 'auto' (自动检测)
+  device: 'auto'              # 训练设备: 'cuda', 'cpu', 'auto' (自动检测)
   save_root: '../experiments' # 保存所有实验结果的根目录
   plot: true

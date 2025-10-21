@@ -10,7 +10,7 @@ data:
   test_size: 0.15          # 最终测试集的比例
   binning: false           # 是否对目标变量进行分箱
   standardize: true        # 是否对特征进行标准化
-  log_transform: false       # 是否对目标变量应用对数变换
+  log_transform: False       # 是否对目标变量应用对数变换
 
 # ---------------------------- 模型配置 -----------------------------
 model:

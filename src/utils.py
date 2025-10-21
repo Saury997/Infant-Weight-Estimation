@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: UTF-8 -*-
 """
-* Author: Zongjian Yang
+* Author: Lanxiang Ma
 * Date: 2025/10/7 14:59 
 * Project: InfantWeight 
 * File: utils.py

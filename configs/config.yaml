@@ -8,7 +8,7 @@ data:
   target_column: '出生体重'
   feature_engineering: false # 是否执行专门为私有数据集设计的特征工程
   test_size: 0.15          # 最终测试集的比例
-  binning: false           # 是否对目标变量进行分箱
+  binning: False           # 是否对目标变量进行分箱
   standardize: true        # 是否对特征进行标准化
   log_transform: false       # 是否对目标变量应用对数变换
 
@@ -35,12 +35,12 @@ model:
 training:
   optimizer: 'AdamW'          # 优化器: 'AdamW', 'SGD', 'Muon', 'LBFGS'
   lr: 0.005                   # 学习率
-  batch_size: 16              # 批处理大小
-  epochs: 100                 # 最大训练轮数
-  patience: 50                # 早停的耐心轮数
+  batch_size: 32              # 批处理大小
+  epochs: 150                 # 最大训练轮数
+  patience: 30                # 早停的耐心轮数
 
   # 交叉验证配置
-  use_kfold: true            # 是否启用K折交叉验证 (若为false, 则使用简单验证集划分)
+  use_kfold: false            # 是否启用K折交叉验证 (若为false, 则使用简单验证集划分)
   k_folds: 5                  # K折交叉验证的折数
 
   # 学习率调度器配置

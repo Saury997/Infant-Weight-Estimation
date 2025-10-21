@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: UTF-8 -*-
 """
-* Author: Zongjian Yang
+* Author: Lanxiang Ma
 * Date: 2025/10/17 10:16 
 * Project: Infant-Weight-Estimation 
 * File: plot.py
@@ -9,13 +9,32 @@
 * Function:
 """
 from typing import Tuple, Optional
-
-import numpy as np
-from matplotlib import pyplot as plt
 from matplotlib.axes import Axes
 from matplotlib.figure import Figure
-from sklearn.metrics import r2_score
 import matplotlib as mpl
+import numpy as np
+import matplotlib.pyplot as plt
+import matplotlib
+from sklearn.metrics import r2_score
+
+matplotlib.use('Agg')
+
+plt.rcParams.update({
+    'font.family': 'sans-serif',
+    'font.sans-serif': 'Arial',
+    'axes.labelsize': 14,
+    'xtick.labelsize': 12,
+    'ytick.labelsize': 12,
+    'legend.fontsize': 12,
+    'figure.titlesize': 18,
+    'axes.titlesize': 16,
+    'axes.titleweight': 'bold',
+    'axes.labelweight': 'bold',
+    'axes.spines.top': False,
+    'axes.spines.right': False,
+    'figure.dpi': 300,
+    "axes.unicode_minus": False,
+})
 
 
 def result_plot(
@@ -193,6 +212,31 @@ def result_plot(
                             wspace=0.02, hspace=0.02)
         return fig, (ax_main, ax_top, ax_rgt, ax_res)
 
+
+def bland_altman_plot(y_true: np.ndarray, y_pred: np.ndarray, model_name="Model",
+                      xlabel="Mean of True & Predicted", ylabel="Difference (Pred - True)",
+                      figsize=(4, 3), dpi=300):
+    """
+    绘制 Bland-Altman 图
+    """
+    y_true = np.asarray(y_true).ravel()
+    y_pred = np.asarray(y_pred).ravel()
+    mean_vals = (y_true + y_pred) / 2
+    diff_vals = y_pred - y_true
+    mean_diff = np.mean(diff_vals)
+    std_diff = np.std(diff_vals, ddof=1)
+
+    plt.figure(figsize=figsize, dpi=dpi)
+    plt.scatter(mean_vals, diff_vals, s=5, alpha=0.6)
+    plt.axhline(mean_diff, color='gray', linestyle='--', label='Mean Diff')
+    plt.axhline(mean_diff + 1.96 * std_diff, color='red', linestyle='--', label='+1.96 SD')
+    plt.axhline(mean_diff - 1.96 * std_diff, color='red', linestyle='--', label='-1.96 SD')
+    plt.xlabel(xlabel)
+    plt.ylabel(ylabel)
+    plt.title(f"Bland-Altman: {model_name}")
+    plt.legend()
+    plt.tight_layout()
+    return plt.gcf()
 
 if __name__ == "__main__":
     rng = np.random.RandomState(0)

@@ -1,13 +1,16 @@
 #!/usr/bin/env python
 # -*- coding: UTF-8 -*-
 """
-* Author: Zongjian Yang
+* Author: Lanxiang Ma
 * Date: 2025/10/09
 * Project: InfantWeight
 * File: main.py
 * Function: Main training script for fetal weight prediction models.
   Supports multiple model architectures (MLP, KAN, Fourier-KAN, etc.) and training modes (k-fold cross-validation or simple validation).
   Handles data loading, preprocessing, model training, evaluation, and result logging with TensorBoard support.
+  This script orchestrates the entire machine learning pipeline, from configuration loading and data preparation
+  to model training, hyperparameter tuning (implicitly via k-fold), final evaluation on a held-out test set,
+  and visualization of results.
 """
 import os
 import time
@@ -26,19 +29,27 @@ from torch.utils.tensorboard import SummaryWriter
 from loguru import logger
 import numpy as np
 import argparse
+import pandas as pd  # <-- 新增导入
 
 from data_loader import load_and_preprocess_data
 from trainer import Trainer
 from utils import get_optimizer, set_seed, get_model, check_distribution, setup_logger, get_scheduler
-from plot import result_plot
+from plot import result_plot, bland_altman_plot
 
 warnings.filterwarnings("ignore")
 
 
-def load_config(config_path):
+def load_config(config_path: str) -> SimpleNamespace:
     """
-    加载并解析 YAML 配置文件.
-    将嵌套的字典转换为可以通过点操作符访问的命名空间对象.
+    加载并解析 YAML 配置文件。
+    将嵌套的字典结构转换为可以通过点操作符访问属性的 `SimpleNamespace` 对象。
+    这使得配置参数的访问更加方便，例如 `config.training.epochs`。
+
+    Args:
+        config_path (str): YAML 配置文件的路径。
+
+    Returns:
+        SimpleNamespace: 包含所有配置参数的命名空间对象。
     """
     with open(config_path, 'r', encoding='utf-8') as f:
         config_dict = yaml.safe_load(f)
@@ -48,7 +59,7 @@ def load_config(config_path):
             return d
         namespace = SimpleNamespace()
         for key, value in d.items():
-            attr_name = key.replace('-', '_')
+            attr_name = key.replace('-', '_')  # 替换 '-' 为 '_'，以便点操作符访问
             namespace.__setattr__(attr_name, dict_to_namespace(value))
         return namespace
 
@@ -56,46 +67,78 @@ def load_config(config_path):
 
 
 def main():
+    """
+    主训练和评估函数。
+
+    该函数执行以下主要步骤：
+    1. 解析命令行参数，加载 YAML 配置文件。
+    2. 初始化设备、随机种子、创建实验目录并设置日志。
+    3. 加载并预处理数据，包括特征工程、对数变换等。
+    4. 将数据划分为训练/验证集和独立的测试集。如果配置了分箱，则进行分层抽样。
+    5. 根据配置选择训练模式：
+        - 如果 `config.training.use_kfold` 为 True，则执行 K-折交叉验证。
+          在每个折叠中，模型会进行训练和验证，并记录验证集上的性能。
+        - 否则，将跳过 K-折验证（但仍会进行后续的最终模型训练和测试）。
+    6. 使用所有训练/验证数据训练一个最终模型。
+       该模型会保存最佳权重。
+    7. 在独立的测试集上评估最终模型的性能，并计算详细的误差指标。
+    8. 可选地生成结果可视化图表（例如，预测值 vs 真实值散点图，Bland-Altman 图）并保存。
+    9. 将超参数和交叉验证结果（如果进行了）记录到 TensorBoard。
+    10. 将训练集和测试集的原始特征、真实值和预测值保存为 CSV 文件。
+    """
     parser = argparse.ArgumentParser(description='Fetal Weight Prediction Model Training')
     parser.add_argument('--config', type=str, default='../configs/config.yaml',
                         help='Path to the YAML configuration file. Default: config.yaml')
     args = parser.parse_args()
+
+    # --- 1. 加载配置并初始化环境 ---
     try:
         config = load_config(args.config)
     except FileNotFoundError:
-        print(f"Error: Configuration file not found at '{args.config}'")
+        logger.error(f"Error: Configuration file not found at '{args.config}'")
         return
 
+    # 设置设备
     if config.others.device == 'auto':
         config.others.device = 'cuda' if torch.cuda.is_available() else 'cpu'
     logger.info(f"Using device: {config.others.device}")
-    set_seed(config.others.random_seed)
+    set_seed(config.others.random_seed)  # 设置随机种子以保证可复现性
+
+    # 创建保存实验结果的目录结构
     if not os.path.exists(config.others.save_root):
         os.makedirs(config.others.save_root)
 
-    # 日志文件保存路径
     timestamp = time.strftime('%Y%m%d_%H%M%S')
-    run_name = f"{timestamp}_{config.model.name}-{config.model.hidden_layers}_lr-{config.training.lr}_bs-{config.training.batch_size}"
+    # 根据模型类型和参数生成运行名称
+    layers_info = 'default'
+    if hasattr(config.model, 'hidden_layers'):
+        layers_info = config.model.hidden_layers
+    elif hasattr(config.model, 'params') and hasattr(config.model.params, 'conv_channels'):
+        layers_info = config.model.params.conv_channels
+    elif hasattr(config.model, 'params') and hasattr(config.model.params, 'num_neurons'):  # KAN 模型的层信息
+        layers_info = config.model.params.num_neurons
+
+    run_name = f"{timestamp}_{config.model.name}-{layers_info}_lr-{config.training.lr}_bs-{config.training.batch_size}"
     run_dir = os.path.join(config.others.save_root, run_name)
     checkpoints_dir = os.path.join(run_dir, 'checkpoints')
     tensorboard_dir = os.path.join(run_dir, 'tensorboard')
     log_file_path = os.path.join(run_dir, 'run.log')
-    config_file_path = os.path.join(run_dir, 'config.yaml')
+    config_file_path = os.path.join(run_dir, 'config.yaml')  # 保存当前运行的配置文件副本
     os.makedirs(checkpoints_dir, exist_ok=True)
     os.makedirs(tensorboard_dir, exist_ok=True)
 
-    setup_logger(log_file_path)
-    writer = SummaryWriter(log_dir=tensorboard_dir)
+    setup_logger(log_file_path)  # 配置 loguru 记录到文件
+    writer = SummaryWriter(log_dir=tensorboard_dir)  # 初始化 TensorBoard SummaryWriter
 
     logger.info(f"Experiment run directory: {run_dir}")
 
-    # 超参数保存
+    # 保存当前配置文件的副本
     with open(args.config, 'r', encoding='utf-8') as f_in, open(config_file_path, 'w', encoding='utf-8') as f_out:
         f_out.write(f_in.read())
     logger.info(f"Configuration for this run saved to {config_file_path}")
     logger.info(f"Experiments are conducted on {config.model.name}.")
 
-    # --- 1. 数据加载和预处理 ---
+    # --- 2. 数据加载和预处理 ---
     logger.info("Loading and preprocessing all data...")
     X, y, y_bins, input_dim = load_and_preprocess_data(
         file_path=config.data.path,
@@ -105,16 +148,19 @@ def main():
         log_transform=config.data.log_transform
     )
 
-    # --- 2. 划分出最终的测试集 ---
+    # --- 3. 划分出最终的测试集 ---
+    # `X_train_val` 用于 K-fold 或直接训练，`X_test` 用于最终评估
     if config.data.binning:
+        # 如果需要分箱（通常用于处理目标变量分布不均的情况），则进行分层抽样
         X_train_val, X_test, y_train_val, y_test, y_bins_train, y_bins_test = train_test_split(
             X, y, y_bins,
             test_size=config.data.test_size,
             random_state=config.others.random_seed,
-            stratify=y_bins
+            stratify=y_bins  # 依据分箱结果进行分层抽样
         )
-        check_distribution(y_train_val, y_test, y_bins_train, y_bins_test)
+        check_distribution(y_train_val, y_test, y_bins_train, y_bins_test)  # 检查分层抽样后的分布
     else:
+        # 否则进行普通随机抽样
         X_train_val, X_test, y_train_val, y_test = train_test_split(
             X, y,
             test_size=config.data.test_size,
@@ -126,29 +172,30 @@ def main():
     if X is None:
         raise ValueError("DataLoadError! Please check your data file path.")
 
-    # --- 3. 根据参数选择执行K-折交叉验证或简单验证 ---
+    # --- 4. 根据参数选择执行 K-折交叉验证 ---
     if config.training.use_kfold:
-        # --- K-Fold Cross-Validation ---
         logger.info(f"----- Starting {config.training.k_folds}-Fold Cross-Validation -----")
         kfold = KFold(n_splits=config.training.k_folds, shuffle=True, random_state=config.others.random_seed)
-        fold_results = []
+        fold_results = []  # 存储每折的验证 MAE
 
         for fold, (train_ids, val_ids) in enumerate(kfold.split(X_train_val)):
             fold_num = fold + 1
             logger.info(f"----- FOLD {fold_num}/{config.training.k_folds} -----")
 
-            # --- 数据准备 ---
+            # --- K-Fold 数据准备 ---
             X_train, X_val = X_train_val.iloc[train_ids], X_train_val.iloc[val_ids]
             y_train, y_val = y_train_val.iloc[train_ids], y_train_val.iloc[val_ids]
 
+            # 数据标准化
             if config.data.standardize:
-                final_scaler = StandardScaler()
-                X_train = final_scaler.fit_transform(X_train)
-                X_val = final_scaler.transform(X_val)
+                scaler = StandardScaler()
+                X_train = scaler.fit_transform(X_train)
+                X_val = scaler.transform(X_val)
             else:
                 X_train = X_train.values
                 X_val = X_val.values
 
+            # 转换为 TensorDataset 和 DataLoader
             train_dataset = TensorDataset(torch.tensor(X_train, dtype=torch.float32),
                                           torch.tensor(y_train.values, dtype=torch.float32).view(-1, 1))
             val_dataset = TensorDataset(torch.tensor(X_val, dtype=torch.float32),
@@ -159,7 +206,7 @@ def main():
 
             # --- 模型初始化 ---
             model = get_model(config.model, input_dim).to(config.others.device)
-            criterion = nn.MSELoss()
+            criterion = nn.MSELoss()  # 使用均方误差作为损失函数
             optimizer = get_optimizer(model, config.training.optimizer, config.training.lr)
             scheduler = get_scheduler(optimizer, config.training.scheduler)
 
@@ -170,19 +217,18 @@ def main():
             fold_results.append(trainer.best_val_mae)
             logger.success(f"Fold {fold + 1} Best Validation MAE: {trainer.best_val_mae:.2f}g")
 
-        # --- 打印交叉验证总结 ---
+        # --- K-Fold 结果总结 ---
         avg_mae = np.mean(fold_results)
         std_mae = np.std(fold_results)
         logger.success(f"K-Fold CV Summary: Average Validation MAE = {avg_mae:.2f}g ± {std_mae:.2f}g")
 
-        # 将 config 对象转为字典以记录超参数
+        # 将 config 对象转为字典以记录超参数到 TensorBoard
         def config_to_dict(cfg: Any) -> Dict[str, Any]:
             if not isinstance(cfg, SimpleNamespace):
                 return cfg
             return {key: config_to_dict(value) for key, value in cfg.__dict__.items()}
 
-        # 展平嵌套的配置字典
-        def flatten_dict(d: Dict[str, Any], parent_key:str = '', sep: str = '.'):
+        def flatten_dict(d: Dict[str, Any], parent_key: str = '', sep: str = '.'):
             items = []
             for k, v in d.items():
                 new_key = parent_key + sep + k if parent_key else k
@@ -197,51 +243,100 @@ def main():
         writer.add_hparams(hparams_dict, metrics_dict)
         logger.success("Hyperparameters and metrics saved to TensorBoard.")
 
-    # --- 4. 训练最终模型 ---
+    # --- 5. 训练最终模型 (使用所有训练/验证数据) ---
     logger.info("----- Training Final Model on All Training Data -----")
 
-    # --- 数据准备 ---
+    # --- 最终模型数据准备 ---
+    # 对所有训练/验证数据进行标准化 (如果配置)
     if config.data.standardize:
+        # 注意：这里重新初始化 scaler 以确保它只在 X_train_val 上 fit_transform
         final_scaler = StandardScaler()
-        X_train_val = final_scaler.fit_transform(X_train_val)
-        X_test = final_scaler.transform(X_test)
+        X_train_val_scaled = final_scaler.fit_transform(X_train_val)
+        X_test_scaled = final_scaler.transform(X_test)  # 测试集使用训练集的 scaler 进行 transform
     else:
-        X_train_val = X_train_val.values
+        X_train_val_scaled = X_train_val.values
+        X_test_scaled = X_test.values
 
     y_train_val_tensor = torch.tensor(y_train_val.values, dtype=torch.float32).view(-1, 1)
 
-    final_train_dataset = TensorDataset(torch.tensor(X_train_val, dtype=torch.float32), y_train_val_tensor)
+    final_train_dataset = TensorDataset(torch.tensor(X_train_val_scaled, dtype=torch.float32), y_train_val_tensor)
     final_train_loader = DataLoader(final_train_dataset, batch_size=config.training.batch_size, shuffle=True)
 
-    # --- 模型初始化与训练 ---
+    # --- 最终模型初始化与训练 ---
     final_model = get_model(config.model, input_dim).to(config.others.device)
     criterion = nn.MSELoss()
     optimizer = get_optimizer(final_model, config.training.optimizer, config.training.lr)
     scheduler = get_scheduler(optimizer, config.training.scheduler)
 
+    # 在所有训练数据上训练，不使用验证集 (或使用所有数据作为训练集)
     final_trainer = Trainer(final_model, criterion, optimizer, config, writer, fold='Final')
-    final_trainer.fit(final_train_loader, None, checkpoints_dir, scheduler)
+    final_trainer.fit(final_train_loader, None, checkpoints_dir, scheduler)  # val_loader 传入 None 表示不进行验证
 
-    # --- 5. 在最终测试集上评估 ---
+    # --- 6. 在最终测试集上评估 ---
     logger.info("----- Evaluating Final Model on Held-Out Test Set -----")
     y_test_tensor = torch.tensor(y_test.values, dtype=torch.float32).view(-1, 1)
 
-    test_dataset = TensorDataset(torch.tensor(X_test, dtype=torch.float32), y_test_tensor)
+    test_dataset = TensorDataset(torch.tensor(X_test_scaled, dtype=torch.float32), y_test_tensor)
     test_loader = DataLoader(test_dataset, batch_size=config.training.batch_size, shuffle=False)
 
-    test_loss, test_mae, y_pred_test = final_trainer.evaluate(test_loader)
-    test_rmse = np.sqrt(test_loss)
-    logger.success(f"Final Test Set Performance -> MSE: {test_loss:.4f}, RMSE: {test_rmse:.2f}g, MAE: {test_mae:.2f}g")
+    # 评估最终模型
+    # `y_pred_test` 是原始单位的预测结果
+    test_loss_log, test_mse_g, test_mae_g, metrics, y_pred_test_tensor = final_trainer.evaluate(  # 修改变量名以区分tensor
+        test_loader, save_root=checkpoints_dir
+    )
+    test_rmse_g = np.sqrt(test_mse_g)
+    logger.success(
+        f"Final Test Set Performance -> MSE: {test_mse_g:.4f}, RMSE: {test_rmse_g:.2f}g, MAE: {test_mae_g:.2f}g"
+    )
 
+    # --- 7. 结果可视化 ---
     if config.others.plot:
-        y_pred_train = final_model(torch.tensor(X_train_val, dtype=torch.float32, device=config.others.device)).detach()
-        fig, _ = result_plot(y_train_val, y_pred_train.to('cpu'), y_test, y_pred_test.to('cpu'), model_name=config.model.name)
+        logger.info("Generating result plots...")
+        # 重新获取训练集预测值用于绘图
+        final_model.eval()  # 切换到评估模式
+        with torch.no_grad():
+            y_pred_train_norm = final_model(
+                torch.tensor(X_train_val_scaled, dtype=torch.float32, device=config.others.device))
+            # 将训练集预测值反变换回原始单位
+            y_pred_train_orig = final_trainer._prepare_targets(y_pred_train_norm, training=False).detach().cpu()
+
+        # 散点图
+        fig, _ = result_plot(y_train_val, y_pred_train_orig, y_test, y_pred_test_tensor.to('cpu'),
+                             model_name=config.model.name)
         fig_path = os.path.join(run_dir, f'result_visualization-{config.model.name}.png')
         fig.savefig(fig_path, dpi=300, bbox_inches="tight")
         plt.close(fig)
-        logger.info(f"Visualization saved to: {fig_path}")
+        logger.info(f"Result visualization saved to: {fig_path}")
 
-    writer.close()
+        # Bland-Altman 图
+        ba_fig = bland_altman_plot(y_test, y_pred_test_tensor.to('cpu'), model_name=config.model.name)
+        ba_fig_path = os.path.join(run_dir, f'bland_altman-{config.model.name}.png')
+        ba_fig.savefig(ba_fig_path, dpi=300, bbox_inches="tight")
+        plt.close(ba_fig)
+        logger.info(f"Bland-Altman plot saved to: {ba_fig_path}")
+
+    # --- 8. 保存训练集和测试集预测结果到CSV ---
+    logger.info("Saving training and test set predictions to CSV files...")
+
+    # 获取训练集预测结果 (y_pred_train_orig 已经在绘图部分计算)
+    # y_train_val 是 Pandas Series，y_pred_train_orig 是 Tensor
+    train_results_df = X_train_val.copy()  # 复制原始特征，保留索引
+    train_results_df[config.data.target_column + '_True'] = y_train_val
+    train_results_df[config.data.target_column + '_Predicted'] = y_pred_train_orig.numpy().flatten()
+    train_predictions_path = os.path.join(run_dir, 'train_predictions.csv')
+    train_results_df.to_csv(train_predictions_path, index=True)  # index=True保留原始DataFrame索引作为区分
+    logger.success(f"Train set predictions saved to: {train_predictions_path}")
+
+    # 获取测试集预测结果 (y_pred_test_tensor 是 evaluate 返回的原始单位预测结果)
+    # y_test 是 Pandas Series，y_pred_test_tensor 是 Tensor
+    test_results_df = X_test.copy()  # 复制原始特征，保留索引
+    test_results_df[config.data.target_column + '_True'] = y_test
+    test_results_df[config.data.target_column + '_Predicted'] = y_pred_test_tensor.numpy().flatten()
+    test_predictions_path = os.path.join(run_dir, 'test_predictions.csv')
+    test_results_df.to_csv(test_predictions_path, index=True)  # index=True保留原始DataFrame索引作为区分
+    logger.success(f"Test set predictions saved to: {test_predictions_path}")
+
+    writer.close()  # 关闭 TensorBoard SummaryWriter
 
 
 if __name__ == "__main__":

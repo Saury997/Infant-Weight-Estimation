@@ -6,47 +6,42 @@
 data:
   path: '../data/my_dataset.xlsx'
   target_column: '出生体重'
-  feature_engineering: false # 是否执行专门为私有数据集设计的特征工程
-  test_size: 0.15          # 最终测试集的比例
-  binning: false           # 是否对目标变量进行分箱
-  standardize: true        # 是否对特征进行标准化
-  log_transform: false       # 是否对目标变量应用对数变换
+  feature_engineering: false
+  test_size: 0.15
+  binning: True
+  standardize: true
+  log_transform: True
 
 # ---------------------------- 模型配置 -----------------------------
 model:
-  name: 'RNN'          # 模型架构, e.g., 'MLP', 'KAN', 'Taylor-KAN', 'Fourier-KAN', 'Wavelet-KAN', 'Jacobi-KAN', 'Cheby-KAN'
-  hidden_layers: [64]
+  name: 'RNN'                     # 仍使用 RNN/LSTM
+  hidden_layers: [128]             # 增大隐藏层维度
   params:
-    hidden_size: 64
-    num_layers: 1
-    nonlinearity: 'tanh'
-    bidirectional: false
-    mlp_hidden: 64
-    init_type: 'xavier'         # 权重初始化方法: 'uniform', 'normal', 'xavier', 'kaiming'
-    dropout: 0.1                # Dropout比率
+    hidden_size: 128               # LSTM隐藏层大小
+    num_layers: 2                  # 双层LSTM
+    nonlinearity: 'tanh'           # RNN非线性，LSTM可忽略
+    bidirectional: true            # 双向捕捉序列信息
+    mlp_hidden: 128                # MLP head隐藏层
+    init_type: 'xavier'            # 权重初始化
+    dropout: 0.3                   # 防过拟合
     act: "relu"
     use_lazy_proj: false
 
 # ---------------------------- 训练配置 -----------------------------
 training:
-  optimizer: 'AdamW'          # 优化器: 'AdamW', 'SGD', 'Muon', 'LBFGS'
-  lr: 0.01                   # 学习率
-  batch_size: 16              # 批处理大小
-  epochs: 150                 # 最大训练轮数
-  patience: 50                # 早停的耐心轮数
-
-  # 交叉验证配置
-  use_kfold: true            # 是否启用K折交叉验证 (若为false, 则使用简单验证集划分)
-  k_folds: 5                  # K折交叉验证的折数
-
-  # 学习率调度器配置
+  optimizer: 'AdamW'
+  lr: 0.0003                        # 调整学习率
+  batch_size: 32                    # 增大批量，充分利用GPU
+  epochs: 200
+  patience: 50
+  use_kfold: true
+  k_folds: 5
   scheduler:
-    name: 'CosineAnnealingLR' # 调度器名称, e.g., 'ReduceLROnPlateau', 'CosineAnnealingWarmRestarts', 'CosineAnnealingLR', 'ExponentialLR'
-    # CosineAnnealingWarmRestarts 参数
+    name: 'CosineAnnealingLR'
     T_0: 10
     T_mult: 2
-    T_max: 150
-    eta_min: 0.0005
+    T_max: 200
+    eta_min: 0.0001
     # ReduceLROnPlateau 参数
     patience: 25
     # ExponentialLR 参数
@@ -58,7 +53,7 @@ training:
 
 # ---------------------------- 其他通用配置 ---------------------------
 others:
-  random_seed: 3407           # 全局随机种子, 保证实验可复现
-  device: 'cuda'              # 训练设备: 'cuda', 'cpu', 'auto' (自动检测)
-  save_root: '../experiments' # 保存所有实验结果的根目录
+  random_seed: 3407
+  device: 'auto'                   # 自动选择GPU/CPU
+  save_root: '../experiments'
   plot: true
