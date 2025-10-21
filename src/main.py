@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: UTF-8 -*-
 """
-* Author: Lanxiang Ma
+* Author: Zongjian Yang & Lanxiang Ma
 * Date: 2025/10/09
 * Project: InfantWeight
 * File: main.py
@@ -34,7 +34,7 @@ import pandas as pd  # <-- 新增导入
 from data_loader import load_and_preprocess_data
 from trainer import Trainer
 from utils import get_optimizer, set_seed, get_model, check_distribution, setup_logger, get_scheduler
-from plot import result_plot, bland_altman_plot
+from plot import result_plot
 
 warnings.filterwarnings("ignore")
 
@@ -98,24 +98,21 @@ def main():
         logger.error(f"Error: Configuration file not found at '{args.config}'")
         return
 
-    # 设置设备
     if config.others.device == 'auto':
         config.others.device = 'cuda' if torch.cuda.is_available() else 'cpu'
     logger.info(f"Using device: {config.others.device}")
     set_seed(config.others.random_seed)  # 设置随机种子以保证可复现性
 
-    # 创建保存实验结果的目录结构
     if not os.path.exists(config.others.save_root):
         os.makedirs(config.others.save_root)
 
     timestamp = time.strftime('%Y%m%d_%H%M%S')
-    # 根据模型类型和参数生成运行名称
     layers_info = 'default'
     if hasattr(config.model, 'hidden_layers'):
         layers_info = config.model.hidden_layers
     elif hasattr(config.model, 'params') and hasattr(config.model.params, 'conv_channels'):
         layers_info = config.model.params.conv_channels
-    elif hasattr(config.model, 'params') and hasattr(config.model.params, 'num_neurons'):  # KAN 模型的层信息
+    elif hasattr(config.model, 'params') and hasattr(config.model.params, 'num_neurons'):
         layers_info = config.model.params.num_neurons
 
     run_name = f"{timestamp}_{config.model.name}-{layers_info}_lr-{config.training.lr}_bs-{config.training.batch_size}"
@@ -123,12 +120,12 @@ def main():
     checkpoints_dir = os.path.join(run_dir, 'checkpoints')
     tensorboard_dir = os.path.join(run_dir, 'tensorboard')
     log_file_path = os.path.join(run_dir, 'run.log')
-    config_file_path = os.path.join(run_dir, 'config.yaml')  # 保存当前运行的配置文件副本
+    config_file_path = os.path.join(run_dir, 'config.yaml')
     os.makedirs(checkpoints_dir, exist_ok=True)
     os.makedirs(tensorboard_dir, exist_ok=True)
 
-    setup_logger(log_file_path)  # 配置 loguru 记录到文件
-    writer = SummaryWriter(log_dir=tensorboard_dir)  # 初始化 TensorBoard SummaryWriter
+    setup_logger(log_file_path)
+    writer = SummaryWriter(log_dir=tensorboard_dir)
 
     logger.info(f"Experiment run directory: {run_dir}")
 
@@ -149,7 +146,6 @@ def main():
     )
 
     # --- 3. 划分出最终的测试集 ---
-    # `X_train_val` 用于 K-fold 或直接训练，`X_test` 用于最终评估
     if config.data.binning:
         # 如果需要分箱（通常用于处理目标变量分布不均的情况），则进行分层抽样
         X_train_val, X_test, y_train_val, y_test, y_bins_train, y_bins_test = train_test_split(
@@ -279,8 +275,6 @@ def main():
     test_dataset = TensorDataset(torch.tensor(X_test_scaled, dtype=torch.float32), y_test_tensor)
     test_loader = DataLoader(test_dataset, batch_size=config.training.batch_size, shuffle=False)
 
-    # 评估最终模型
-    # `y_pred_test` 是原始单位的预测结果
     test_loss_log, test_mse_g, test_mae_g, metrics, y_pred_test_tensor = final_trainer.evaluate(  # 修改变量名以区分tensor
         test_loader, save_root=checkpoints_dir
     )
@@ -308,35 +302,24 @@ def main():
         plt.close(fig)
         logger.info(f"Result visualization saved to: {fig_path}")
 
-        # Bland-Altman 图
-        ba_fig = bland_altman_plot(y_test, y_pred_test_tensor.to('cpu'), model_name=config.model.name)
-        ba_fig_path = os.path.join(run_dir, f'bland_altman-{config.model.name}.png')
-        ba_fig.savefig(ba_fig_path, dpi=300, bbox_inches="tight")
-        plt.close(ba_fig)
-        logger.info(f"Bland-Altman plot saved to: {ba_fig_path}")
-
     # --- 8. 保存训练集和测试集预测结果到CSV ---
     logger.info("Saving training and test set predictions to CSV files...")
 
-    # 获取训练集预测结果 (y_pred_train_orig 已经在绘图部分计算)
-    # y_train_val 是 Pandas Series，y_pred_train_orig 是 Tensor
-    train_results_df = X_train_val.copy()  # 复制原始特征，保留索引
+    train_results_df = X_train_val.copy()
     train_results_df[config.data.target_column + '_True'] = y_train_val
     train_results_df[config.data.target_column + '_Predicted'] = y_pred_train_orig.numpy().flatten()
     train_predictions_path = os.path.join(run_dir, 'train_predictions.csv')
-    train_results_df.to_csv(train_predictions_path, index=True)  # index=True保留原始DataFrame索引作为区分
+    train_results_df.to_csv(train_predictions_path, index=True)
     logger.success(f"Train set predictions saved to: {train_predictions_path}")
 
-    # 获取测试集预测结果 (y_pred_test_tensor 是 evaluate 返回的原始单位预测结果)
-    # y_test 是 Pandas Series，y_pred_test_tensor 是 Tensor
-    test_results_df = X_test.copy()  # 复制原始特征，保留索引
+    test_results_df = X_test.copy()
     test_results_df[config.data.target_column + '_True'] = y_test
     test_results_df[config.data.target_column + '_Predicted'] = y_pred_test_tensor.numpy().flatten()
     test_predictions_path = os.path.join(run_dir, 'test_predictions.csv')
-    test_results_df.to_csv(test_predictions_path, index=True)  # index=True保留原始DataFrame索引作为区分
+    test_results_df.to_csv(test_predictions_path, index=True)
     logger.success(f"Test set predictions saved to: {test_predictions_path}")
 
-    writer.close()  # 关闭 TensorBoard SummaryWriter
+    writer.close()
 
 
 if __name__ == "__main__":

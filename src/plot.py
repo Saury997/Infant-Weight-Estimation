@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: UTF-8 -*-
 """
-* Author: Lanxiang Ma
+* Author: Zongjian Yang & Lanxiang Ma
 * Date: 2025/10/17 10:16 
 * Project: Infant-Weight-Estimation 
 * File: plot.py
@@ -91,7 +91,6 @@ def result_plot(
             hspace=0.03, wspace=0.02
         )
 
-        # 轴：主图与残差都在左列；直方图在上行/右列
         ax_main = fig.add_subplot(gs[1, 0])
         ax_top  = fig.add_subplot(gs[0, 0], sharex=ax_main) if show_top_hist else None
         ax_rgt  = fig.add_subplot(gs[1, 1], sharey=ax_main) if show_right_hist else None
@@ -108,31 +107,28 @@ def result_plot(
         def _fit_line(x, y):
             a, b = np.polyfit(x, y, deg=1)
             x_min, x_max = np.min(x), np.max(x)
-            xp = np.linspace(x_min, x_max, 100)  # 使用100个点使线条更平滑
+            xp = np.linspace(x_min, x_max, 100)
             yp = a * xp + b
             return xp, yp
         xp_tr, yp_tr = _fit_line(y_true_train, y_pred_train)
         xp_te, yp_te = _fit_line(y_true_test,  y_pred_test)
 
-        ax_main.plot(yp_tr, xp_tr, color="#1f77b4", linewidth=0.8)  # 深蓝色训练集回归线
-        ax_main.plot(yp_te, xp_te, color="#ff7f0e", linewidth=0.8)  # 深橙色测试集回归线
+        ax_main.plot(yp_tr, xp_tr, color="#1f77b4", linewidth=0.8)
+        ax_main.plot(yp_te, xp_te, color="#ff7f0e", linewidth=0.8)
 
         # 轴 & 比例
         ax_main.set_xlim(lo, hi); ax_main.set_ylim(lo, hi)
         ax_main.set_aspect('equal', adjustable='box')
         ax_main.set_ylabel(ylabel)
 
-        # —— 脊线闭合逻辑（解决边界不闭合或过长）——
         ax_main.spines['left'].set_visible(True)
         ax_main.spines['bottom'].set_visible(True)
         ax_main.spines['top'].set_visible(False if show_top_hist else True)
         ax_main.spines['right'].set_visible(False if show_right_hist else True)
 
-        # 主图不显示 x 轴标签与刻度文本（x 交给残差图显示）
         ax_main.tick_params(axis="x", labelbottom=False)
         ax_main.tick_params(length=2.5, pad=1.5)
 
-        # 模型名与 R²
         r2_tr = r2_score(y_true_train, y_pred_train)
         r2_te = r2_score(y_true_test,  y_pred_test)
         ax_main.text(0.65, 0.38, model_name,
@@ -160,7 +156,6 @@ def result_plot(
                                top=False, bottom=True,
                                labeltop=False, labelbottom=False,
                                length=2.0)
-            # y轴完全干净
             ax_top.tick_params(axis="y", left=False, right=False, labelleft=False, length=0)
 
         # -------- 右侧直方图 --------
@@ -189,25 +184,20 @@ def result_plot(
             ax_res.scatter(y_pred_train, res_tr, s=3, color=c_train)
             ax_res.scatter(y_pred_test,  res_te, s=3, color=c_test)
 
-            # 0 参考线
             ax_res.axhline(0.0, linestyle="--", color=c_line, linewidth=0.9, dashes=(3, 2))
 
-            # y 轴范围贴近 0，避免过多留白
             r_all = np.concatenate([res_tr, res_te])
-            r_rng = np.nanpercentile(np.abs(r_all), 98)  # 稍抗离群
+            r_rng = np.nanpercentile(np.abs(r_all), 98)
             r_pad = 0.1 * (r_rng + 1e-12)
             ax_res.set_ylim(-r_rng - r_pad, r_rng + r_pad)
 
-            # 残差图显示 x 轴刻度与标签（主图不显示）
             ax_res.set_xlabel(xlabel)
             ax_res.tick_params(length=2.0, pad=0.5)
             ax_res.set_ylabel("Errors", labelpad=1.5)
 
-            # 残差图四周脊线全部可见，保证“封闭”
             for s in ("top", "right", "left", "bottom"):
                 ax_res.spines[s].set_visible(True)
 
-        # 压缩留白（主-残差间距更小）
         plt.subplots_adjust(left=0.18, right=0.98, bottom=0.16, top=0.96,
                             wspace=0.02, hspace=0.02)
         return fig, (ax_main, ax_top, ax_rgt, ax_res)

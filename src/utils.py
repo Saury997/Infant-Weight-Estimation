@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: UTF-8 -*-
 """
-* Author: Lanxiang Ma
+* Author: Zongjian Yang
 * Date: 2025/10/7 14:59 
 * Project: InfantWeight 
 * File: utils.py
@@ -77,12 +77,10 @@ def get_scheduler(optimizer: torch.optim.Optimizer, scheduler_cfg: SimpleNamespa
         logger.info(f"Using ReduceLROnPlateau scheduler with patience={scheduler_cfg.patience}.")
     elif scheduler_cfg.name == 'CosineAnnealingWarmRestarts':
         from torch.optim.lr_scheduler import CosineAnnealingWarmRestarts
-        # T_0: 初始重启周期长度，T_mult: 周期倍增因子，eta_min: 最小学习率
         scheduler = CosineAnnealingWarmRestarts(optimizer, scheduler_cfg.T_0, T_mult=scheduler_cfg.T_mult, eta_min=scheduler_cfg.eta_min)
         logger.info(f"Using CosineAnnealingWarmRestarts scheduler with T_0={scheduler_cfg.T_0}, T_mult={scheduler_cfg.T_mult}, eta_min={scheduler_cfg.eta_min}.")
     elif scheduler_cfg.name == 'StepLR':
         from torch.optim.lr_scheduler import StepLR
-        # step_size: 学习率衰减的步长，gamma: 衰减系数
         scheduler = StepLR(optimizer, step_size=scheduler_cfg.step_size, gamma=scheduler_cfg.gamma)
         logger.info(f"Using StepLR scheduler with step_size={scheduler_cfg.step_size}, gamma={scheduler_cfg.gamma}.")
     elif scheduler_cfg.name == 'MultiStepLR':
@@ -91,12 +89,10 @@ def get_scheduler(optimizer: torch.optim.Optimizer, scheduler_cfg: SimpleNamespa
         logger.info(f"Using MultiStepLR scheduler with milestones={scheduler_cfg.milestones}, gamma={scheduler_cfg.gamma}.")
     elif scheduler_cfg.name == 'ExponentialLR':
         from torch.optim.lr_scheduler import ExponentialLR
-        # gamma: 指数衰减系数
         scheduler = ExponentialLR(optimizer, gamma=scheduler_cfg.gamma)
         logger.info(f"Using ExponentialLR scheduler with gamma={scheduler_cfg.gamma}.")
     elif scheduler_cfg.name == 'CosineAnnealingLR':
         from torch.optim.lr_scheduler import CosineAnnealingLR
-        # T_max: 最大迭代次数，eta_min: 最小学习率
         scheduler = CosineAnnealingLR(optimizer, T_max=scheduler_cfg.T_max, eta_min=scheduler_cfg.eta_min)
         logger.info(f"Using CosineAnnealingLR scheduler with T_max={scheduler_cfg.T_max}, eta_min={scheduler_cfg.eta_min}.")
     else:
@@ -111,15 +107,6 @@ def get_model(model_cfg: SimpleNamespace, input_dim: int) -> torch.nn.Module:
     if model_cfg.name == 'MLP':
         from model.mlp import MLP
         model = MLP(input_dim=input_dim, **params)
-    elif model_cfg.name == 'CNN':
-        from model.cnn import CNNRegressor1D
-        model = CNNRegressor1D(num_features=input_dim, **params)
-    elif model_cfg.name == 'RNN':
-        from model.rnn import RNNRegressor
-        model = RNNRegressor(**params)
-    elif model_cfg.name == 'LSTM':
-        from model.lstm import LSTMRegressor
-        model = LSTMRegressor(**params)
     elif model_cfg.name == 'KAN':
         from model.kan import KAN
         model = KAN(layers_hidden=[input_dim] + model_cfg.hidden_layers + [1], **params)
@@ -184,7 +171,7 @@ def check_distribution(y_train: pd.Series, y_test: pd.Series, y_bins_train: pd.S
             max="max"
         )
         summary["ratio"] = summary["count"] / len(y)
-        logger.opt(raw=True).info(str(summary))  # 使用 raw=True 避免添加额外的日志格式前缀
+        logger.opt(raw=True).info(str(summary))
 
     logger.info("==== 数据分布检查 ====")
     stats_summary(y_train, y_bins_train, "训练集")

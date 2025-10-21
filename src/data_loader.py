@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: UTF-8 -*-
 """
-* Author: Lanxiang Ma
+* Author: Zongjian Yang & Lanxiang Ma
 * Date: 2025/10/7 13:04 
 * Project: InfantWeight 
 * File: data_loader.py
@@ -80,7 +80,7 @@ def load_and_preprocess_data(file_path, target_column, feat_eng=False, binning=F
         df = pd.read_excel(file_path)
     except FileNotFoundError:
         logger.error(f"错误: 数据文件 '{file_path}' 未找到。请确保文件在正确的路径下。")
-        return None, None, None, None  # ✅ 返回 4 个值，与正常返回一致
+        return None, None, None, None
 
     # 2. 剔除无关或导致数据泄漏的列
     df = df.drop(columns=['ID'])
