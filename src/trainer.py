@@ -7,6 +7,8 @@ from tqdm import tqdm
 from loguru import logger
 import json
 
+from utils import evaluate_regression
+
 
 class Trainer:
     """
@@ -143,72 +145,16 @@ class Trainer:
         y_pred = torch.cat(all_outputs_orig, dim=0).numpy().flatten()
         y_true = torch.cat(all_targets_orig, dim=0).numpy().flatten()
 
-        # =====================================================
-        #               指标计算逻辑
-        # =====================================================
-        def within_pct(y_true, y_pred, pct):
-            return float(np.mean(np.abs(y_pred - y_true) <= pct / 100.0 * y_true) * 100.0)
-
-        # 全体样本指标
-        relative_errors_pct = (y_pred - y_true) / (y_true + 1e-8) * 100
-        systematic_error = float(np.mean(relative_errors_pct))
-        random_error = float(np.std(relative_errors_pct, ddof=0))
-        mape = float(np.mean(np.abs(relative_errors_pct)))
-        mae_g = float(np.mean(np.abs(y_pred - y_true)))
-        rmse_g = float(np.sqrt(np.mean((y_pred - y_true) ** 2)))
-
-        metrics = {
-            "系统误差(%)": systematic_error,
-            "随机误差(%)": random_error,
-            "MAPE(%)": mape,
-            "MAE(g)": mae_g,
-            "RMSE(g)": rmse_g,
-            "Within5%": within_pct(y_true, y_pred, 5),
-            "Within10%": within_pct(y_true, y_pred, 10),
-            "Within15%": within_pct(y_true, y_pred, 15),
-            "样本数量": len(y_true)
-        }
+        metrics = evaluate_regression(y_true, y_pred)
 
         # 3800g 以上样本指标
         idx_3800 = np.where(y_true >= 3800)[0]
         if len(idx_3800) > 0:
             sub_y_true = y_true[idx_3800]
             sub_y_pred = y_pred[idx_3800]
-            rel_err_3800 = (sub_y_pred - sub_y_true) / (sub_y_true + 1e-8) * 100
-            metrics[">=3800g"] = {
-                "系统误差(%)": float(np.mean(rel_err_3800)),
-                "随机误差(%)": float(np.std(rel_err_3800, ddof=0)),
-                "MAPE(%)": float(np.mean(np.abs(rel_err_3800))),
-                "MAE(g)": float(np.mean(np.abs(sub_y_pred - sub_y_true))),
-                "RMSE(g)": float(np.sqrt(np.mean((sub_y_pred - sub_y_true) ** 2))),
-                "Within5%": within_pct(sub_y_true, sub_y_pred, 5),
-                "Within10%": within_pct(sub_y_true, sub_y_pred, 10),
-                "Within15%": within_pct(sub_y_true, sub_y_pred, 15),
-                "样本数量": len(sub_y_true)
-            }
+            metrics[">=3800g"] = evaluate_regression(sub_y_true, sub_y_pred)
         else:
             metrics[">=3800g"] = None
-
-        # 分体重段指标
-        metrics["分体重段指标"] = {}
-        bins = [(0, 2500), (2500, 3800), (3800, np.inf)]
-        labels = ["小体重", "正常体重", "大体重"]
-        for (lb, ub), label in zip(bins, labels):
-            idx = np.where((y_true >= lb) & (y_true < ub))[0]
-            if len(idx) > 0:
-                sub_y_true = y_true[idx]
-                sub_y_pred = y_pred[idx]
-                rel_err = (sub_y_pred - sub_y_true) / (sub_y_true + 1e-8) * 100
-                metrics["分体重段指标"][label] = {
-                    "系统误差(%)": float(np.mean(rel_err)),
-                    "随机误差(%)": float(np.std(rel_err, ddof=0)),
-                    "MAPE(%)": float(np.mean(np.abs(rel_err))),
-                    "MAE(g)": float(np.mean(np.abs(sub_y_pred - sub_y_true))),
-                    "RMSE(g)": float(np.sqrt(np.mean((sub_y_pred - sub_y_true) ** 2))),
-                    "样本数量": len(sub_y_true)
-                }
-            else:
-                metrics["分体重段指标"][label] = None
 
         # 保存 metrics
         if save_root is not None:
@@ -236,7 +182,8 @@ class Trainer:
                 logger.info(
                     f"Fold {self.fold} | Epoch {epoch+1}/{self.epochs} [{elapsed:.2f}s] -> "
                     f"Train Loss: {train_loss:.6f}, Val Loss: {val_loss_log:.6f}, "
-                    f"MAE: {val_mae_g:.2f}g, 系统误差: {metrics['系统误差(%)']:.2f}%, 随机误差: {metrics['随机误差(%)']:.2f}%"
+                    f"MAE: {val_mae_g:.2f}g, SystematicError: {metrics['SystematicError(%)']:.2f}%, "
+                    f"RandomError: {metrics['RandomError(%)']:.2f}%"
                 )
 
                 if self.writer:
@@ -267,12 +214,12 @@ class Trainer:
         self.model.load_state_dict(self.best_model_wts)
         model_path = os.path.join(save_root, f'fold{self.fold}_best_model.pth')
         torch.save(self.best_model_wts, model_path)
-        logger.success(f"✅ Best model saved: {model_path}")
+        logger.success(f"Best model saved: {model_path}")
 
         if save_root is not None and self.best_metrics is not None:
             metrics_path = os.path.join(save_root, f"best_metrics_fold{self.fold}.json")
             with open(metrics_path, "w", encoding="utf-8") as f:
                 json.dump(self.best_metrics, f, ensure_ascii=False, indent=4)
-            logger.success(f"✅ Metrics saved: {metrics_path}")
+            logger.success(f"Metrics saved: {metrics_path}")
 
         return self.best_metrics

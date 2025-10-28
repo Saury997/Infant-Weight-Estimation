@@ -193,11 +193,16 @@ def setup_logger(log_file_path: str) -> None:
 
 def evaluate_regression(y_true: np.ndarray, y_pred: np.ndarray) -> dict:
     """计算回归任务的各项评估指标"""
-    mse = mean_squared_error(y_true, y_pred)
-    rmse = float(np.sqrt(mse))
+    rmse = float(np.sqrt(mean_squared_error(y_true, y_pred)))
     mae = mean_absolute_error(y_true, y_pred)
     r2 = r2_score(y_true, y_pred)
-    return {"MSE": mse, "RMSE": rmse, "MAE": mae, "R2": r2}
+    relative_errors_pct = (y_pred - y_true) / (y_true + 1e-8) * 100
+    systematic_error = float(np.mean(relative_errors_pct))
+    random_error = float(np.std(relative_errors_pct, ddof=0))
+    mape = float(np.mean(np.abs(relative_errors_pct)))
+    with10pct = float(np.mean(np.abs(y_pred - y_true) <= 10 / 100.0 * y_true) * 100.0)
+    return {"RMSE": rmse, "MAE": mae, "R2": r2, "MAPE": mape, "SystematicError": systematic_error,
+            "RandomError": random_error, "With10pct": with10pct}
 
 
 def build_regressor(algo: str, cfg_ml, standardize:bool=False) -> Pipeline:
