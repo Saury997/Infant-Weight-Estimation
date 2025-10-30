@@ -91,59 +91,42 @@ class Trainer:
         return running_loss / len(train_loader.dataset)
 
     # -------------------------------------------------------------------------
-    def evaluate(self, data_loader, save_root=None):
+    def evaluate(self, data_loader):
         """
-        在验证集或测试集上评估模型，返回：
-          - epoch_loss_log: log 空间 loss
-          - epoch_mse_g: 原始 g 空间 MSE
-          - epoch_mae_g: 原始 g 空间 MAE
-          - metrics: 各类误差指标（整体 + 3800g以上 + 分体重段）
-          - y_pred_orig: 原始单位的预测结果 tensor
+        在验证集或测试集上评估模型
         """
         self.model.eval()
-        running_loss_log = 0.0
-        running_mae = 0.0
-        running_mse = 0.0
-        all_outputs_orig, all_targets_orig = [], []
+        running_loss = 0.0
+        all_outputs, all_targets = [], []
 
         progress_bar = tqdm(data_loader, desc="Evaluating", leave=False)
         with torch.no_grad():
             for inputs, targets in progress_bar:
                 inputs, targets = inputs.to(self.device), targets.to(self.device)
-                outputs_norm = self.model(inputs)
+                outputs = self.model(inputs)
 
-                # === 还原回原始体重(g) ===
                 if self.log_transform:
-                    outputs_orig = self._prepare_targets(outputs_norm, training=False)
-                    targets_orig = torch.exp(targets) if self.targets_are_already_log else targets
+                    outputs = self._prepare_targets(outputs, training=False)
+                    targets = torch.exp(targets) if self.targets_are_already_log else targets
                 else:
-                    outputs_orig = outputs_norm
-                    targets_orig = targets
+                    outputs = outputs
+                    targets = targets
 
-                all_outputs_orig.append(outputs_orig.detach().cpu())
-                all_targets_orig.append(targets_orig.detach().cpu())
+                all_outputs.append(outputs.detach().cpu())
+                all_targets.append(targets.detach().cpu())
 
-                # log 空间 loss
                 if self.log_transform:
                     targets_norm = self._prepare_targets(targets, training=True)
-                    loss_log = self.criterion(outputs_norm, targets_norm)
+                    loss = self.criterion(outputs, targets_norm)
                 else:
-                    loss_log = self.criterion(outputs_orig, targets_orig)
+                    loss = self.criterion(outputs, targets)
 
-                mae_g = torch.abs(outputs_orig - targets_orig).mean()
-                mse_g = torch.pow(outputs_orig - targets_orig, 2).mean()
+                running_loss += loss.item() * inputs.size(0)
 
-                running_loss_log += loss_log.item() * inputs.size(0)
-                running_mae += mae_g.item() * inputs.size(0)
-                running_mse += mse_g.item() * inputs.size(0)
+        epoch_loss = running_loss / len(data_loader.dataset)
 
-        # === 汇总 ===
-        epoch_loss_log = running_loss_log / len(data_loader.dataset)
-        epoch_mae_g = running_mae / len(data_loader.dataset)
-        epoch_mse_g = running_mse / len(data_loader.dataset)
-
-        y_pred = torch.cat(all_outputs_orig, dim=0).numpy().flatten()
-        y_true = torch.cat(all_targets_orig, dim=0).numpy().flatten()
+        y_pred = torch.cat(all_outputs, dim=0).numpy().flatten()
+        y_true = torch.cat(all_targets, dim=0).numpy().flatten()
 
         metrics = evaluate_regression(y_true, y_pred)
 
@@ -152,17 +135,11 @@ class Trainer:
         if len(idx_3800) > 0:
             sub_y_true = y_true[idx_3800]
             sub_y_pred = y_pred[idx_3800]
-            metrics[">=3800g"] = evaluate_regression(sub_y_true, sub_y_pred)
+            metrics_3800g = evaluate_regression(sub_y_true, sub_y_pred)
         else:
-            metrics[">=3800g"] = None
+            metrics_3800g = None
 
-        # 保存 metrics
-        if save_root is not None:
-            metrics_path = os.path.join(save_root, f"metrics_fold{self.fold}.json")
-            with open(metrics_path, "w", encoding="utf-8") as f:
-                json.dump(metrics, f, ensure_ascii=False, indent=4)
-
-        return epoch_loss_log, epoch_mse_g, epoch_mae_g, metrics, torch.tensor(y_pred)
+        return epoch_loss, metrics, metrics_3800g, torch.tensor(y_pred)
 
     # -------------------------------------------------------------------------
     def fit(self, train_loader, val_loader, save_root, scheduler):
@@ -177,26 +154,27 @@ class Trainer:
             elapsed = time.time() - start_time
 
             if val_loader:
-                val_loss_log, val_loss_g, val_mae_g, metrics, _ = self.evaluate(val_loader, save_root=save_root)
+                val_loss, metrics, _, y_pred_val = self.evaluate(val_loader)
 
                 logger.info(
                     f"Fold {self.fold} | Epoch {epoch+1}/{self.epochs} [{elapsed:.2f}s] -> "
-                    f"Train Loss: {train_loss:.6f}, Val Loss: {val_loss_log:.6f}, "
-                    f"MAE: {val_mae_g:.2f}g, SystematicError: {metrics['SystematicError(%)']:.2f}%, "
-                    f"RandomError: {metrics['RandomError(%)']:.2f}%"
+                    f"Train Loss: {train_loss:.2f}, Val Loss: {val_loss:.2f}, "
+                    f"MAE: {metrics['MAE']:.2f}g, MAPE: {metrics['MAPE']:.2f}, R2: {metrics['R2']:.2f},"
+                    f"SystematicError: {metrics['SystematicError']:.2f}%, "
+                    f"RandomError: {metrics['RandomError']:.2f}%"
                 )
 
                 if self.writer:
                     prefix = f'Fold-{self.fold}/'
                     self.writer.add_scalar(f'{prefix}Loss/Train', train_loss, epoch)
-                    self.writer.add_scalar(f'{prefix}Loss/Val', val_loss_log, epoch)
-                    self.writer.add_scalar(f'{prefix}MAE/Val', val_mae_g, epoch)
+                    self.writer.add_scalar(f'{prefix}Loss/Val', val_loss, epoch)
+                    self.writer.add_scalar(f'{prefix}MAE/Val', metrics['MAE'], epoch)
                     self.writer.add_scalar(f'{prefix}LR', self.optimizer.param_groups[0]['lr'], epoch)
 
-                scheduler.step(val_loss_log)
+                scheduler.step(val_loss)
 
-                if val_mae_g < self.best_val_mae:
-                    self.best_val_mae, self.best_val_loss = val_mae_g, val_loss_log
+                if metrics['MAE'] < self.best_val_mae:
+                    self.best_val_mae, self.best_val_loss = metrics['MAE'], val_loss
                     self.best_model_wts = copy.deepcopy(self.model.state_dict())
                     self.best_metrics = metrics
                     patience_counter = 0
@@ -215,11 +193,4 @@ class Trainer:
         model_path = os.path.join(save_root, f'fold{self.fold}_best_model.pth')
         torch.save(self.best_model_wts, model_path)
         logger.success(f"Best model saved: {model_path}")
-
-        if save_root is not None and self.best_metrics is not None:
-            metrics_path = os.path.join(save_root, f"best_metrics_fold{self.fold}.json")
-            with open(metrics_path, "w", encoding="utf-8") as f:
-                json.dump(self.best_metrics, f, ensure_ascii=False, indent=4)
-            logger.success(f"Metrics saved: {metrics_path}")
-
         return self.best_metrics

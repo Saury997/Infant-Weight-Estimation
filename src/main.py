@@ -243,12 +243,10 @@ def main():
     logger.info("----- Training Final Model on All Training Data -----")
 
     # --- 最终模型数据准备 ---
-    # 对所有训练/验证数据进行标准化 (如果配置)
     if config.data.standardize:
-        # 注意：这里重新初始化 scaler 以确保它只在 X_train_val 上 fit_transform
         final_scaler = StandardScaler()
         X_train_val_scaled = final_scaler.fit_transform(X_train_val)
-        X_test_scaled = final_scaler.transform(X_test)  # 测试集使用训练集的 scaler 进行 transform
+        X_test_scaled = final_scaler.transform(X_test)
     else:
         X_train_val_scaled = X_train_val.values
         X_test_scaled = X_test.values
@@ -275,19 +273,17 @@ def main():
     test_dataset = TensorDataset(torch.tensor(X_test_scaled, dtype=torch.float32), y_test_tensor)
     test_loader = DataLoader(test_dataset, batch_size=config.training.batch_size, shuffle=False)
 
-    test_loss_log, test_mse_g, test_mae_g, metrics, y_pred_test_tensor = final_trainer.evaluate(  # 修改变量名以区分tensor
-        test_loader, save_root=checkpoints_dir
-    )
-    test_rmse_g = np.sqrt(test_mse_g)
+    test_loss, metrics, _, y_pred_test = final_trainer.evaluate(test_loader)
     logger.success(
-        f"Final Test Set Performance -> MSE: {test_mse_g:.4f}, RMSE: {test_rmse_g:.2f}g, MAE: {test_mae_g:.2f}g"
+        f"Final Test Set Performance -> RMSE: {metrics['RMSE']:.2f}g, MAE: {metrics['MAE']:.2f}g, "
+        f"R2: {metrics['R2']:.2f}, MAPE: {metrics['MAPE']:.2f}, SystematicError: {metrics['SystematicError']:.2f}, "
+        f"RandomError: {metrics['RandomError']:.2f}%, With10pct: {metrics['With10pct']:.2f}%"
     )
 
     # --- 7. 结果可视化 ---
     if config.others.plot:
         logger.info("Generating result plots...")
-        # 重新获取训练集预测值用于绘图
-        final_model.eval()  # 切换到评估模式
+        final_model.eval()
         with torch.no_grad():
             y_pred_train_norm = final_model(
                 torch.tensor(X_train_val_scaled, dtype=torch.float32, device=config.others.device))
@@ -295,7 +291,7 @@ def main():
             y_pred_train_orig = final_trainer._prepare_targets(y_pred_train_norm, training=False).detach().cpu()
 
         # 散点图
-        fig, _ = result_plot(y_train_val, y_pred_train_orig, y_test, y_pred_test_tensor.to('cpu'),
+        fig, _ = result_plot(y_train_val, y_pred_train_orig, y_test, y_pred_test.to('cpu'),
                              model_name=config.model.name)
         fig_path = os.path.join(run_dir, f'result_visualization-{config.model.name}.png')
         fig.savefig(fig_path, dpi=300, bbox_inches="tight")
@@ -314,7 +310,7 @@ def main():
 
     test_results_df = X_test.copy()
     test_results_df[config.data.target_column + '_True'] = y_test
-    test_results_df[config.data.target_column + '_Predicted'] = y_pred_test_tensor.numpy().flatten()
+    test_results_df[config.data.target_column + '_Predicted'] = y_pred_test.numpy().flatten()
     test_predictions_path = os.path.join(run_dir, 'test_predictions.csv')
     test_results_df.to_csv(test_predictions_path, index=True)
     logger.success(f"Test set predictions saved to: {test_predictions_path}")
