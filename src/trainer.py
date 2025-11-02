@@ -7,7 +7,7 @@ from tqdm import tqdm
 from loguru import logger
 import json
 
-from utils import evaluate_regression
+from utils import evaluate_regression, single_metrics
 
 
 class Trainer:
@@ -139,7 +139,11 @@ class Trainer:
         else:
             metrics_3800g = None
 
-        return epoch_loss, metrics, metrics_3800g, torch.tensor(y_pred)
+        sample_metrics = []
+        for i in range(len(y_true)):
+            sample_metrics.append(single_metrics(np.array([y_true[i]]), np.array([y_pred[i]])))
+
+        return epoch_loss, metrics, metrics_3800g, sample_metrics, torch.tensor(y_pred)
 
     # -------------------------------------------------------------------------
     def fit(self, train_loader, val_loader, save_root, scheduler):
@@ -154,14 +158,14 @@ class Trainer:
             elapsed = time.time() - start_time
 
             if val_loader:
-                val_loss, metrics, _, y_pred_val = self.evaluate(val_loader)
+                val_loss, metrics, _, _, _ = self.evaluate(val_loader)
 
                 logger.info(
-                    f"Fold {self.fold} | Epoch {epoch+1}/{self.epochs} [{elapsed:.2f}s] -> "
-                    f"Train Loss: {train_loss:.2f}, Val Loss: {val_loss:.2f}, "
-                    f"MAE: {metrics['MAE']:.2f}g, MAPE: {metrics['MAPE']:.2f}, R2: {metrics['R2']:.2f},"
-                    f"SystematicError: {metrics['SystematicError']:.2f}%, "
-                    f"RandomError: {metrics['RandomError']:.2f}%"
+                    f"Fold {self.fold} | Epoch {epoch+1}/{self.epochs} [{elapsed:.2f}s] "
+                    f"Loss(T/V) {train_loss:.2f}/{val_loss:.2f} | "
+                    f"MAE {metrics['MAE']:.2f} MAPE {metrics['MAPE']:.2f} RMSE {metrics['RMSE']:.2f} R2 {metrics['R2']:.2f} "
+                    f"Err(Sys/Ran) {metrics['SystematicError']:+.2f}/{metrics['RandomError']:+.2f}% "
+                    f"w10p {metrics['With10pct']:.2f}%"
                 )
 
                 if self.writer:
@@ -185,7 +189,13 @@ class Trainer:
                     logger.warning(f"Early stopping at epoch {epoch+1}.")
                     break
             else:
-                logger.info(f"Epoch {epoch+1}/{self.epochs} Train Loss: {train_loss:.6f}")
+                _, metrics, _, _, _ = self.evaluate(train_loader)
+                logger.info(
+                    f"Train {epoch+1}/{self.epochs} [{elapsed:.2f}s] Loss {train_loss:.2f} | "
+                    f"MAE {metrics['MAE']:.2f} MAPE {metrics['MAPE']:.2f} RMSE {metrics['RMSE']:.2f} R2 {metrics['R2']:.2f} "
+                    f"Err(Sys/Ran) {metrics['SystematicError']:+.2f}/{metrics['RandomError']:+.2f}% "
+                    f"w10p {metrics['With10pct']:.2f}%"
+                )
                 self.best_model_wts = copy.deepcopy(self.model.state_dict())
 
         # === 保存模型与指标 ===

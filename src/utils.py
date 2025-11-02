@@ -41,8 +41,10 @@ def get_optimizer(model: torch.nn.Module, optimizer: str, lr: float) -> torch.op
     """根据参数初始化优化器"""
     if optimizer == 'AdamW':
         optimizer = AdamW(model.parameters(), lr=lr)
+        logger.info(f"Using AdamW optimizer with lr={lr}.")
     elif optimizer == 'SGD':
         optimizer = SGD(model.parameters(), lr=lr)
+        logger.info(f"Using SGD optimizer with lr={lr}.")
     elif optimizer == 'Muon':   # TODO: bugs need to fix.
         os.environ['MASTER_ADDR'] = 'localhost'
         os.environ['MASTER_PORT'] = '12345'
@@ -181,8 +183,8 @@ def check_distribution(y_train: pd.Series, y_test: pd.Series, y_bins_train: pd.S
 def setup_logger(log_file_path: str) -> None:
     """初始化日志记录器"""
     log_format = (
-        "<green>{time:YYYY-MM-DD HH:mm:ss.SSS}</green> | "
-        "<level>{level: <6}</level> | "
+        "<green>{time:YYYY-MM-DD HH:mm:ss}</green> | "
+        "<level>{level: <6}</level>| "
         "<cyan>{name}</cyan>:<cyan>{function}</cyan>:<cyan>{line}</cyan> - <level>{message}</level>"
     )
     logger.remove()
@@ -201,11 +203,31 @@ def evaluate_regression(y_true: np.ndarray, y_pred: np.ndarray) -> dict:
     random_error = float(np.std(relative_errors_pct, ddof=0))
     mape = float(np.mean(np.abs(relative_errors_pct)))
     with10pct = float(np.mean(np.abs(y_pred - y_true) <= 10 / 100.0 * y_true) * 100.0)
-    return {"RMSE": rmse, "MAE": mae, "R2": r2, "MAPE": mape, "SystematicError": systematic_error,
-            "RandomError": random_error, "With10pct": with10pct}
+
+    return {
+        "RMSE": rmse,
+        "MAE": mae,
+        "R2": r2,
+        "MAPE": mape,
+        "SystematicError": systematic_error,
+        "RandomError": random_error,
+        "With10pct": with10pct
+    }
 
 
-def build_regressor(algo: str, cfg_ml, standardize:bool=False) -> Pipeline:
+def single_metrics(y_true: np.ndarray, y_pred: np.ndarray) -> dict:
+    """计算单个样本的评估指标"""
+    mae = float(np.abs(y_pred - y_true))
+    relative_error_pct = float((y_pred - y_true) / (y_true + 1e-8) * 100)
+    mape = float(np.abs(relative_error_pct))
+
+    return {
+        "MAE": mae,
+        "MAPE": mape
+    }
+
+
+def build_regressor(algo: str, cfg_ml: SimpleNamespace, standardize:bool=False) -> Pipeline:
     """根据算法名称和配置构建一个 scikit-learn Pipeline"""
     steps = []
 
