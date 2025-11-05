@@ -1,13 +1,18 @@
 import os
 import time
 import copy
+from types import SimpleNamespace
+from typing import Optional, Union
+
 import torch
 import numpy as np
+from torch import nn
+from torch.utils.data import DataLoader
+from torch.utils.tensorboard import SummaryWriter
 from tqdm import tqdm
 from loguru import logger
-import json
 
-from utils import evaluate_regression, single_metrics
+from utils import evaluate_metrics, single_metrics
 
 
 class Trainer:
@@ -18,7 +23,8 @@ class Trainer:
     - 保存最优模型与指标文件
     """
 
-    def __init__(self, model, criterion, optimizer, config, writer, fold):
+    def __init__(self, model: nn.Module, criterion: nn.Module, optimizer: torch.optim.Optimizer,
+                 config: SimpleNamespace, writer: SummaryWriter, fold: Union[str, int]):
         self.criterion = criterion
         self.optimizer = optimizer
         self.device = config.others.device
@@ -35,7 +41,7 @@ class Trainer:
         self.best_metrics = None
 
     # -------------------------------------------------------------------------
-    def _compute_y_stats(self, train_loader):
+    def _compute_y_stats(self, train_loader: DataLoader) -> None:
         """计算训练集的 log-target 均值与标准差"""
         if not self.log_transform:
             return
@@ -58,7 +64,7 @@ class Trainer:
         logger.info(f"Fold {self.fold}: log-space y mean={self.y_mean:.6f}, std={self.y_std:.6f}")
 
     # -------------------------------------------------------------------------
-    def _prepare_targets(self, targets, training=True):
+    def _prepare_targets(self, targets: torch.Tensor, training: bool=True) -> torch.Tensor:
         """log空间标准化或反标准化"""
         if not self.log_transform:
             return targets
@@ -73,7 +79,7 @@ class Trainer:
             return torch.exp(y_pred_log)
 
     # -------------------------------------------------------------------------
-    def train_one_epoch(self, train_loader, epoch):
+    def train_one_epoch(self, train_loader: DataLoader, epoch: int) -> float:
         self.model.train()
         running_loss = 0.0
         progress_bar = tqdm(train_loader, desc=f"Fold {self.fold} Epoch {epoch+1}/{self.epochs} [T]", leave=False)
@@ -91,7 +97,7 @@ class Trainer:
         return running_loss / len(train_loader.dataset)
 
     # -------------------------------------------------------------------------
-    def evaluate(self, data_loader):
+    def evaluate(self, data_loader: DataLoader):
         """
         在验证集或测试集上评估模型
         """
@@ -128,14 +134,14 @@ class Trainer:
         y_pred = torch.cat(all_outputs, dim=0).numpy().flatten()
         y_true = torch.cat(all_targets, dim=0).numpy().flatten()
 
-        metrics = evaluate_regression(y_true, y_pred)
+        metrics = evaluate_metrics(y_true, y_pred)
 
         # 3800g 以上样本指标
         idx_3800 = np.where(y_true >= 3800)[0]
         if len(idx_3800) > 0:
             sub_y_true = y_true[idx_3800]
             sub_y_pred = y_pred[idx_3800]
-            metrics_3800g = evaluate_regression(sub_y_true, sub_y_pred)
+            metrics_3800g = evaluate_metrics(sub_y_true, sub_y_pred)
         else:
             metrics_3800g = None
 
@@ -146,15 +152,17 @@ class Trainer:
         return epoch_loss, metrics, metrics_3800g, sample_metrics, torch.tensor(y_pred)
 
     # -------------------------------------------------------------------------
-    def fit(self, train_loader, val_loader, save_root, scheduler):
+    def fit(self, train_loader: DataLoader, val_loader: Optional[DataLoader], save_root: str, scheduler) -> dict:
         """主训练流程 + 模型保存 + 指标保存"""
         patience_counter = 0
+        loss_history = []
         if self.log_transform:
             self._compute_y_stats(train_loader)
 
         for epoch in range(self.epochs):
             start_time = time.time()
             train_loss = self.train_one_epoch(train_loader, epoch)
+            loss_history.append(train_loss)
             elapsed = time.time() - start_time
 
             if val_loader:

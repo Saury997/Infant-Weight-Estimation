@@ -109,6 +109,9 @@ def get_model(model_cfg: SimpleNamespace, input_dim: int) -> torch.nn.Module:
     if model_cfg.name == 'MLP':
         from model.mlp import MLP
         model = MLP(input_dim=input_dim, **params)
+    elif model_cfg.name == 'LSTM':
+        from model.lstm import LSTMRegressor
+        model = LSTMRegressor(input_dim=input_dim, **params)
     elif model_cfg.name == 'KAN':
         from model.kan import KAN
         model = KAN(layers_hidden=[input_dim] + model_cfg.hidden_layers + [1], **params)
@@ -193,7 +196,7 @@ def setup_logger(log_file_path: str) -> None:
     logger.info("Logger initialized.")
 
 
-def evaluate_regression(y_true: np.ndarray, y_pred: np.ndarray) -> dict:
+def evaluate_metrics(y_true: np.ndarray, y_pred: np.ndarray) -> dict:
     """计算回归任务的各项评估指标"""
     rmse = float(np.sqrt(mean_squared_error(y_true, y_pred)))
     mae = mean_absolute_error(y_true, y_pred)

@@ -13,7 +13,7 @@ training:
 
 ml:
   # 依次运行列表中的所有模型
-  algorithms: ["KNN", "RandomForest", "XGBoost", "Ridge", "Lasso", "ElasticNet",
+  algorithms: ["KNN", "Linear", "RandomForest", "XGBoost", "Ridge", "Lasso", "ElasticNet",
                "SVR", "KernelRidge", "ExtraTrees", "GBDT", "LightGBM", "CatBoost"]
 
   # --- 各个模型的超参数配置 ---
@@ -23,6 +23,8 @@ ml:
     metric: minkowski
     p: 2
     n_jobs: -1
+  linear:
+    fit_intercept: true
   random_forest:
     n_estimators: 400
     max_depth: 10
@@ -106,6 +108,6 @@ ml:
     verbose: False
     random_seed: 42
 others:
-  random_seed: 42
+  random_seed: 3407
   save_root: ../experiments
   plot: true

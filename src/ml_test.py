@@ -21,7 +21,7 @@ from sklearn.model_selection import KFold, train_test_split
 
 from data_loader import load_and_preprocess_data
 from src.plot import result_plot
-from utils import set_seed, setup_logger, evaluate_regression, build_regressor, single_metrics
+from utils import set_seed, setup_logger, evaluate_metrics, build_regressor, single_metrics
 from main import load_config
 
 
@@ -98,7 +98,7 @@ def main():
                 y_te_true = np.exp(y_te_fold.values) if config.data.log_transform else y_te_fold.values
                 if config.data.log_transform: y_te_pred = np.exp(y_te_pred)
 
-                metrics = evaluate_regression(y_te_true, y_te_pred)
+                metrics = evaluate_metrics(y_te_true, y_te_pred)
                 fold_metrics.append(metrics)
 
                 model_path = os.path.join(algo_dir, f'model_fold_{fold_idx + 1}.joblib')
@@ -187,7 +187,7 @@ def main():
                 plt.close(fig)
                 logger.info(f"Visualization saved to: {fig_path}")
 
-            test_metrics = evaluate_regression(y_test_true, y_test_pred)
+            test_metrics = evaluate_metrics(y_test_true, y_test_pred)
             test_row = {"Algorithm": algo, **{f"Test_{k}": v for k, v in test_metrics.items()}}
             all_test_results.append(test_row)
             logger.success(f"[{algo} TEST] -> " + ', '.join([f"{k}:{v:.4f}" for k, v in test_metrics.items()]))

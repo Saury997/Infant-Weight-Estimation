@@ -27,7 +27,7 @@ from skopt import BayesSearchCV
 from skopt.space import Categorical, Integer, Real
 
 from data_loader import load_and_preprocess_data
-from utils import set_seed, setup_logger, build_regressor, evaluate_regression
+from utils import set_seed, setup_logger, build_regressor, evaluate_metrics
 from main import load_config
 
 warnings.filterwarnings("ignore")
@@ -261,7 +261,7 @@ def main():
             y_test_true = np.exp(y_test.values)
         else:
             y_test_true = y_test.values
-        metrics = evaluate_regression(y_test_true, y_pred_test)
+        metrics = evaluate_metrics(y_test_true, y_pred_test)
 
         # 记录汇总
         summary_rows.append({

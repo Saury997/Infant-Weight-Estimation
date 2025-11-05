@@ -15,22 +15,22 @@ data:
 # ---------------------------- 模型配置 -----------------------------
 model:
   name: 'MLP'          # 模型架构, e.g., 'MLP', 'KAN', 'Taylor-KAN', 'Fourier-KAN', 'Wavelet-KAN', 'Jacobi-KAN', 'Cheby-KAN'
-  hidden_layers: [128, 64]     # 隐藏层神经元数量列表
+  hidden_layers: [64, 32]     # 隐藏层神经元数量列表
   params:
     init_type: 'xavier'         # 权重初始化方法: 'uniform', 'normal', 'xavier', 'kaiming'
-    dropout_rate: 0.2           # Dropout比率
-    hidden_layers: [128, 64]
+    dropout_rate: 0.15           # Dropout比率
+    hidden_layers: [64, 32]
 
 # ---------------------------- 训练配置 -----------------------------
 training:
   optimizer: 'AdamW'          # 优化器: 'AdamW', 'SGD', 'Muon', 'LBFGS'
   lr: 0.01                   # 学习率
   batch_size: 16              # 批处理大小
-  epochs: 150                 # 最大训练轮数
-  patience: 50                # 早停的耐心轮数
+  epochs: 160                 # 最大训练轮数
+  patience: 30                # 早停的耐心轮数
 
   # 交叉验证配置
-  use_kfold: false            # 是否启用K折交叉验证 (若为false, 则使用简单验证集划分)
+  use_kfold: true            # 是否启用K折交叉验证 (若为false, 则使用简单验证集划分)
   k_folds: 5                  # K折交叉验证的折数
 
   # 学习率调度器配置
@@ -52,7 +52,7 @@ training:
 
 # ---------------------------- 其他通用配置 ---------------------------
 others:
-  random_seed: 42           # 全局随机种子, 保证实验可复现
+  random_seed: 3407           # 全局随机种子, 保证实验可复现
   device: 'auto'              # 训练设备: 'cuda', 'cpu', 'auto' (自动检测)
   save_root: '../experiments' # 保存所有实验结果的根目录
   plot: true

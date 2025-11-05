@@ -27,7 +27,6 @@ from sklearn.preprocessing import StandardScaler
 from torch.utils.data import DataLoader, TensorDataset
 from torch.utils.tensorboard import SummaryWriter
 from loguru import logger
-import numpy as np
 import argparse
 import pandas as pd
 
@@ -108,7 +107,7 @@ def main():
     6. 使用所有训练/验证数据训练一个最终模型。
        该模型会保存最佳权重。
     7. 在独立的测试集上评估最终模型的性能，并计算详细的误差指标。
-    8. 可选地生成结果可视化图表（例如，预测值 vs 真实值散点图，Bland-Altman 图）并保存。
+    8. 可选地生成结果可视化图表（预测值 vs 真实值散点图）并保存。
     9. 将超参数和交叉验证结果（如果进行了）记录到 TensorBoard。
     10. 将训练集和测试集的原始特征、真实值和预测值保存为 CSV 文件。
     """
